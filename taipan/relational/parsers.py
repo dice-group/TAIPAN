@@ -1,6 +1,7 @@
 import json
 
 from taipan.utils.exceptions import TableHasNoValueError
+import numpy
 
 class MannheimParser(object):
     """
@@ -29,6 +30,30 @@ class MannheimParser(object):
     def getRecordOffset(self):
         return (self.getValue('recordOffset'), self.getValue('recordEndOffset'))
 
+    def getS3Link(self):
+        return self.getValue('s3Link')
+
+    def getTableNum(self):
+        return self.getValue('tableNum')
+
+    def getTableType(self):
+        return self.getValue('tableType')
+
+    def getTermSet(self):
+        return self.getValue('termSet')
+
+    def getTitle(self):
+        return self.getValue('title')
+
+    def getUrl(self):
+        """
+            Return the source URL of the table.
+        """
+        return self.getValue('url')
+
+    def getTable(self):
+        return numpy.asarray(self.getValue('relation'))
+
     def getValue(self, valueName):
         if(valueName in self.table):
             return self.table[valueName]
@@ -40,4 +65,5 @@ if __name__ == "__main__":
     sampler = Sampler()
     randomTable = sampler.getRandomTables(1)
     parser = MannheimParser(randomTable[0])
+
     import ipdb; ipdb.set_trace()
