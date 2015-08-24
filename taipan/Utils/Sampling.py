@@ -1,4 +1,4 @@
-from taipan.config.pathes import tablesFolder
+from taipan.Config.Pathes import tablesFolder
 
 import os
 import os.path

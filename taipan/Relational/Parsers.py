@@ -1,6 +1,6 @@
 import json
 
-from taipan.utils.exceptions import TableHasNoValueError
+from taipan.Utils.Exceptions import TableHasNoValueError
 import numpy
 
 class MannheimParser(object):
@@ -61,7 +61,7 @@ class MannheimParser(object):
             raise TableHasNoValueError(valueName)
 
 if __name__ == "__main__":
-    from taipan.utils.sampling import Sampler
+    from Taipan.Utils.Sampling import Sampler
     sampler = Sampler()
     randomTable = sampler.getRandomTables(1)
     parser = MannheimParser(randomTable[0])

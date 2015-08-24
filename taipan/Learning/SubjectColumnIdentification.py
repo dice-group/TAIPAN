@@ -1,4 +1,4 @@
-import taipan.config.pathes
+import taipan.Config.Pathes
 
 class SimpleIdentifier(object):
     identificationThreshold = 0.1
@@ -32,10 +32,10 @@ class SimpleIdentifier(object):
                 return columnNumber
 
 if __name__ == "__main__":
-    from taipan.utils.sampling import Sampler
     sampler = Sampler()
+    from taipan.Utils.Sampling import Sampler
     randomTable = sampler.getRandomTables(1)
-    from taipan.relational.parsers import MannheimParser
+    from taipan.Relational.Parsers import MannheimParser
     parser = MannheimParser(randomTable[0])
 
     si = SimpleIdentifier(parser)
