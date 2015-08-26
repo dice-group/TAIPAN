@@ -1,6 +1,10 @@
 import taipan.Config.Pathes
 
 class SimpleIdentifier(object):
+    """
+        According to Recovering Semantics of Tables on The Web, 2011
+        This should have precision of 83%
+    """
     identificationThreshold = 0.1
 
     def __init__(self, parser):
@@ -31,13 +35,16 @@ class SimpleIdentifier(object):
             if(digitsRatio < self.identificationThreshold):
                 return columnNumber
 
-if __name__ == "__main__":
-    sampler = Sampler()
-    from taipan.Utils.Sampling import Sampler
-    randomTable = sampler.getRandomTables(1)
-    from taipan.Relational.Parsers import MannheimParser
-    parser = MannheimParser(randomTable[0])
-
-    si = SimpleIdentifier(parser)
-    colNumber = si.identifySubjectColumn()
-    print colNumber
+class SVMIdentifier(object):
+    """
+        According to Recovering Semantics of Tables on The Web, 2011
+        should have precision of 94%
+        Features to use:
+        - Fraction of cells with unique content
+        - Fraction of cells with numeric content
+        - Variance in the number of date tokens in each cell
+        - Average number of words in each cell
+        - Column index from left
+    """
+    def __init__(self):
+        pass
