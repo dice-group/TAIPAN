@@ -1,4 +1,4 @@
-from taipan.Config.Pathes import tablesFolder
+from taipan.Config.Pathes import tablesDir
 
 import os
 import os.path
@@ -13,7 +13,7 @@ class Sampler(object):
         pass
 
     def getTableFileList(self, withHeaders=True):
-        tableFiles = [f for f in os.listdir(tablesFolder) if os.path.isfile(os.path.join(tablesFolder, f))]
+        tableFiles = [f for f in os.listdir(tablesDir) if os.path.isfile(os.path.join(tablesDir, f))]
         tableFilesWithHeaders = []
         tableFilesWithoutHeaders = []
         for tableFile in tableFiles:
@@ -32,7 +32,7 @@ class Sampler(object):
 
     def getRandomTables(self, numberOfRandomTables, withHeaders=True):
         tableFile = self.getRandomTableFile(withHeaders=withHeaders)
-        tableFilePath = os.path.join(tablesFolder, tableFile)
+        tableFilePath = os.path.join(tablesDir, tableFile)
         tables = open(tableFilePath).readlines()
         randomTables = []
         for i in range(0, numberOfRandomTables):

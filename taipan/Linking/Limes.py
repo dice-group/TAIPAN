@@ -20,4 +20,5 @@ class LimesLinker(object):
 if __name__ == "__main__":
     limesLinker = LimesLinker()
     controller = limesLinker.getController()
+    controller.main([limesExampleXml])
     import ipdb; ipdb.set_trace()
