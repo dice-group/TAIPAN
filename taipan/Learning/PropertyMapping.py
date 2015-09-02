@@ -25,6 +25,13 @@ class PropertyMapper(object):
             })
         return annotatedColumn
 
+    def searchPropertyFor(self, subjectCell, otherCell):
+        """
+            TODO: Build another solr index for finding relations between two cells
+            OR just fire a query for dbpedia sparql endpoint (first approach)
+        """
+        pass
+
     def mapProperties(self, table):
         atomicTables = self.mannheimAtomizer.atomizeTable(table)
         annotatedSubjectColumn = self.annotateColumn(atomicTables[0][0])
@@ -33,4 +40,5 @@ class PropertyMapper(object):
             for cellnumber in range(len(annotatedSubjectColumn)):
                 subjectCell = annotatedSubjectColumn[cellnumber]
                 otherCell = annotatedOtherColumn[cellnumber]
+                self.searchPropertyFor(subjectCell, otherCell)
                 print (subjectCell, otherCell)
