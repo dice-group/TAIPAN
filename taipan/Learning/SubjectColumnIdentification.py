@@ -7,16 +7,16 @@ class SimpleIdentifier(object):
     """
     identificationThreshold = 0.1
 
-    def __init__(self, parser):
+    def __init__(self, table):
         """
-            Passing the whole parser object which got access
+            Passing the whole table object which got access
             to all the metadata on the table
         """
-        self.parser = parser
+        self.table = table
 
     def identifySubjectColumn(self):
-        headerPosition = self.parser.getHeaderPosition()
-        table = self.parser.getTable()
+        headerPosition = self.table.getHeaderPosition()
+        table = self.table.getTable()
         if(headerPosition == "FIRST_ROW"):
             """
                 We can iterate through the columns in the table!

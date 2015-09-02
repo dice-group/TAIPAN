@@ -64,6 +64,6 @@ if __name__ == "__main__":
     from taipan.Utils.Sampling import Sampler
     sampler = Sampler()
     randomTable = sampler.getRandomTables(1)
-    parser = MannheimTable(randomTable[0])
+    table = MannheimTable(randomTable[0])
 
     import ipdb; ipdb.set_trace()

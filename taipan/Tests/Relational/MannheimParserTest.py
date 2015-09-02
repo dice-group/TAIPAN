@@ -8,9 +8,9 @@ class MannheimTableTestCase(unittest.TestCase):
     def setUp(self):
         sampler = Sampler()
         randomTable = sampler.getRandomTables(1)[0]
-        self.parser = MannheimTable(randomTable)
+        self.table = MannheimTable(randomTable)
 
     def testTableExist(self):
-        table = self.parser.getTable()
+        table = self.table.getTable()
         self.assertIsInstance(table, numpy.ndarray, msg="getTable() should return numpy.ndarray")
         self.assertGreater(len(table), 0, msg="getTable() should return non empty table")

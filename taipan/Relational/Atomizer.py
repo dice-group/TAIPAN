@@ -4,7 +4,7 @@ class MannheimAtomizer(object):
         tables, where N is (number of columns - 1)
     """
     def __init__(self):
-        self.parser = parser
+        self.table = table
         pass
 
     def atomizeTable(self, table, subjectColumnNumber):
@@ -17,7 +17,7 @@ if __name__ == "__main__":
     randomTable = sampler.getRandomTables(1)
 
     from taipan.Relational.Parsers import MannheimTable
-    parser = MannheimTable(randomTable[0])
+    table = MannheimTable(randomTable[0])
 
-    mannheimAtomizer = MannheimAtomizer(parser)
+    mannheimAtomizer = MannheimAtomizer(table)
     import ipdb; ipdb.set_trace()

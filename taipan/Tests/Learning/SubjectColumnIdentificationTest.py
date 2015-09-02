@@ -8,8 +8,8 @@ class SimpleIdentifierTestCase(unittest.TestCase):
     def setUp(self):
         sampler = Sampler()
         randomTable = sampler.getRandomTables(1)[0]
-        parser = MannheimTable(randomTable)
-        self.simpleIdentifier = SimpleIdentifier(parser)
+        table = MannheimTable(randomTable)
+        self.simpleIdentifier = SimpleIdentifier(table)
 
     def testSimpleColumnIdentification(self):
         colNumber = self.simpleIdentifier.identifySubjectColumn()
