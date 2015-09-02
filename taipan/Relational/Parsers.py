@@ -61,7 +61,7 @@ class MannheimParser(object):
             raise TableHasNoValueError(valueName)
 
 if __name__ == "__main__":
-    from Taipan.Utils.Sampling import Sampler
+    from taipan.Utils.Sampling import Sampler
     sampler = Sampler()
     randomTable = sampler.getRandomTables(1)
     parser = MannheimParser(randomTable[0])
