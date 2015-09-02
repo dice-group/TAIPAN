@@ -1,0 +1,15 @@
+Cython==0.23.1
+argparse==1.2.1
+decorator==4.0.2
+ipdb==0.8.1
+ipython==4.0.0
+ipython-genutils==0.1.0
+jnius==1.1-dev
+numpy==1.9.2
+path.py==7.6.1
+pexpect==3.3
+pickleshare==0.5
+simplegeneric==0.8.1
+solrpy==0.9.7
+traitlets==4.0.0
+wsgiref==0.1.2
