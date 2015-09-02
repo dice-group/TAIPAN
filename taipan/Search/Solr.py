@@ -1,4 +1,5 @@
 import solr
+from solr import SolrException
 
 from taipan.Config.Solr import solrUri
 from taipan.Config.Solr import solrShortAbstractsCore
@@ -20,4 +21,10 @@ class SolrSearch(object):
                  u'score': 2.5929914}
             }
         """
-        return self.shortAbstractsSolr.select("comment_en:\""+lookupString+"\"").results
+        instances = []
+        try:
+            instances = self.shortAbstractsSolr.select("comment_en:\""+lookupString+"\"").results
+        except SolrException as e:
+            print("Exception occured while searching solr index %s"%(str(e),))
+            print("The request string was %s"%(lookupString,))
+        return instances
