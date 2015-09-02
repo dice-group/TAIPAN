@@ -1,14 +1,14 @@
 import unittest
 
 from taipan.Utils.Sampling import Sampler
-from taipan.Relational.Parsers import MannheimParser
+from taipan.Relational.Parsers import MannheimTable
 from taipan.Learning.SubjectColumnIdentification import SimpleIdentifier
 
 class SimpleIdentifierTestCase(unittest.TestCase):
     def setUp(self):
         sampler = Sampler()
         randomTable = sampler.getRandomTables(1)[0]
-        parser = MannheimParser(randomTable)
+        parser = MannheimTable(randomTable)
         self.simpleIdentifier = SimpleIdentifier(parser)
 
     def testSimpleColumnIdentification(self):

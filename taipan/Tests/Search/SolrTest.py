@@ -1,7 +1,7 @@
 import unittest
 
 from taipan.Utils.Sampling import Sampler
-from taipan.Relational.Parsers import MannheimParser
+from taipan.Relational.Parsers import MannheimTable
 from taipan.Search.Solr import SolrSearch
 
 class SolrTestCase(unittest.TestCase):

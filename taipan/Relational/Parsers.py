@@ -3,7 +3,7 @@ import json
 from taipan.Utils.Exceptions import TableHasNoValueError
 import numpy
 
-class MannheimParser(object):
+class MannheimTable(object):
     """
         Parse a table from Mannheim Table corpus
         Into neat data structures
@@ -64,6 +64,6 @@ if __name__ == "__main__":
     from taipan.Utils.Sampling import Sampler
     sampler = Sampler()
     randomTable = sampler.getRandomTables(1)
-    parser = MannheimParser(randomTable[0])
+    parser = MannheimTable(randomTable[0])
 
     import ipdb; ipdb.set_trace()
