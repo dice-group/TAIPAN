@@ -1,4 +1,5 @@
 from taipan.Learning.SubjectColumnIdentification import SimpleIdentifier
+from taipan.Utils.Exceptions import SubjectColumnNotFoundError
 
 class MannheimAtomizer(object):
     """
@@ -9,7 +10,11 @@ class MannheimAtomizer(object):
         self.subjectColumnIdentifier = SimpleIdentifier()
 
     def atomizeTable(self, table):
-        subjectColumn = self.subjectColumnIdentifier.identifySubjectColumn(table)
+        try:
+            subjectColumn = self.subjectColumnIdentifier.identifySubjectColumn(table)
+        except SubjectColumnNotFoundError as e:
+            print("Subject column not found %s" %(str(e),))
+            subjectColumn = 0
         relations = table.getTable()
         atomicTables = []
         for index in range(subjectColumn, len(relations) - 1):

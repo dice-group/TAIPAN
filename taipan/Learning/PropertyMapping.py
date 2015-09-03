@@ -2,6 +2,8 @@ import taipan.Config.Pathes
 
 from taipan.Relational.Atomizers import MannheimAtomizer
 from taipan.Search.Solr import SolrSearch
+from taipan.Search.PropertySearch import PropertySearch
+from taipan.Utils.Exceptions import NoInstancesFoundError
 
 class PropertyMapper(object):
     """
@@ -10,6 +12,7 @@ class PropertyMapper(object):
 
     def __init__(self):
         self.mannheimAtomizer = MannheimAtomizer()
+        self.propertySearch = PropertySearch()
         self.solr = SolrSearch()
 
     def searchInstanceFor(self, string):
@@ -26,12 +29,18 @@ class PropertyMapper(object):
         return annotatedColumn
 
     def searchPropertyFor(self, subjectCell, otherCell):
-        """
-            TODO: Build another solr index for finding relations between two cells
-            OR just fire a query for dbpedia sparql endpoint (first approach)
-        """
-        pass
+        #For each instance in subjectCell -- match instance in otherCell
+        # if(len(subjectCell['instances']) == 0):
+        #     raise NoInstancesFoundError("No instances found for subject cell %s" % subjectCell['string'])
+        results = []
 
+        for instance in subjectCell['instances']:
+            #Match against string
+            results.append(self.propertySearch.searchPropertiesSparql(instance['id'], otherCell['string']))
+            for otherInstance in otherCell['instances']:
+                results.append(self.propertySearch.searchPropertiesSparql(instance['id'], otherInstance['id']))
+        import ipdb; ipdb.set_trace()
+        
     def mapProperties(self, table):
         atomicTables = self.mannheimAtomizer.atomizeTable(table)
         annotatedSubjectColumn = self.annotateColumn(atomicTables[0][0])
@@ -40,5 +49,8 @@ class PropertyMapper(object):
             for cellnumber in range(len(annotatedSubjectColumn)):
                 subjectCell = annotatedSubjectColumn[cellnumber]
                 otherCell = annotatedOtherColumn[cellnumber]
-                self.searchPropertyFor(subjectCell, otherCell)
-                print (subjectCell, otherCell)
+                try:
+                    self.searchPropertyFor(subjectCell, otherCell)
+                except NoInstancesFoundError as e:
+                    print str(e)
+                    continue

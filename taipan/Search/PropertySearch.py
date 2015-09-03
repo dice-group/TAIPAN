@@ -1,4 +1,5 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
+from taipan.Config.ExternalUris import dbpediaSparqlEndpointUri
 
 class PropertySearch(object):
     """
@@ -6,7 +7,7 @@ class PropertySearch(object):
         And returns all properties which (possibly) connects them
     """
     def __init__(self):
-        self.dbpediaSparql = SPARQLWrapper("http://dbpedia.org/sparql")
+        self.dbpediaSparql = SPARQLWrapper(dbpediaSparqlEndpointUri)
         self.dbpediaSparql.setReturnFormat(JSON)
 
     def searchPropertiesSparql(self, s, o):

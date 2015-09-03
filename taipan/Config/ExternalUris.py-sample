@@ -1,0 +1,2 @@
+#Official SPARQL Endpoint is usually down, better to use your own
+dbpediaSparqlEndpointUri = "http://dbpedia.org/sparql"
