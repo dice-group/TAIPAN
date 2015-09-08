@@ -1,5 +1,10 @@
+import numpy
+
 from taipan.Learning.SubjectColumnIdentification import SimpleIdentifier
 from taipan.Utils.Exceptions import SubjectColumnNotFoundError
+from taipan.Utils.Exceptions import CouldNotAtomizeError
+
+from taipan.Logging.Logger import Logger
 
 class MannheimAtomizer(object):
     """
@@ -8,16 +13,26 @@ class MannheimAtomizer(object):
     """
     def __init__(self):
         self.subjectColumnIdentifier = SimpleIdentifier()
+        self.logger = Logger().getLogger(__name__)
 
     def atomizeTable(self, table):
         try:
-            subjectColumn = self.subjectColumnIdentifier.identifySubjectColumn(table)
+            subjectColumnNumber = self.subjectColumnIdentifier.identifySubjectColumn(table)
         except SubjectColumnNotFoundError as e:
-            print("Subject column not found %s" %(str(e),))
-            subjectColumn = 0
+            self.logger.error("Subject column not found", exc_info=True)
+            subjectColumnNumber = 0
         relations = table.getTable()
         atomicTables = []
-        for index in range(subjectColumn, len(relations) - 1):
-            atomicTable = relations[subjectColumn:subjectColumn+index+2:index+1]
-            atomicTables.append(atomicTable)
+        subjectCol = relations[subjectColumnNumber]
+        for index in range(len(relations) - 1):
+            if index != subjectColumnNumber:
+                otherCol = relations[index]
+                atomicTable = numpy.array([subjectCol, otherCol])
+                atomicTables.append(atomicTable)
+            else:
+                continue
+        if(len(atomicTables) < 1):
+            raise CouldNotAtomizeError("Table could not be atomized!")
+            self.logger.error("Table could not be atomized!")
+            self.logger.error("%s" % (relations,))
         return atomicTables

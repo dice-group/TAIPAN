@@ -38,7 +38,7 @@
 
     "loggers": {
         "taipan": {
-            "level": "INFO",
+            "level": "DEBUG",
             "handlers": ["console"],
             "propagate": "no"
         }

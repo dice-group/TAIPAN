@@ -7,3 +7,6 @@ install:
 
 test:
 	python -m unittest discover -s ./taipan/Tests -p "*Test.py"
+
+benchmark:
+	python -m unittest discover -s ./taipan/Tests -p "*Bench.py"
