@@ -30,19 +30,32 @@ class T2DTable(object):
         return self.parseAttributes(attributesRaw)
 
     def parseAttributes(self, attributesRaw):
+        if attributesRaw == []:
+            return []
         attributes = []
-        for row in attributesRaw:
+        if attributesRaw.ndim > 1:
+            for row in attributesRaw:
+                attribute = {
+                    "uri": row[0],
+                    "headerValue": row[1],
+                    "isKey": False if row[2] == "False" else True,
+                    "columnIndex": int(row[3])
+                }
+            attributes.append(attribute)
+        else:
+            row = attributesRaw
             attribute = {
                 "uri": row[0],
                 "headerValue": row[1],
                 "isKey": False if row[2] == "False" else True,
                 "columnIndex": int(row[3])
             }
-            attributes.append(attribute)
         return attributes
 
     def getEntitiesInstance(self, id):
         entitiesRaw = self.loadCsv(os.path.join(t2dDataDir, 'entities_instance', id))
+        if entitiesRaw == []:
+            return []
         entities = []
         for row in entitiesRaw:
             entity = {
@@ -62,6 +75,8 @@ class T2DTable(object):
         return self.parseClasses(allClasses, id)
 
     def parseClasses(self, classes, id):
+        if classes == []:
+            return []
         classesRaw = classes[classes[:,0] == id]
         classes = []
         for row in classesRaw:
@@ -74,11 +89,15 @@ class T2DTable(object):
         return classes
 
     def loadCsv(self, csvPath):
+        print csvPath
         if(os.path.exists(csvPath)):
-            csv = numpy.genfromtxt(csvPath, delimiter=",", dtype="S", comments="\n")
-            for x in numpy.nditer(csv, op_flags=['readwrite']):
-                x[...] = str(x).strip('"')
-            return csv
+            csv = numpy.genfromtxt(csvPath, delimiter=",", dtype="S", comments="///")
+            if numpy.shape(csv) != (0,):
+                for x in numpy.nditer(csv, op_flags=['readwrite']):
+                    x[...] = str(x).strip('"')
+                return csv
+            else:
+                return []
         else:
             return []
 
