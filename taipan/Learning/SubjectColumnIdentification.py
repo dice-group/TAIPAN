@@ -1,5 +1,6 @@
 import collections
 import taipan.Config.Pathes
+import foxpy.fox
 
 from taipan.Utils.Exceptions import SubjectColumnNotFoundError
 
@@ -52,15 +53,35 @@ class DistantSupervisionIdentifier(object):
                     if(row[itemIndex] == row[otherItemIndex]):
                         relations[itemIndex][otherItemIndex] = 0
                     else:
-                        rel = self.findRelation(item, otherItem)
+                        rel = self.findRelation(item, otherItem, tableHeader[itemIndex], tableHeader[otherItemIndex])
                         relations[itemIndex][otherItemIndex] = rel
                         relations[otherItemIndex][itemIndex] = rel
 
         return 0
 
-    def findRelation(self, columnValue1, columnValue2):
+    def findRelation(self, columnValue1, columnValue2, headerValue1, headerValue2):
+        entity1 = self.identifyEntity(columnValue1, headerValue1)
+        entity2 = self.identifyEntity(columnValue2, headerValue2)
+
         import ipdb; ipdb.set_trace()
         pass
+
+    def identifyEntity(self, columnValue, headerValue):
+        fx = foxpy.fox.Fox()
+        recognizedText = fx.recognizeText(
+                self.clearString(headerValue) + ' ' + self.clearString(columnValue))
+        import ipdb; ipdb.set_trace()
+        pass
+
+    def clearString(self, string):
+        import re
+
+        characters = "{}|"
+        string = string.translate(None, characters)
+        string = re.sub('&nbsp;', '', string)
+        string = string.strip()
+        print string
+        return string
 
 class SVMIdentifier(object):
     """

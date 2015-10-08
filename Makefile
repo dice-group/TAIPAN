@@ -10,3 +10,6 @@ test:
 
 benchmark:
 	python -m unittest discover -s ./taipan/Tests -p "*Bench.py"
+
+benchmark-subjectcolumn:
+	python -m unittest discover -s ./taipan/Tests/Benchmarking -p "SubjectColumnIdentificationBench.py"
