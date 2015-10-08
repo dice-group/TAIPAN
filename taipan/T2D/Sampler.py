@@ -22,7 +22,12 @@ class T2DSampler(object):
             tables.append(self.getTable(id))
         return tables
 
+    def getTestTable(self):
+        tableId = "43729470_1_5047305886112599189.csv"
+        return self.getTable(tableId)
+
 if __name__ == "__main__":
     t2dSampler = T2DSampler()
-    tables = t2dSampler.getTables()
+    #tables = t2dSampler.getTables()
+    table = t2dSampler.getTestTable()
     import ipdb; ipdb.set_trace()

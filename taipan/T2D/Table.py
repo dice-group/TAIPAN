@@ -11,10 +11,6 @@ class T2DTable(object):
         self.classes = self.getClassesComplete(id)
         self.entities = self.getEntitiesInstance(id)
 
-        #self.tableInstance = self.getTablesInstance(id) #The same as self.table
-        #self.attributesInstance = self.getAttributesInstance(id) #The same as self.attributes
-        #self.classesInstance = self.getClassesInstance(id) #The same as self.classes
-
     def getTableComplete(self, id):
         return self.loadCsv(os.path.join(t2dDataDir, 'tables_complete', id))
 
@@ -100,6 +96,18 @@ class T2DTable(object):
                 return []
         else:
             return []
+
+    def getHeader(self):
+        return self.table[0]
+
+    def getData(self):
+        return self.table[1:]
+
+    def getHeaderPosition(self):
+        return "FIRST_ROW"
+
+    def getTable(self):
+        return self.getData()
 
 if __name__ == "__main__":
     sampleId = "39759273_0_1427898308030295194.csv"

@@ -23,7 +23,6 @@ class SimpleIdentifier(object):
             relations = relations.T
 
         for columnNumber, column in enumerate(relations):
-            print columnNumber
             columnString = ''.join([element for element in column])
             digitsInString = 0
             for character in columnString:
@@ -36,6 +35,10 @@ class SimpleIdentifier(object):
                 return columnNumber
 
         raise SubjectColumnNotFoundError("SimpleIdentifier could not find subject column")
+
+class DistantSupervisionIdentifier(object):
+    def __init__(self):
+        pass
 
 class SVMIdentifier(object):
     """
