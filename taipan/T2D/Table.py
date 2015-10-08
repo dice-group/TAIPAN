@@ -79,7 +79,7 @@ class T2DTable(object):
             _class = {
                 "name": row[1],
                 "uri": row[2],
-                "headerRowIndices": row[3].split(".") #dot separated values
+                "headerRowIndices": [ int(x) for x in row[3].split(".") ] #dot separated values
             }
             classes.append(_class)
         return classes
@@ -108,6 +108,16 @@ class T2DTable(object):
 
     def getTable(self):
         return self.getData()
+
+    def isSubjectColumn(self, columnIndex):
+        classIndex = self.getClassIndex()
+        if(columnIndex in classIndex):
+            return True
+        else:
+            return False
+
+    def getClassIndex(self):
+        return self.classes[0]['headerRowIndices']
 
 if __name__ == "__main__":
     sampleId = "39759273_0_1427898308030295194.csv"
