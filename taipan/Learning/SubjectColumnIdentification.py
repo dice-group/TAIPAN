@@ -1,3 +1,4 @@
+import collections
 import taipan.Config.Pathes
 
 from taipan.Utils.Exceptions import SubjectColumnNotFoundError
@@ -38,6 +39,27 @@ class SimpleIdentifier(object):
 
 class DistantSupervisionIdentifier(object):
     def __init__(self):
+        self.logger = Logger().getLogger(__name__)
+
+    def identifySubjectColumn(self, table):
+        tableData = table.getData()
+        tableHeader = table.getHeader()
+
+        relations = collections.defaultdict(dict)
+        for row in tableData:
+            for itemIndex, item in enumerate(row):
+                for otherItemIndex, otherItem in enumerate(row[itemIndex:]):
+                    if(row[itemIndex] == row[otherItemIndex]):
+                        relations[itemIndex][otherItemIndex] = 0
+                    else:
+                        rel = self.findRelation(item, otherItem)
+                        relations[itemIndex][otherItemIndex] = rel
+                        relations[otherItemIndex][itemIndex] = rel
+
+        return 0
+
+    def findRelation(self, columnValue1, columnValue2):
+        import ipdb; ipdb.set_trace()
         pass
 
 class SVMIdentifier(object):

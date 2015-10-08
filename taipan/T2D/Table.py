@@ -85,7 +85,7 @@ class T2DTable(object):
         return classes
 
     def loadCsv(self, csvPath):
-        print csvPath
+        #print csvPath
         if(os.path.exists(csvPath)):
             csv = numpy.genfromtxt(csvPath, delimiter=",", dtype="S", comments="///")
             if numpy.shape(csv) != (0,):
