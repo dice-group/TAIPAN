@@ -1,6 +1,12 @@
+try:
+   import cPickle as pickle
+except:
+   import pickle
 import collections
 import re
+import os
 import taipan.Config.Pathes
+from taipan.Config.Pathes import cacheFolder
 import foxpy.fox
 from taipan.Search.PropertySearch import PropertySearchDbpediaSparql
 
@@ -47,23 +53,39 @@ class DistantSupervisionIdentifier(object):
     def identifySubjectColumn(self, table):
         tableData = table.getData()
         tableHeader = table.getHeader()
+        cacheFile = os.path.join(cacheFolder, "relations.cache")
 
-        relations = collections.defaultdict(dict)
-        entities = []
-        for row in tableData:
-            entities = self.identifyEntitiesForRow(row, tableHeader)
-            for itemIndex, entity in enumerate(entities):
-                item = row[itemIndex]
-                for otherItemIndex, otherItem in enumerate(row[itemIndex:]):
-                    if(row[itemIndex] == row[otherItemIndex]):
-                        relations[itemIndex][otherItemIndex] = []
-                    else:
-                        rel = self.findRelation(item, otherItem, entities[itemIndex], entities[otherItemIndex])
-                        relations[itemIndex][otherItemIndex] = rel
-                        relations[otherItemIndex][itemIndex] = rel
+        if(os.path.exists(cacheFile)):
+            relations = pickle.load(open(cacheFile, 'rb'))
+        else:
+            relations = collections.defaultdict(dict)
+            entities = []
+            for row in tableData:
+                entities = self.identifyEntitiesForRow(row, tableHeader)
+                for itemIndex, item in enumerate(row):
+                    entity = entities[itemIndex]
+                    for otherItemIndex, otherItem in enumerate(row[itemIndex:]):
+                        otherItemIndex = itemIndex + otherItemIndex
+                        if(row[itemIndex] == row[otherItemIndex]):
+                            relations[itemIndex][otherItemIndex] = []
+                        else:
+                            rel = self.findRelation(item, otherItem, entities[itemIndex], entities[otherItemIndex])
+                            relations[itemIndex][otherItemIndex] = rel
+                            relations[otherItemIndex][itemIndex] = rel
+                #save cache
+                pickle.dump(dict(entities), open(cacheFile, "wb" ) )
 
-        import ipdb; ipdb.set_trace()
-        return 0
+        scores = collections.defaultdict(dict)
+        for column in relations:
+            score = 0
+            for otherColumn in relations[column]:
+                score += len(relations[column][otherColumn])
+            scores[column] = score
+
+        import operator
+        maximum = max(scores.iteritems(), key=operator.itemgetter(1))[0]
+
+        return maximum
 
     def findRelation(self, columnValue1, columnValue2, entity1, entity2):
         propertySearch = PropertySearchDbpediaSparql()
@@ -88,12 +110,10 @@ class DistantSupervisionIdentifier(object):
         fx = foxpy.fox.Fox()
         (text, output, log) = fx.recognizeText(
                 self.clearString(headerValue) + ' ' + self.clearString(columnValue))
-        #grab dbpedia:.* from output
         entity = re.search("\"(dbpedia:.*)\"", output)
         if(entity):
             entity = entity.group(1)
             entity = re.sub('dbpedia:', "http://dbpedia.org/resource/", entity)
-            print entity
             return entity
         else:
             return ""
@@ -103,7 +123,6 @@ class DistantSupervisionIdentifier(object):
         string = string.translate(None, characters)
         string = re.sub('&nbsp;', '', string)
         string = string.strip()
-        print string
         return string
 
 class SVMIdentifier(object):
