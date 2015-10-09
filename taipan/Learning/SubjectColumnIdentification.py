@@ -2,6 +2,7 @@ import collections
 import re
 import taipan.Config.Pathes
 import foxpy.fox
+from taipan.Search.PropertySearch import PropertySearchDbpediaSparql
 
 from taipan.Utils.Exceptions import SubjectColumnNotFoundError
 
@@ -48,24 +49,40 @@ class DistantSupervisionIdentifier(object):
         tableHeader = table.getHeader()
 
         relations = collections.defaultdict(dict)
+        entities = []
         for row in tableData:
-            for itemIndex, item in enumerate(row):
+            entities = self.identifyEntitiesForRow(row, tableHeader)
+            for itemIndex, entity in enumerate(entities):
+                item = row[itemIndex]
                 for otherItemIndex, otherItem in enumerate(row[itemIndex:]):
                     if(row[itemIndex] == row[otherItemIndex]):
-                        relations[itemIndex][otherItemIndex] = 0
+                        relations[itemIndex][otherItemIndex] = []
                     else:
-                        rel = self.findRelation(item, otherItem, tableHeader[itemIndex], tableHeader[otherItemIndex])
+                        rel = self.findRelation(item, otherItem, entities[itemIndex], entities[otherItemIndex])
                         relations[itemIndex][otherItemIndex] = rel
                         relations[otherItemIndex][itemIndex] = rel
 
+        import ipdb; ipdb.set_trace()
         return 0
 
-    def findRelation(self, columnValue1, columnValue2, headerValue1, headerValue2):
-        entity1 = self.identifyEntity(columnValue1, headerValue1)
-        entity2 = self.identifyEntity(columnValue2, headerValue2)
+    def findRelation(self, columnValue1, columnValue2, entity1, entity2):
+        propertySearch = PropertySearchDbpediaSparql()
+        properties = []
+        if(entity1 != ''):
+            properties = propertySearch.uriLiteralSearch(entity1,columnValue2)
+        elif(entity2 != ''):
+            properties = propertySearch.uriLiteralSearch(entity2,columnValue1)
+        elif(entity1 != '' and entity2 != ''):
+            properties = propertySearch.uriUriSearch(entity1, entity2)
+        else:
+            properties = []
+        return properties
 
-        import ipdb; ipdb.set_trace()
-        pass
+    def identifyEntitiesForRow(self, row, tableHeader):
+        entities = []
+        for itemIndex, item in enumerate(row):
+            entities.append(self.identifyEntity(item, tableHeader[itemIndex]))
+        return entities
 
     def identifyEntity(self, columnValue, headerValue):
         fx = foxpy.fox.Fox()

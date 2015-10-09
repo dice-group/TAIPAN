@@ -1,7 +1,7 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
 from taipan.Config.ExternalUris import dbpediaSparqlEndpointUri
 
-class PropertySearch(object):
+class PropertySearchDbpediaSparql(object):
     """
         This class takes two entities (URI and URI/Literal)
         And returns all properties which (possibly) connects them
@@ -10,31 +10,79 @@ class PropertySearch(object):
         self.dbpediaSparql = SPARQLWrapper(dbpediaSparqlEndpointUri)
         self.dbpediaSparql.setReturnFormat(JSON)
 
-    def searchPropertiesSparql(self, s, o):
-        #TODO: smart switch to detect if o is a URL or Literal
+    def search(self, s, o):
         if(o.startswith('http')):
-            return self.searchPropertiesSparqlUriUri(s, o)
+            return self.uriUriSimple(s, o)
         else:
-            return self.searchPropertiesSparqlUriLiteral(s, o)
+            return self.uriLiteralSimple(s, o)
 
-    def searchPropertiesSparqlUriUri(self, s, o):
+    def uriLiteralSearch(self, s, o):
+        properties = []
+        properties.append(self.uriLiteralSimple(s,o))
+        properties.append(self.uriLiteralRegex(s,o))
+        properties.append(self.uriLiteralPathRegex(s,o))
+        properties.append(self.literalUriReversePathRegex(s,o))
+        properties = [item for sublist in properties for item in sublist]
+        return list(set(properties))
+
+    def uriUriSearch(self, s, o):
+        properties = []
+        properties.append(self.uriUriSimple(s,o))
+        return properties
+
+    def uriUriSimple(self, s, o):
         self.dbpediaSparql.setQuery("""
-            SELECT ?property
+            SELECT DISTINCT ?property
             WHERE { <%s> ?property <%s> .}
         """ % (s, o,))
         results = self.dbpediaSparql.query().convert()['results']['bindings']
-        properties = []
-        for result in results:
-            properties.append(result['property']['value'])
-        return properties
+        return self.parseResults(results)
 
-    def searchPropertiesSparqlUriLiteral(self, s, o):
+    def uriLiteralSimple(self, s, o):
         self.dbpediaSparql.setQuery("""
-            SELECT ?property
+            SELECT DISTINCT ?property
             WHERE { <%s> ?property "%s"@en .}
         """ % (s, o,))
         results = self.dbpediaSparql.query().convert()['results']['bindings']
+        return self.parseResults(results)
+
+    def uriLiteralRegex(self, s, o):
+        self.dbpediaSparql.setQuery("""
+            SELECT DISTINCT ?property
+            WHERE {
+                <%s> ?property ?o .
+                FILTER regex(?o, ".*%s.*", "i")
+            }
+        """ % (s, o,))
+        results = self.dbpediaSparql.query().convert()['results']['bindings']
+        return self.parseResults(results)
+
+    def uriLiteralPathRegex(self, s, o):
+        self.dbpediaSparql.setQuery("""
+            SELECT DISTINCT ?property
+            WHERE {
+                <%s> ?property ?obj .
+                ?obj ?p ?o .
+                FILTER regex(?o, "%s", "i")
+            }
+        """ % (s, o,))
+        results = self.dbpediaSparql.query().convert()['results']['bindings']
+        return self.parseResults(results)
+
+    def literalUriReversePathRegex(self, s, o):
+        self.dbpediaSparql.setQuery("""
+            SELECT DISTINCT ?property
+            WHERE {
+                ?obj ?property <%s> .
+                ?obj ?p ?o .
+                FILTER regex(?o, "%s", "i")
+            }
+        """ % (s, o,))
+        results = self.dbpediaSparql.query().convert()['results']['bindings']
+        return self.parseResults(results)
+
+    def parseResults(self, results, variableName="property"):
         properties = []
         for result in results:
-            properties.append(result['property']['value'])
+            properties.append(result[variableName]['value'])
         return properties
