@@ -53,7 +53,8 @@ class DistantSupervisionIdentifier(object):
     def identifySubjectColumn(self, table):
         tableData = table.getData()
         tableHeader = table.getHeader()
-        cacheFile = os.path.join(cacheFolder, "relations.cache")
+        tableId = table.id
+        cacheFile = os.path.join(cacheFolder, tableId + ".relations.cache")
 
         if(os.path.exists(cacheFile)):
             relations = pickle.load(open(cacheFile, 'rb'))
@@ -73,7 +74,7 @@ class DistantSupervisionIdentifier(object):
                             relations[itemIndex][otherItemIndex] = rel
                             relations[otherItemIndex][itemIndex] = rel
                 #save cache
-                pickle.dump(dict(entities), open(cacheFile, "wb" ) )
+            pickle.dump(dict(relations), open(cacheFile, "wb" ) )
 
         scores = collections.defaultdict(dict)
         for column in relations:

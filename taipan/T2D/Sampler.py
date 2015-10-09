@@ -22,6 +22,15 @@ class T2DSampler(object):
             tables.append(self.getTable(id))
         return tables
 
+    def get20Tables(self):
+        tables = []
+        idList = self.getListOfTableIds()
+        for ix, id in enumerate(idList):
+            tables.append(self.getTable(id))
+            if ix > 20:
+                break
+        return tables
+
     def getTestTable(self):
         tableId = "43729470_1_5047305886112599189.csv"
         return self.getTable(tableId)

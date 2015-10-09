@@ -76,10 +76,14 @@ class T2DTable(object):
         classesRaw = classes[classes[:,0] == id]
         classes = []
         for row in classesRaw:
+            if row[3] == '':
+                headerRowIndices = [0]
+            else:
+                headerRowIndices = [ int(x) for x in row[3].split(".") ]
             _class = {
                 "name": row[1],
                 "uri": row[2],
-                "headerRowIndices": [ int(x) for x in row[3].split(".") ] #dot separated values
+                "headerRowIndices": headerRowIndices #dot separated values
             }
             classes.append(_class)
         return classes
