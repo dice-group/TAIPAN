@@ -1,4 +1,5 @@
 import collections
+import re
 import taipan.Config.Pathes
 import foxpy.fox
 
@@ -68,14 +69,19 @@ class DistantSupervisionIdentifier(object):
 
     def identifyEntity(self, columnValue, headerValue):
         fx = foxpy.fox.Fox()
-        recognizedText = fx.recognizeText(
+        (text, output, log) = fx.recognizeText(
                 self.clearString(headerValue) + ' ' + self.clearString(columnValue))
-        import ipdb; ipdb.set_trace()
-        pass
+        #grab dbpedia:.* from output
+        entity = re.search("\"(dbpedia:.*)\"", output)
+        if(entity):
+            entity = entity.group(1)
+            entity = re.sub('dbpedia:', "http://dbpedia.org/resource/", entity)
+            print entity
+            return entity
+        else:
+            return ""
 
     def clearString(self, string):
-        import re
-
         characters = "{}|"
         string = string.translate(None, characters)
         string = re.sub('&nbsp;', '', string)
