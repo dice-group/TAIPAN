@@ -20,8 +20,7 @@ class PropertySearchDbpediaSparql(object):
         properties = []
         properties.append(self.uriLiteralSimple(s,o))
         properties.append(self.uriLiteralRegex(s,o))
-        properties.append(self.uriLiteralPathRegex(s,o))
-        properties.append(self.literalUriReversePathRegex(s,o))
+        properties.append(self.uriLiteralRegexReverse(s,o))
         properties = [item for sublist in properties for item in sublist]
         return list(set(properties))
 
@@ -57,7 +56,21 @@ class PropertySearchDbpediaSparql(object):
         results = self.dbpediaSparql.query().convert()['results']['bindings']
         return self.parseResults(results)
 
+    def uriLiteralRegexReverse(self, s, o):
+        self.dbpediaSparql.setQuery("""
+            SELECT DISTINCT ?property
+            WHERE {
+                ?o ?property <%s> .
+                FILTER regex(?o, ".*%s.*", "i")
+            }
+        """ % (s, o,))
+        results = self.dbpediaSparql.query().convert()['results']['bindings']
+        return self.parseResults(results)
+
     def uriLiteralPathRegex(self, s, o):
+        """
+            Due to small diameter of a graph looking for any pathes will lead to noise. Most likely F-measure will drop if used together with simple property search.
+        """
         self.dbpediaSparql.setQuery("""
             SELECT DISTINCT ?property
             WHERE {
