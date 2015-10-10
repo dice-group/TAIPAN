@@ -7,7 +7,11 @@ class AgdistisIdentifier(object):
         self.agdistis = Agdistis()
 
     def flattenUrls(self, entities):
-        return [item["disambiguatedURL"] for item in entities]
+        flattenedUrls = []
+        for item in entities:
+            if item['disambiguatedURL'] != None:
+                flattenedUrls.append(item['disambiguatedURL'])
+        return flattenedUrls
 
     def identifyEntity(self, string):
         """

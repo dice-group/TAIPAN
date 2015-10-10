@@ -5,6 +5,7 @@ except:
 import collections
 import re
 import os
+import operator
 
 from taipan.Logging.Logger import Logger
 from taipan.Utils.Exceptions import SubjectColumnNotFoundError
@@ -14,6 +15,9 @@ from taipan.Learning.EntityIdentification.AgdistisIdentifier import AgdistisIden
 import taipan.Config.Pathes
 
 class DistantSupervisionIdentifier(object):
+    #limit to 20 rows for analysis
+    rowsToAnalyze = 20
+
     def __init__(self):
         self.logger = Logger().getLogger(__name__)
         self.agdistisIdentifier = AgdistisIdentifier()
@@ -29,7 +33,7 @@ class DistantSupervisionIdentifier(object):
         else:
             relations = collections.defaultdict(dict)
             entities = []
-            for row in tableData:
+            for row in tableData[:self.rowsToAnalyze]:
                 entities = self.identifyEntitiesForRow(row, tableHeader)
                 for itemIndex, item in enumerate(row):
                     entity = entities[itemIndex]
@@ -51,7 +55,6 @@ class DistantSupervisionIdentifier(object):
                 score += len(relations[column][otherColumn])
             scores[column] = score
 
-        import operator
         maximum = max(scores.iteritems(), key=operator.itemgetter(1))[0]
 
         return maximum
@@ -78,8 +81,6 @@ class DistantSupervisionIdentifier(object):
         #remove duplicates
         properties = list(set(properties))
 
-        import ipdb; ipdb.set_trace()
-
         return properties
 
     def identifyEntitiesForRow(self, row, tableHeader):
@@ -87,4 +88,5 @@ class DistantSupervisionIdentifier(object):
         for itemIndex, item in enumerate(row):
             rowEntities = self.agdistisIdentifier.identifyEntity(item)
             entities.append(self.agdistisIdentifier.flattenUrls(rowEntities))
+        self.logger.debug("Entities found: %s" %(entities))
         return entities
