@@ -2,8 +2,12 @@ from taipan.Config.Pathes import t2dDataDir
 from taipan.T2D.Table import T2DTable
 import os.path
 import os
+import numpy
 
 class T2DSampler(object):
+    blackList = [
+        "41612329_0_7158224623202100303.csv" #too much inconsistency
+    ]
     def __init__(self):
         pass
 
@@ -11,6 +15,13 @@ class T2DSampler(object):
         tablesCompletePath = os.path.join(t2dDataDir, 'tables_complete')
         ids = [ f for f in os.listdir(tablesCompletePath) if os.path.isfile(os.path.join(tablesCompletePath,f)) ]
         return ids
+
+    def getListOfTableIdsWithClasses(self):
+        allClasses = self.loadCsv(os.path.join(t2dDataDir, 'classes_complete.csv'))
+        idList = []
+        for row in allClasses:
+            idList.append(row[0])
+        return idList
 
     def getTable(self, id):
         return T2DTable(id)
@@ -20,6 +31,14 @@ class T2DSampler(object):
         idList = self.getListOfTableIds()
         for id in idList:
             tables.append(self.getTable(id))
+        return tables
+
+    def getTablesSubjectIdentification(self):
+        tables = []
+        idList = self.getListOfTableIdsWithClasses()
+        for id in idList:
+            if(not id in self.blackList):
+                tables.append(self.getTable(id))
         return tables
 
     def get20Tables(self):
@@ -34,6 +53,19 @@ class T2DSampler(object):
     def getTestTable(self):
         tableId = "43729470_1_5047305886112599189.csv"
         return self.getTable(tableId)
+
+    def loadCsv(self, csvPath):
+        #print csvPath
+        if(os.path.exists(csvPath)):
+            csv = numpy.genfromtxt(csvPath, delimiter=",", dtype="S", comments="///")
+            if numpy.shape(csv) != (0,):
+                for x in numpy.nditer(csv, op_flags=['readwrite']):
+                    x[...] = str(x).strip('"')
+                return csv
+            else:
+                return []
+        else:
+            return []
 
 if __name__ == "__main__":
     t2dSampler = T2DSampler()

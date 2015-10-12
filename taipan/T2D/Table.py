@@ -6,10 +6,9 @@ class T2DTable(object):
     def __init__(self, id):
         self.id = id
         self.table = self.getTableComplete(id)
-        self.attributes = self.getAttributesComplete(id)
-        self.properties = self.attributes
         self.classes = self.getClassesComplete(id)
-        self.entities = self.getEntitiesInstance(id)
+        self.properties = self.getAttributesComplete(id)
+        #self.entities = self.getEntitiesInstance(id)
 
     def getTableComplete(self, id):
         return self.loadCsv(os.path.join(t2dDataDir, 'tables_complete', id))
@@ -91,7 +90,7 @@ class T2DTable(object):
     def loadCsv(self, csvPath):
         #print csvPath
         if(os.path.exists(csvPath)):
-            csv = numpy.genfromtxt(csvPath, delimiter=",", dtype="S", comments="///")
+            csv = numpy.genfromtxt(csvPath, delimiter=",", dtype="S", comments="///", missing_values="NULL")
             if numpy.shape(csv) != (0,):
                 for x in numpy.nditer(csv, op_flags=['readwrite']):
                     x[...] = str(x).strip('"')

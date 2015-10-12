@@ -8,8 +8,14 @@ install:
 test:
 	python -m unittest discover -s ./taipan/Tests -p "*Test.py"
 
+test-t2d-sampler:
+	python -m unittest discover -s ./taipan/Tests/T2D -p "SamplerTest.py"
+
 benchmark:
 	python -m unittest discover -s ./taipan/Tests -p "*Bench.py"
 
 benchmark-subjectcolumn:
 	python -m unittest discover -s ./taipan/Tests/Benchmarking -p "SubjectColumnIdentificationBench.py"
+
+clean-windows-characters:
+	bash scripts/cleanWindowsCharacters.sh
