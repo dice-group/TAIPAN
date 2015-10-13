@@ -1,6 +1,7 @@
 from taipan.Config.Pathes import t2dDataDir
 import os.path
 import numpy
+import random
 
 class T2DTable(object):
     def __init__(self, id):
@@ -109,8 +110,36 @@ class T2DTable(object):
     def getHeaderPosition(self):
         return "FIRST_ROW"
 
+    def swap_cols(self, arr, frm, to):
+        arr[:,[frm, to]] = arr[:,[to, frm]]
+
+    def scrumbleColumns(self, times=1000):
+        """
+            Scrumble the positions of the columns
+            Pick two random columns and change their places
+        """
+        numOfColumns = len(self.table.transpose())
+        columnIndex = range(0,numOfColumns)
+        for i in range(0, times):
+            colA = random.randint(0, numOfColumns - 1)
+            colB = colA
+            while colB == colA:
+                colB = random.randint(0, numOfColumns - 1)
+            indexA = columnIndex.index(colA)
+            indexB = columnIndex.index(colB)
+            columnIndex[indexA] = colB
+            columnIndex[indexB] = colA
+            self.swap_cols(self.table,colA,colB)
+        self.columnIndex = columnIndex
+
     def getTable(self):
         return self.getData()
+
+    def getColumnIndex(self):
+        return self.columnIndex
+
+    def translateColumnIndex(self, columnNumber):
+        return self.columnIndex.index(columnNumber)
 
     def isSubjectColumn(self, columnIndex):
         classIndex = self.getClassIndex()
@@ -120,9 +149,13 @@ class T2DTable(object):
             return False
 
     def getClassIndex(self):
-        return self.classes[0]['headerRowIndices']
+        if(len(self.classes) > 0):
+            return self.classes[0]['headerRowIndices']
+        else:
+            return [0]
 
 if __name__ == "__main__":
     sampleId = "39759273_0_1427898308030295194.csv"
     t2dTable = T2DTable(sampleId)
+    t2dTable.scrumbleColumns()
     import ipdb; ipdb.set_trace()

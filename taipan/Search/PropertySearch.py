@@ -1,3 +1,4 @@
+import re
 from SPARQLWrapper import SPARQLWrapper, JSON
 from taipan.Config.ExternalUris import dbpediaSparqlEndpointUri
 from taipan.Logging.Logger import Logger
@@ -20,7 +21,12 @@ class PropertySearchDbpediaSparql(object):
 
     def uriLiteralSearch(self, s, o):
         properties = []
-        o = o.decode('utf-8')
+        try:
+            o = o.decode('utf-8')
+        except UnicodeDecodeError as e:
+            self.logger.debug("Could not decode o for uriLiteralSearch")
+            self.logger.debug(str(e))
+            o = ""
         properties.append(self.uriLiteralSimple(s,o))
         properties.append(self.uriLiteralRegex(s,o))
         properties.append(self.uriLiteralRegexReverse(s,o))
@@ -42,6 +48,9 @@ class PropertySearchDbpediaSparql(object):
         return self.parseResults(results)
 
     def uriLiteralSimple(self, s, o):
+        o = self.clearLiteral(o)
+        if o == "" or o == None:
+            return []
         self.dbpediaSparql.setQuery(u"""
             SELECT DISTINCT ?property
             WHERE { <%s> ?property "%s"@en .}
@@ -51,6 +60,9 @@ class PropertySearchDbpediaSparql(object):
         return self.parseResults(results)
 
     def uriLiteralRegex(self, s, o):
+        o = self.clearLiteral(o)
+        if o == "" or o == None:
+            return []
         self.dbpediaSparql.setQuery(u"""
             SELECT DISTINCT ?property
             WHERE {
@@ -63,6 +75,9 @@ class PropertySearchDbpediaSparql(object):
         return self.parseResults(results)
 
     def uriLiteralRegexReverse(self, s, o):
+        o = self.clearLiteral(o)
+        if o == "" or o == None:
+            return []
         self.dbpediaSparql.setQuery(u"""
             SELECT DISTINCT ?property
             WHERE {
@@ -78,6 +93,9 @@ class PropertySearchDbpediaSparql(object):
         """
             Due to small diameter of a graph looking for any pathes will lead to noise. Most likely F-measure will drop if used together with simple property search.
         """
+        o = self.clearLiteral(o)
+        if o == "" or o == None:
+            return []
         self.dbpediaSparql.setQuery(u"""
             SELECT DISTINCT ?property
             WHERE {
@@ -91,6 +109,9 @@ class PropertySearchDbpediaSparql(object):
         return self.parseResults(results)
 
     def literalUriPathRegexReverse(self, s, o):
+        o = self.clearLiteral(o)
+        if o == "" or o == None:
+            return []
         self.dbpediaSparql.setQuery(u"""
             SELECT DISTINCT ?property
             WHERE {
@@ -102,6 +123,12 @@ class PropertySearchDbpediaSparql(object):
         self.queryDebugMessage("literalUriPathRegexReverse", s, o, self.dbpediaSparql.queryString)
         results = self.dbpediaSparql.query().convert()['results']['bindings']
         return self.parseResults(results)
+
+    def clearLiteral(self, string):
+        string = re.sub('[{}|*?()\[\]!-"]', '', string)
+        string = re.sub('&nbsp;', '', string)
+        string = string.strip()
+        return string
 
     def queryDebugMessage(self, functionName, s, o, queryString):
         self.logger.debug("%s ?s: %s ?o: %s" %(functionName, s, o, ))

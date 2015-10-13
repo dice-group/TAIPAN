@@ -27,6 +27,7 @@ class DistantSupervisionIdentifier(object):
         tableHeader = table.getHeader()
         tableId = table.id
         cacheFile = os.path.join(cacheFolder, tableId + ".relations.cache")
+        self.logger.debug(tableId)
 
         if(os.path.exists(cacheFile)):
             relations = pickle.load(open(cacheFile, 'rb'))
