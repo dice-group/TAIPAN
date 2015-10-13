@@ -111,7 +111,10 @@ class T2DTable(object):
         return "FIRST_ROW"
 
     def swap_cols(self, arr, frm, to):
-        arr[:,[frm, to]] = arr[:,[to, frm]]
+        try:
+            arr[:,[frm, to]] = arr[:,[to, frm]]
+        except:
+            pass
 
     def scrumbleColumns(self, times=1000):
         """

@@ -7,15 +7,15 @@ from taipan.Learning.SubjectColumnIdentification.DistantSupervisionIdentifier im
 
 from taipan.Logging.Logger import Logger
 
-class SimpleIdentifierBenchTestCase(unittest.TestCase):
-    def setUp(self):
-        sampler = T2DSampler()
-        self.testTable = sampler.getTestTable()
-        self.simpleIdentifier = SimpleIdentifier()
+# class SimpleIdentifierBenchTestCase(unittest.TestCase):
+#     def setUp(self):
+#         sampler = T2DSampler()
+#         self.testTable = sampler.getTestTable()
+#         self.simpleIdentifier = SimpleIdentifier()
 
-    def testSimpleColumnIdentifierOne(self):
-        colNumber = self.simpleIdentifier.identifySubjectColumn(self.testTable)
-        self.assertTrue(self.testTable.isSubjectColumn(colNumber), msg="colNumber should be subject column")
+    # def testSimpleColumnIdentifierOne(self):
+    #     colNumber = self.simpleIdentifier.identifySubjectColumn(self.testTable)
+    #     self.assertTrue(self.testTable.isSubjectColumn(colNumber), msg="colNumber should be subject column")
 
 class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
     def setUp(self):
@@ -26,9 +26,9 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
         # self.testTables20 = sampler.get20Tables()
         self.testTables = sampler.getTablesSubjectIdentification()
 
-    def testDistantLearningIdentifierOne(self):
-        colNumber = self.dlIdentifier.identifySubjectColumn(self.testTable)
-        self.assertTrue(self.testTable.isSubjectColumn(colNumber), msg="colNumber should be subject column")
+    # def testDistantLearningIdentifierOne(self):
+    #     colNumber = self.dlIdentifier.identifySubjectColumn(self.testTable)
+    #     self.assertTrue(self.testTable.isSubjectColumn(colNumber), msg="colNumber should be subject column")
 
     # def testDistantLearningIdentifierProblematic(self):
     #     tableId = "65842312_0_4733067625464702086.csv" #Got ???? symbols in the cells
@@ -48,22 +48,22 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
     #     precision = float(correct)/overall
     #     print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
     #
-    # def testDistantLearningIdentifierAll(self):
-    #     """
-    #         Tables analyzed: 900
-    #         Subject Column Identified Correctly: 762
-    #         Precision: 0.846666666667
-    #     """
-    #     print "Analyzing %s tables" % (len(self.testTables),)
-    #     overall = 900
-    #     correct = 0
-    #     for table in self.testTables[:900]:
-    #         colNumber = self.dlIdentifier.identifySubjectColumn(table)
-    #         if(table.isSubjectColumn(colNumber)):
-    #             correct += 1
-    #
-    #     precision = float(correct)/overall
-    #     print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
+    def testDistantLearningIdentifierAll(self):
+        """
+            Tables analyzed: 900
+            Subject Column Identified Correctly: 762
+            Precision: 0.846666666667
+        """
+        print "Analyzing %s tables" % (len(self.testTables),)
+        overall = 900
+        correct = 0
+        for table in self.testTables[:900]:
+            colNumber = self.dlIdentifier.identifySubjectColumn(table)
+            if(table.isSubjectColumn(colNumber)):
+                correct += 1
+
+        precision = float(correct)/overall
+        print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
 
     def testSimpleColumnIdentifierAll(self):
         """
@@ -81,6 +81,11 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
         print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
 
     def testSimpleColumnIdentifierScrumblingAll(self):
+        """
+            Tables analyzed: 900
+            Subject Column Identified Correctly: 325
+            Precision: 0.361111111111
+        """
         overall = 900
         correct = 0
         for table in self.testTables[:900]:
