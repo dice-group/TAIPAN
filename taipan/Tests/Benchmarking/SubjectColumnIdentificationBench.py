@@ -53,11 +53,15 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             Tables analyzed: 900
             Subject Column Identified Correctly: 762
             Precision: 0.846666666667
+
+            Tables analyzed: 1687
+            Subject Column Identified Correctly: 1461
+            Precision: 0.866034380557
         """
         print "Analyzing %s tables" % (len(self.testTables),)
-        overall = 900
+        overall = len(self.testTables)
         correct = 0
-        for table in self.testTables[:900]:
+        for table in self.testTables:
             colNumber = self.dlIdentifier.identifySubjectColumn(table)
             if(table.isSubjectColumn(colNumber)):
                 correct += 1
@@ -65,35 +69,35 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
         precision = float(correct)/overall
         print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
 
-    def testSimpleColumnIdentifierAll(self):
-        """
-            Tables analyzed: 900
-            Subject Column Identified Correctly: 893
-            Precision: 0.992222222222
-        """
-        overall = 900
-        correct = 0
-        for table in self.testTables[:900]:
-            colNumber = self.simpleIdentifier.identifySubjectColumn(self.testTable)
-            if(table.isSubjectColumn(colNumber)):
-                correct += 1
-        precision = float(correct)/overall
-        print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
-
-    def testSimpleColumnIdentifierScrumblingAll(self):
-        """
-            Tables analyzed: 900
-            Subject Column Identified Correctly: 325
-            Precision: 0.361111111111
-        """
-        overall = 900
-        correct = 0
-        for table in self.testTables[:900]:
-            table.scrumbleColumns()
-            colNumber = self.simpleIdentifier.identifySubjectColumn(self.testTable)
-            colNumber = table.translateColumnIndex(colNumber)
-            if(table.isSubjectColumn(colNumber)):
-                correct += 1
-        precision = float(correct)/overall
-        print "Scrumbled Columns"
-        print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
+    # def testSimpleColumnIdentifierAll(self):
+    #     """
+    #         Tables analyzed: 900
+    #         Subject Column Identified Correctly: 893
+    #         Precision: 0.992222222222
+    #     """
+    #     overall = 900
+    #     correct = 0
+    #     for table in self.testTables[:900]:
+    #         colNumber = self.simpleIdentifier.identifySubjectColumn(self.testTable)
+    #         if(table.isSubjectColumn(colNumber)):
+    #             correct += 1
+    #     precision = float(correct)/overall
+    #     print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
+    #
+    # def testSimpleColumnIdentifierScrumblingAll(self):
+    #     """
+    #         Tables analyzed: 900
+    #         Subject Column Identified Correctly: 325
+    #         Precision: 0.361111111111
+    #     """
+    #     overall = 900
+    #     correct = 0
+    #     for table in self.testTables[:900]:
+    #         table.scrumbleColumns()
+    #         colNumber = self.simpleIdentifier.identifySubjectColumn(self.testTable)
+    #         colNumber = table.translateColumnIndex(colNumber)
+    #         if(table.isSubjectColumn(colNumber)):
+    #             correct += 1
+    #     precision = float(correct)/overall
+    #     print "Scrumbled Columns"
+    #     print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
