@@ -57,25 +57,25 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             result = [table.id, rowsToAnalyze, tableSize, colNumber, identifiedCorrectly, self.dlIdentifier.executionTimeFull, self.dlIdentifier.executionTimePure, self.dlIdentifier.queryTime, self.dlIdentifier.agdistisTime]
             self.resultsIterativePrinter(result,resultsFilename)
 
-    def testDistantLearningIdentifierOne(self):
-        self.distantLearningIdentifier(20, [self.testTable], "testOneTable.20rows.csv.1")
+    # def testDistantLearningIdentifierOne(self):
+    #     self.distantLearningIdentifier(20, [self.testTable], "testOneTable.20rows.csv.1")
 
     # def testDistantLearningIdentifierTwenty(self):
     #     self.distantLearningIdentifier(20, self.testTables20, "test20tables.20rows.csv.1")
     #
-    # def testDistantLearningIdentifierAll(self):
-    #     """
-    #         With 1 row only!
-    #
-    #         Tables analyzed: 900
-    #         Subject Column Identified Correctly: 762
-    #         Precision: 0.846666666667
-    #
-    #         Tables analyzed: 1687
-    #         Subject Column Identified Correctly: 1461
-    #         Precision: 0.866034380557
-    #     """
-    #     self.testDistantLearningIdentifier(20, self.testTables, "testAlltables.20rows.csv")
+    def testDistantLearningIdentifierAll(self):
+        """
+            With 1 row only!
+
+            Tables analyzed: 900
+            Subject Column Identified Correctly: 762
+            Precision: 0.846666666667
+
+            Tables analyzed: 1687
+            Subject Column Identified Correctly: 1461
+            Precision: 0.866034380557
+        """
+        self.testDistantLearningIdentifier(20, self.testTables, "testAlltables.20rows.csv")
 
     # def testSimpleColumnIdentifierAll(self):
     #     """
