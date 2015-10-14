@@ -21,3 +21,7 @@ benchmark-subjectcolumn:
 
 clean-windows-characters:
 	bash scripts/cleanWindowsCharacters.sh
+
+requirements:
+	pip install numpy
+	pip install requests
