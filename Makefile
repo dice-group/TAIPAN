@@ -25,3 +25,4 @@ clean-windows-characters:
 requirements:
 	pip install numpy
 	pip install requests
+	pip install SPARQLWrapper
