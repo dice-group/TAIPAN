@@ -19,12 +19,6 @@ class DistantSupervisionIdentifier(object):
     def __init__(self):
         self.logger = Logger().getLogger(__name__)
         self.agdistisIdentifier = AgdistisIdentifier()
-        self.executionStartTimePoint = 0
-        self.executionEndTimePoint = 0
-        self.executionTimeFull = 0
-        self.executionTimePure = 0 #without querying and disambiguation
-        self.queryTime = 0
-        self.agdistisTime = 0
 
     def identifySubjectColumn(self, table, rowsToAnalyze=20):
         #limit to 20 rows for analysis
@@ -33,6 +27,13 @@ class DistantSupervisionIdentifier(object):
         tableId = table.id
         cacheFile = os.path.join(cacheFolder, tableId + ".relations.cache")
         self.logger.debug(tableId)
+
+        self.executionStartTimePoint = 0
+        self.executionEndTimePoint = 0
+        self.executionTimeFull = 0
+        self.executionTimePure = 0 #without querying and disambiguation
+        self.queryTime = 0
+        self.agdistisTime = 0
 
         self.executionStartTimePoint = time.time()
         if(os.path.exists(cacheFile)):

@@ -26,8 +26,7 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
         self.testTables20 = sampler.get20Tables()
         #self.testTables = sampler.getTablesSubjectIdentification()
 
-    def resultsPrinter(self, results, filename):
-        import csv
+    def determineResultsFilename(self, filename):
         import os
         while os.path.exists(os.path.join("results",filename)):
             filename = filename.split(".")
@@ -36,21 +35,27 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             filename = ".".join(filename)
 
         filename = os.path.join("results",filename)
-        with open(filename, 'wb') as csvfile:
+        return filename
+
+    def resultsIterativePrinter(self, row, filename):
+        import csv
+        with open(filename, 'a') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=',',
                                     quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            for result in results:
-                spamwriter.writerow(result)
+            spamwriter.writerow(row)
+
 
     def distantLearningIdentifier(self, rowsToAnalyze, tables, resultsFilename):
-        results = [["tableId","rowsToAnalyze","tableSize","subjectColumnIdx","identifiedCorrectly","executionTimeFull","executionTimePure","queryTime","disambiguationTime"]]
+        resultsFilename = self.determineResultsFilename(resultsFilename)
+        header = ["tableId","rowsToAnalyze","tableSize","subjectColumnIdx","identifiedCorrectly","executionTimeFull","executionTimePure","queryTime","disambiguationTime"]
+        self.resultsIterativePrinter(header,resultsFilename)
+
         for table in tables:
             colNumber = self.dlIdentifier.identifySubjectColumn(table)
             identifiedCorrectly = table.isSubjectColumn(colNumber)
             tableSize = len(table.getData())
             result = [table.id, rowsToAnalyze, tableSize, colNumber, identifiedCorrectly, self.dlIdentifier.executionTimeFull, self.dlIdentifier.executionTimePure, self.dlIdentifier.queryTime, self.dlIdentifier.agdistisTime]
-            results.append(result)
-        self.resultsPrinter(results, resultsFilename)
+            self.resultsIterativePrinter(result,resultsFilename)
 
     def testDistantLearningIdentifierOne(self):
         self.distantLearningIdentifier(20, [self.testTable], "testOneTable.20rows.csv.1")

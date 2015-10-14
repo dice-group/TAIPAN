@@ -51,7 +51,8 @@ class T2DSampler(object):
         return tables
 
     def getTestTable(self):
-        tableId = "43729470_1_5047305886112599189.csv"
+        #tableId = "43729470_1_5047305886112599189.csv"
+        tableId = "75022277_0_6693812820589580743.csv"
         return self.getTable(tableId)
 
     def loadCsv(self, csvPath):
