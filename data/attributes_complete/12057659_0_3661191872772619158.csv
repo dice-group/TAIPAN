@@ -1,0 +1,8 @@
+"http://dbpedia.org/ontology/populationTotal","population(2011 est.)","False","6"
+"http://dbpedia.org/ontology/infantMortality","infantmortality","False","8"
+"http://dbpedia.org/ontology/PopulatedPlace/area","countrysize","False","5"
+"http://dbpedia.org/ontology/iso31661Code","iso code num","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","country name","True","4"
+"http://dbpedia.org/ontology/iso31661Code","iso code 3a","False","2"
+"http://dbpedia.org/ontology/iso31661Code","iso code 2a","False","1"
+"http://dbpedia.org/ontology/lifeExpectancy","lifeexpectancy","False","7"

@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/heritageRegister","Registrar","False","1"
+"http://dbpedia.org/ontology/dateAgreement","Expire Date","False","3"
+"http://dbpedia.org/ontology/releaseDate","Create Date","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","Domain","True","0"

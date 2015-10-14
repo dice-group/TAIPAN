@@ -1,0 +1,4 @@
+"http://www.w3.org/2000/01/rdf-schema#label","name","True","1"
+"http://dbpedia.org/ontology/gender","sex","False","4"
+"http://dbpedia.org/ontology/age","age","False","3"
+"http://dbpedia.org/ontology/location","location","False","2"

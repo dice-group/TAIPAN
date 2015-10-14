@@ -1,0 +1,5 @@
+"http://dbpedia.org/ontology/populationTotal","Population","False","2"
+"http://dbpedia.org/ontology/PopulatedPlace/populationDensity","Population Density (per square km)","False","3"
+"http://dbpedia.org/ontology/PopulatedPlace/area","Area (square km)","False","1"
+"http://dbpedia.org/ontology/grossDomesticProduct","GDP per capita ($ in PPP terms)","False","4"
+"http://www.w3.org/2000/01/rdf-schema#label","Country","True","0"

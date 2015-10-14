@@ -1,0 +1,3 @@
+"http://dbpedia.org/ontology/PopulatedPlace/populationDensity","Population density (persons per square km.)","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","Country","True","0"
+"http://dbpedia.org/ontology/populationTotal","Total population in 2004 (million)","False","1"

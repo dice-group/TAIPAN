@@ -1,0 +1,3 @@
+"http://www.w3.org/2000/01/rdf-schema#label","Movie Title","True","0"
+"http://dbpedia.org/ontology/grades","Grade","False","2"
+"http://dbpedia.org/ontology/rating","Rating","False","1"

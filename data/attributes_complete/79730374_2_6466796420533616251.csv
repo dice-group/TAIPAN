@@ -1,0 +1,6 @@
+"http://dbpedia.org/ontology/PopulatedPlace/populationDensity","Population density(per km?)","False","3"
+"http://dbpedia.org/ontology/capital","Capital","False","4"
+"http://dbpedia.org/ontology/populationTotal",".Population(July 2009 est.^&nbsp;Population (July 2009 est. Mexico (05/09) 28 January 2010 0:27 UTC www.state.gov [Source type: FILTERED WITH BAYES]^&nbsp;Population (2009 est. El Salvador (09/09) 2 February 2010 14:29 UTC www.state.gov [Source type: FILTERED WITH BAYES]^&nbsp;(July 2009 est. CIA - The World Factbook -- Mexico 15 September 2009 23:53 UTC www.cia.gov [Source type: FILTERED WITH BAYES])","False","2"
+"http://dbpedia.org/ontology/officialLanguage","Officiallanguage","False","5"
+"http://www.w3.org/2000/01/rdf-schema#label","Name of territorywith flag","True","0"
+"http://dbpedia.org/ontology/PopulatedPlace/area","Area(km?)[1]","False","1"

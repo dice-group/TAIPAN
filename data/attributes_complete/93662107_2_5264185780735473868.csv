@@ -1,0 +1,5 @@
+"http://dbpedia.org/ontology/day","Day","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","Country","True","0"
+"http://dbpedia.org/ontology/language","Language","False","1"
+"http://dbpedia.org/ontology/flyingHours","Hour","False","4"
+"http://dbpedia.org/ontology/number","Hotline","False","2"

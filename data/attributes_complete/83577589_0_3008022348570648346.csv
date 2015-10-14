@@ -1,0 +1,5 @@
+"http://www.w3.org/2000/01/rdf-schema#label","name:","True","1"
+"http://www.w3.org/2000/01/rdf-schema#label","artist:","True","2"
+"http://dbpedia.org/ontology/country","country:","False","6"
+"http://dbpedia.org/ontology/releaseDate","released:","False","7"
+"http://dbpedia.org/ontology/recordLabel","label:","False","3"

@@ -1,0 +1,5 @@
+"http://dbpedia.org/ontology/GeopoliticalOrganisation/populationDensity","Population Density(/km2)","False","2"
+"http://dbpedia.org/ontology/populationAsOf","Population","False","4"
+"http://dbpedia.org/ontology/country","Former/Disputed Sovereign Power","False","1"
+"http://www.w3.org/2000/01/rdf-schema#label","De Facto Independent/Breakaway/Disputed State","True","0"
+"http://dbpedia.org/ontology/GeopoliticalOrganisation/populationDensity","Area(km2)","False","3"

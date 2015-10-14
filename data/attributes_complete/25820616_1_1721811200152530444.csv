@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/address","Addresses","False","1"
+"http://dbpedia.org/ontology/relative","Relatives","False","4"
+"http://dbpedia.org/ontology/age","DOB","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","FullName","True","0"

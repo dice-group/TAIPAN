@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/priceMoney","USD Amount","False","3"
+"http://dbpedia.org/ontology/currencyCode","Currency","False","2"
+"http://dbpedia.org/ontology/priceMoney","Amount","False","1"
+"http://www.w3.org/2000/01/rdf-schema#label","Country","True","0"

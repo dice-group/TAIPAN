@@ -1,0 +1,3 @@
+"http://dbpedia.org/ontology/company","Receiving locations affiliated with","False","1"
+"http://dbpedia.org/ontology/currency","Currency","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","Country","True","0"

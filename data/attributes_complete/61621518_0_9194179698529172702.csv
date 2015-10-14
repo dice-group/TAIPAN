@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/ratio","student to teacher ratio","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","school","True","0"
+"http://dbpedia.org/ontology/grades","lowest grade offered","False","4"
+"http://dbpedia.org/ontology/grades","highest grade offered","False","5"

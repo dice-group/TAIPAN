@@ -1,0 +1,7 @@
+"http://dbpedia.org/ontology/origin","place of origin:","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","product name：","True","0"
+"http://dbpedia.org/ontology/deliveryDate","delivery date:","False","4"
+"http://dbpedia.org/ontology/certification","certificates:","False","6"
+"http://dbpedia.org/ontology/tradeMark","trademark:","False","3"
+"http://dbpedia.org/ontology/category","special groups:","False","8"
+"http://dbpedia.org/ontology/model","model no：","False","1"

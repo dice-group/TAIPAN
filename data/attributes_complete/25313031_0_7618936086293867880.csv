@@ -1,0 +1,5 @@
+"http://www.w3.org/2000/01/rdf-schema#label","10","True","0"
+"http://dbpedia.org/ontology/alternativeTitle","jane eyre","False","1"
+"http://dbpedia.org/ontology/releaseDate","1847","False","4"
+"http://dbpedia.org/ontology/literaryGenre","novel","False","2"
+"http://dbpedia.org/ontology/author","{c|bront&euml;}","False","3"

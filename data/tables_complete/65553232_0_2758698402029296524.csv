@@ -1,0 +1,4 @@
+"description:","multi-processing module allowing for daemon processes servingrequests to be assigned a variety of different userids"
+"status:","mpm"
+"module�identifier:","mpm_perchild_module"
+"source�file:","perchild.c"

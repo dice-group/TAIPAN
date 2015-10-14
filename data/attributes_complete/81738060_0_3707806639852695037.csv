@@ -1,0 +1,5 @@
+"http://dbpedia.org/ontology/circle","LOCATION","False","1"
+"http://www.w3.org/2000/01/rdf-schema#label","NAME","True","0"
+"http://dbpedia.org/ontology/language","LANGUAGE","False","4"
+"http://dbpedia.org/ontology/populationTotal","POPULATION","False","3"
+"http://dbpedia.org/ontology/PopulatedPlace/area","SIZE","False","2"

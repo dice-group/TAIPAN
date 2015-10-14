@@ -1,0 +1,7 @@
+"varta","mounting","voltage","capacity","body dimensions","NULL","NULL"
+"type","type","NULL","NULL","length","diameter","order code"
+"cr 12aacd","wire end","3v","950mah","25mm","14.6mm","18-0820"
+"cr 12aaslf","pcb tag","3v","950mah","25mm","14.6mm","18-0825"
+"cr 23aaslf","pcb tag","3v","1350mah","33mm","14.6mm","18-0833"
+"craacd","wire end","3v","2000mah","50mm","14.6mm","18-0835"
+"craa","plain","3v","2000mah","50mm","14.6mm","18-0845"

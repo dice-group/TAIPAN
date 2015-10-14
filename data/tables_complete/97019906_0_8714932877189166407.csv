@@ -1,0 +1,7 @@
+"r1129","r1213"," "
+"87","87","&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replace(c[10] ' ');//trim extra whitespace "
+"88","88","&nbsp; &nbsp; &nbsp; &nbsp; if(xinha.is_ie &amp;&amp; c[13].test(shtml))  "
+"89"," ","&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; shtml = shtml.replace(c[13]'$1'+xinha._escapedollars(stripbaseurl(regexp.$3))+''); "
+" ","89","&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; shtml = shtml.replace(c[13]'$1'+xinha._escapedollars(this.stripbaseurl(regexp.$3))+''); "
+"90","90","&nbsp; &nbsp; &nbsp; &nbsp;  "
+"91","91"," "

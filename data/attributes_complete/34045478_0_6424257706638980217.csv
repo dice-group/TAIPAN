@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/currency","CURRENCY","False","3"
+"http://dbpedia.org/ontology/city","CITY","False","2"
+"http://dbpedia.org/ontology/country","Country","False","0"
+"http://www.w3.org/2000/01/rdf-schema#label","DIRECT CORRESPONDENT BANKS","True","1"

@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/industry","Industry","False","4"
+"http://dbpedia.org/ontology/sales","Sales ($bil)","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","Name","True","0"
+"http://dbpedia.org/ontology/netIncome","Net Income ($mil)","False","3"

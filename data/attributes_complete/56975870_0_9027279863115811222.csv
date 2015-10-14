@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/country","{Country|flag}","","0"
+"http://dbpedia.org/ontology/populationTotal","Population(1 July 2005 est.)","","2"
+"http://dbpedia.org/ontology/PopulatedPlace/area","Area(km?)","","1"
+"http://dbpedia.org/ontology/GeopoliticalOrganisation/populationDensity","Population density(per km?)","","3"

@@ -1,0 +1,7 @@
+"http://dbpedia.org/ontology/frequencyOfPublication","Frequency","False","4"
+"http://www.w3.org/2000/01/rdf-schema#label","Title","True","0"
+"http://dbpedia.org/ontology/type","Medium","False","5"
+"http://dbpedia.org/ontology/classification","Classification","False","6"
+"http://dbpedia.org/ontology/firstPublicationYear","Years published","False","3"
+"http://dbpedia.org/ontology/collectionSize","Country","False","2"
+"http://dbpedia.org/ontology/language","Language","False","1"

@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/waistSize","Waist (inches)","False","4"
+"http://dbpedia.org/ontology/bustSize","Bust (inches)","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","Sizing Guide","True","1"
+"http://dbpedia.org/ontology/hipSize","Hip (inches)","False","5"

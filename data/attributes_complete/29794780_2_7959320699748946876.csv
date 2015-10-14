@@ -1,0 +1,4 @@
+"http://www.w3.org/2000/01/rdf-schema#label","Locale","True","0"
+"http://dbpedia.org/ontology/language","Language","False","1"
+"http://dbpedia.org/ontology/country","Country","False","2"
+"http://dbpedia.org/ontology/code","Charset","False","3"

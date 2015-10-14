@@ -1,0 +1,6 @@
+"[Contract Size:]","1000","[Min. Trade:]","1"
+"[Exchange:]","ICE","[[Trading Hours:]]","23:00 -23:00"
+"[Tick Size:]","0.01","[Tick Value:]","10"
+"[Init. Margin:]","5200","[Maint. Margin:]","5200"
+"[Exchange Fee:]","USD. 0.82","NULL","NULL"
+"[Order Types:]","market limit","NULL","NULL"

@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/populationTotal","Population                     (million)","False","2"
+"http://dbpedia.org/ontology/grossDomesticProduct","GDP (billion                     dollars)","False","3"
+"http://dbpedia.org/ontology/language","Language","False","1"
+"http://www.w3.org/2000/01/rdf-schema#label","Country","True","0"

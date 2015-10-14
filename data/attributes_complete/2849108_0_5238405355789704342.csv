@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/PopulatedPlace/populationDensity","Population Density","False","8"
+"http://www.w3.org/2000/01/rdf-schema#label","State","True","2"
+"http://dbpedia.org/ontology/populationAsOf","Population 2000","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","City Name","True","1"

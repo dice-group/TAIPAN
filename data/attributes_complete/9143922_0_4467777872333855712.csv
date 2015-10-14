@@ -1,0 +1,4 @@
+"http://www.w3.org/2000/01/rdf-schema#label","stadion","True","2"
+"http://dbpedia.org/ontology/location","stadt","False","1"
+"http://dbpedia.org/ontology/location","land","False","0"
+"http://dbpedia.org/ontology/operator","heimatverein","False","4"

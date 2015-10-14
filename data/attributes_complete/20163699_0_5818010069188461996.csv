@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/language","Language","False","0"
+"http://www.w3.org/2000/01/rdf-schema#label","Installation file name","True","3"
+"http://dbpedia.org/ontology/county","Country/Region","False","1"
+"http://dbpedia.org/ontology/id","Culture ID","False","2"

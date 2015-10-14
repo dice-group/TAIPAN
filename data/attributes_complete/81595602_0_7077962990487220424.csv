@@ -1,0 +1,6 @@
+"http://dbpedia.org/ontology/collectionSize","Countries","False","3"
+"http://dbpedia.org/ontology/publisher","Local publishers","False","4"
+"http://dbpedia.org/ontology/originalName","Official Name","False","1"
+"http://dbpedia.org/ontology/language","Language","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","Region","True","0"
+"http://dbpedia.org/ontology/requirement","Registration Requirements","False","5"
