@@ -23,8 +23,8 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
         self.testTable = sampler.getTestTable()
         self.dlIdentifier = DistantSupervisionIdentifier()
         self.simpleIdentifier = SimpleIdentifier()
-        self.testTables20 = sampler.get20Tables()
-        #self.testTables = sampler.getTablesSubjectIdentification()
+        #self.testTables20 = sampler.get20Tables()
+        self.testTables = sampler.getTablesSubjectIdentification()
 
     def determineResultsFilename(self, filename):
         import os
@@ -75,7 +75,7 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             Subject Column Identified Correctly: 1461
             Precision: 0.866034380557
         """
-        self.testDistantLearningIdentifier(20, self.testTables, "testAlltables.20rows.csv")
+        self.distantLearningIdentifier(20, self.testTables, "testAlltables.20rows.csv")
 
     # def testSimpleColumnIdentifierAll(self):
     #     """
