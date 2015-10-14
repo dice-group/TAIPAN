@@ -47,7 +47,8 @@ class DistantSupervisionIdentifier(object):
                 agdistisStartTimePoint = time.time()
                 entities = self.identifyEntitiesForRow(row, tableHeader)
                 agdistisEndTimePoint = time.time()
-                self.agdistisTime = agdistisEndTimePoint - agdistisStartTimePoint
+                agdistisTimeForARow = agdistisEndTimePoint - agdistisStartTimePoint
+                self.agdistisTime += agdistisTimeForARow
 
                 for itemIndex, item in enumerate(row):
                     entity = entities[itemIndex]
