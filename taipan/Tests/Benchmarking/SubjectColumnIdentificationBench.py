@@ -23,12 +23,18 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
         self.testTable = sampler.getTestTable()
         self.dlIdentifier = DistantSupervisionIdentifier()
         self.simpleIdentifier = SimpleIdentifier()
-        #self.testTables20 = sampler.get20Tables()
+        self.testTables20 = sampler.get20Tables()
         #self.testTables = sampler.getTablesSubjectIdentification()
 
     def resultsPrinter(self, results, filename):
         import csv
         import os
+        while os.path.exists(os.path.join("results",filename)):
+            filename = filename.split(".")
+            index = str(int(filename.pop()) + 1)
+            filename.append(index)
+            filename = ".".join(filename)
+
         filename = os.path.join("results",filename)
         with open(filename, 'wb') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=',',
@@ -47,24 +53,24 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
         self.resultsPrinter(results, resultsFilename)
 
     def testDistantLearningIdentifierOne(self):
-        self.distantLearningIdentifier(20, [self.testTable], "testOneTable.20rows.csv")
+        self.distantLearningIdentifier(20, [self.testTable], "testOneTable.20rows.csv.1")
 
-    def testDistantLearningIdentifierTwenty(self):
-        self.distantLearningIdentifier(20, self.testTables20, "test20tables.20rows.csv")
-
-    def testDistantLearningIdentifierAll(self):
-        """
-            With 1 row only!
-
-            Tables analyzed: 900
-            Subject Column Identified Correctly: 762
-            Precision: 0.846666666667
-
-            Tables analyzed: 1687
-            Subject Column Identified Correctly: 1461
-            Precision: 0.866034380557
-        """
-        self.testDistantLearningIdentifier(20, self.testTables, "testAlltables.20rows.csv")
+    # def testDistantLearningIdentifierTwenty(self):
+    #     self.distantLearningIdentifier(20, self.testTables20, "test20tables.20rows.csv.1")
+    #
+    # def testDistantLearningIdentifierAll(self):
+    #     """
+    #         With 1 row only!
+    #
+    #         Tables analyzed: 900
+    #         Subject Column Identified Correctly: 762
+    #         Precision: 0.846666666667
+    #
+    #         Tables analyzed: 1687
+    #         Subject Column Identified Correctly: 1461
+    #         Precision: 0.866034380557
+    #     """
+    #     self.testDistantLearningIdentifier(20, self.testTables, "testAlltables.20rows.csv")
 
     # def testSimpleColumnIdentifierAll(self):
     #     """
@@ -80,7 +86,7 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
     #             correct += 1
     #     precision = float(correct)/overall
     #     print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
-?
+
     # def testDistantLearningIdentifierProblematic(self):
     #     tableId = "65842312_0_4733067625464702086.csv" #Got ???? symbols in the cells
     #     tableId = "95942871_9_1442908185816138298.csv" #utf-8 can not encode char
