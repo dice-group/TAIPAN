@@ -60,3 +60,5 @@ target/
 taipan/Config/ExternalUris.py
 data
 cache
+cache-onerow
+results

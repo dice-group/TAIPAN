@@ -2,8 +2,10 @@ default:
 	echo "no default target for this make file"
 	echo "to run test: make test"
 
-install:
+install: requirements
 	cp taipan/Config/ExternalUris.py-sample taipan/Config/ExternalUris.py
+	mkdir results
+	mkdir cache
 
 test:
 	python -m unittest discover -s ./taipan/Tests -p "*Test.py"

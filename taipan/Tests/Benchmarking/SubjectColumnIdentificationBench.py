@@ -23,33 +23,39 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
         self.testTable = sampler.getTestTable()
         self.dlIdentifier = DistantSupervisionIdentifier()
         self.simpleIdentifier = SimpleIdentifier()
-        # self.testTables20 = sampler.get20Tables()
-        self.testTables = sampler.getTablesSubjectIdentification()
+        #self.testTables20 = sampler.get20Tables()
+        #self.testTables = sampler.getTablesSubjectIdentification()
+
+    def resultsPrinter(self, results, filename):
+        import csv
+        import os
+        filename = os.path.join("results",filename)
+        with open(filename, 'wb') as csvfile:
+            spamwriter = csv.writer(csvfile, delimiter=',',
+                                    quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            for result in results:
+                spamwriter.writerow(result)
+
+    def distantLearningIdentifier(self, rowsToAnalyze, tables, resultsFilename):
+        results = [["tableId","rowsToAnalyze","tableSize","subjectColumnIdx","identifiedCorrectly","executionTimeFull","executionTimePure","queryTime","disambiguationTime"]]
+        for table in tables:
+            colNumber = self.dlIdentifier.identifySubjectColumn(table)
+            identifiedCorrectly = table.isSubjectColumn(colNumber)
+            tableSize = len(table.getData())
+            result = [table.id, rowsToAnalyze, tableSize, colNumber, identifiedCorrectly, self.dlIdentifier.executionTimeFull, self.dlIdentifier.executionTimePure, self.dlIdentifier.queryTime, self.dlIdentifier.agdistisTime]
+            results.append(result)
+        self.resultsPrinter(results, resultsFilename)
 
     def testDistantLearningIdentifierOne(self):
-        colNumber = self.dlIdentifier.identifySubjectColumn(self.testTable)
-        self.assertTrue(self.testTable.isSubjectColumn(colNumber), msg="colNumber should be subject column")
-
-    def testDistantLearningIdentifierProblematic(self):
-        tableId = "65842312_0_4733067625464702086.csv" #Got ???? symbols in the cells
-        tableId = "95942871_9_1442908185816138298.csv" #utf-8 can not encode char
-        table = T2DTable(tableId)
-        colNumber = self.dlIdentifier.identifySubjectColumn(table)
+        self.distantLearningIdentifier(20, [self.testTable], "testOneTable.20rows.csv")
 
     def testDistantLearningIdentifierTwenty(self):
-        print "Analyzing %s tables" % (len(self.testTables20),)
-        overall = len(self.testTables20)
-        correct = 0
-        for table in self.testTables20:
-            colNumber = self.dlIdentifier.identifySubjectColumn(table)
-            if(table.isSubjectColumn(colNumber)):
-                correct += 1
-
-        precision = float(correct)/overall
-        print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
+        self.distantLearningIdentifier(20, self.testTables20, "test20tables.20rows.csv")
 
     def testDistantLearningIdentifierAll(self):
         """
+            With 1 row only!
+
             Tables analyzed: 900
             Subject Column Identified Correctly: 762
             Precision: 0.846666666667
@@ -58,46 +64,25 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             Subject Column Identified Correctly: 1461
             Precision: 0.866034380557
         """
-        print "Analyzing %s tables" % (len(self.testTables),)
-        overall = len(self.testTables)
-        correct = 0
-        for table in self.testTables:
-            colNumber = self.dlIdentifier.identifySubjectColumn(table)
-            if(table.isSubjectColumn(colNumber)):
-                correct += 1
+        self.testDistantLearningIdentifier(20, self.testTables, "testAlltables.20rows.csv")
 
-        precision = float(correct)/overall
-        print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
-
-    def testSimpleColumnIdentifierAll(self):
-        """
-            Tables analyzed: 900
-            Subject Column Identified Correctly: 893
-            Precision: 0.992222222222
-        """
-        overall = 900
-        correct = 0
-        for table in self.testTables[:900]:
-            colNumber = self.simpleIdentifier.identifySubjectColumn(self.testTable)
-            if(table.isSubjectColumn(colNumber)):
-                correct += 1
-        precision = float(correct)/overall
-        print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
-
-    def testSimpleColumnIdentifierScrumblingAll(self):
-        """
-            Tables analyzed: 900
-            Subject Column Identified Correctly: 325
-            Precision: 0.361111111111
-        """
-        overall = 900
-        correct = 0
-        for table in self.testTables[:900]:
-            table.scrumbleColumns()
-            colNumber = self.simpleIdentifier.identifySubjectColumn(self.testTable)
-            colNumber = table.translateColumnIndex(colNumber)
-            if(table.isSubjectColumn(colNumber)):
-                correct += 1
-        precision = float(correct)/overall
-        print "Scrumbled Columns"
-        print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
+    # def testSimpleColumnIdentifierAll(self):
+    #     """
+    #         Tables analyzed: 900
+    #         Subject Column Identified Correctly: 893
+    #         Precision: 0.992222222222
+    #     """
+    #     overall = 900
+    #     correct = 0
+    #     for table in self.testTables[:900]:
+    #         colNumber = self.simpleIdentifier.identifySubjectColumn(self.testTable)
+    #         if(table.isSubjectColumn(colNumber)):
+    #             correct += 1
+    #     precision = float(correct)/overall
+    #     print "Tables analyzed: %s\nSubject Column Identified Correctly: %s\nPrecision: %s" % (overall, correct, precision,)
+?
+    # def testDistantLearningIdentifierProblematic(self):
+    #     tableId = "65842312_0_4733067625464702086.csv" #Got ???? symbols in the cells
+    #     tableId = "95942871_9_1442908185816138298.csv" #utf-8 can not encode char
+    #     table = T2DTable(tableId)
+    #     colNumber = self.dlIdentifier.identifySubjectColumn(table)
