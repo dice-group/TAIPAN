@@ -134,8 +134,11 @@ class SimplePropertyMapper(object):
                 if entity == "":
                     continue
                 for nonSubjectColumn in nonSubjectColumns:
-                    cellValue = tableData[rowIndex][nonSubjectColumn]
-                    properties[rowIndex][nonSubjectColumn] = self.propertySearch.uriLiteralSearch(entity,cellValue)
+                    try:
+                        cellValue = tableData[rowIndex][nonSubjectColumn]
+                        properties[rowIndex][nonSubjectColumn] = self.propertySearch.uriLiteralSearch(entity,cellValue)
+                    except:
+                        pass
 
             propertySearchTimeEnd = time.time()
             self.propertySearchTime = propertySearchTimeEnd - propertySearchTimeStart
