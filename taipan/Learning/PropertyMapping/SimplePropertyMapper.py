@@ -5,6 +5,7 @@ except:
    import pickle
 import collections
 from collections import Counter
+import time
 
 from taipan.Utils.Exceptions import NoInstancesFoundError
 from taipan.Logging.Logger import Logger
@@ -36,6 +37,8 @@ class SimplePropertyMapper(object):
         else:
             raise RelationsDataStructureNotFound("Could not found Rels structure for %s"%(str(tableId),))
 
+        self.executionTimeFull = 0
+        self.startTime = time.time()
         #init properties
         nonSubjectColumns = range(0,len(relations[0]))
         nonSubjectColumns.remove(subjectColumn)
@@ -60,4 +63,6 @@ class SimplePropertyMapper(object):
             except IndexError:
                 self.logger.debug("No property identified for column %s"%(nonSubjectColumn))
 
+        self.endTime = time.time()
+        self.executionTimeFull = self.endTime - self.startTime
         return topProperties

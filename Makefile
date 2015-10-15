@@ -19,8 +19,11 @@ test-property-mapping:
 benchmark:
 	python -m unittest discover -s ./taipan/Tests -p "*Bench.py"
 
-benchmark-subjectcolumn:
+benchmark-subject-column-identification:
 	python -m unittest discover -s ./taipan/Tests/Benchmarking -p "SubjectColumnIdentificationBench.py"
+
+benchmark-simple-property-mapping:
+	python -m unittest discover -s ./taipan/Tests/Benchmarking -p "PropertyMappingBench.py"
 
 clean-windows-characters:
 	bash scripts/cleanWindowsCharacters.sh
