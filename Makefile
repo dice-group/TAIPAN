@@ -28,6 +28,9 @@ benchmark-subject-column-identification:
 benchmark-simple-cache-property-mapping:
 	python -m unittest discover -s ./taipan/Tests/Benchmarking -p "SimpleCachePropertyMappingBench.py"
 
+benchmark-simple-property-mapping:
+	python -m unittest discover -s ./taipan/Tests/Benchmarking -p "SimplePropertyMappingBench.py"
+
 clean-windows-characters:
 	bash scripts/cleanWindowsCharacters.sh
 

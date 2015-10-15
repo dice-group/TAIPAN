@@ -62,9 +62,15 @@ class SimplePropertyMapper(object):
         nonSubjectColumns.remove(subjectColumn)
 
         self.executionTimeFull = 0
-        self.startTime = time.time()
+        self.executionTimePure = 0
+        self.disambiguationTime = 0
+        self.classSearchTime = 0
+        self.propertySearchTime = 0
+
+        startTime = time.time()
 
         #disambiguate entities
+        disambiguationTimeStart = time.time()
         entitiesCacheFile = os.path.join(cacheFolder, tableId + ".entities.cache")
         entitySets = []
         if os.path.exists(entitiesCacheFile):
@@ -74,6 +80,9 @@ class SimplePropertyMapper(object):
                 entitySets.append(self.agdistisIdentifier.identifyEntity(row[subjectColumn]))
             pickle.dump(entitySets, open(entitiesCacheFile, "wb" ) )
 
+        disambiguationTimeEnd = time.time()
+        self.disambiguationTime = disambiguationTimeEnd - disambiguationTimeStart
+
         ## get all classes for those
         ## take the most frequent one
         ## filter out all other disambiguations
@@ -82,12 +91,15 @@ class SimplePropertyMapper(object):
             entitySets = pickle.load(open(filteredEntitiesCache, 'rb'))
         else:
             classes = []
+            classSearchTimeStart = time.time()
             for entitySet in entitySets:
                 for entity in entitySet:
                     entity['classes'] = []
                     if entity['disambiguatedURL']:
                         entity['classes'] = self.getClassForEntity(entity['disambiguatedURL'])
                         classes.append(entity['classes'])
+            classSearchTimeEnd = time.time()
+            self.classSearchTime = classSearchTimeEnd - classSearchTimeStart
             #flatten classes
             classes = [item for sublist in classes for item in sublist ]
             #identify the main class for the subject column
@@ -109,6 +121,7 @@ class SimplePropertyMapper(object):
         if os.path.exists(propertyCache):
             properties = pickle.load(open(propertyCache, 'rb'))
         else:
+            propertySearchTimeStart = time.time()
             for rowIndex, entitySet in enumerate(entitySets):
                 if entitySet == []:
                     continue
@@ -119,6 +132,8 @@ class SimplePropertyMapper(object):
                     cellValue = tableData[rowIndex][nonSubjectColumn]
                     properties[rowIndex][nonSubjectColumn] = self.propertySearch.uriLiteralSearch(entity,cellValue)
 
+            propertySearchTimeEnd = time.time()
+            self.propertySearchTime = propertySearchTimeEnd - propertySearchTimeStart
             pickle.dump(properties, open(propertyCache, "wb" ) )
 
         #Aggregate properties for each atomic table
@@ -143,7 +158,14 @@ class SimplePropertyMapper(object):
             except IndexError:
                 self.logger.debug("No property identified for column %s"%(nonSubjectColumn))
 
-        self.endTime = time.time()
-        self.executionTimeFull = self.endTime - self.startTime
+        endTime = time.time()
+        self.executionTimeFull = endTime - startTime
+        self.executionTimePure = self.executionTimeFull - self.disambiguationTime - self.classSearchTime - self.propertySearchTime
+
+        #check if seed properties contain properties we are trying to find
+        self.seedListContains = 0
+        for _property in table.properties:
+            if _property['uri'] in propertiesAggregate[_property['columnIndex']]:
+                self.seedListContains += 1
 
         return topProperties
