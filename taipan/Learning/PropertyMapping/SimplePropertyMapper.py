@@ -60,6 +60,7 @@ class SimplePropertyMapper(object):
         subjectColumn = self.dlIdentifier.identifySubjectColumn(table)
         nonSubjectColumns = range(0,len(tableData[0]))
         nonSubjectColumns.remove(subjectColumn)
+        self.logger.debug("Identifying properties for a table %s"%(tableId))
 
         self.executionTimeFull = 0
         self.executionTimePure = 0
@@ -103,7 +104,11 @@ class SimplePropertyMapper(object):
             #flatten classes
             classes = [item for sublist in classes for item in sublist ]
             #identify the main class for the subject column
-            mainClass = Counter(classes).most_common(1)[0][0]
+            try:
+                mainClass = Counter(classes).most_common(1)[0][0]
+            except IndexError:
+                self.logger.debug("Main class could not be identified")
+                mainClass = ""
 
             for entitySet in entitySets:
                 entitiesToRemove = []
