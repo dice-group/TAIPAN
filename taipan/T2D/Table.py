@@ -151,6 +151,14 @@ class T2DTable(object):
         else:
             return False
 
+    def isProperty(self, _property):
+        (uri, index) = _property
+        for localProperty in self.properties:
+            if localProperty['uri'] == uri and localProperty['columnIndex'] == index:
+               return True
+
+        return False
+
     def getClassIndex(self):
         if(len(self.classes) > 0):
             return self.classes[0]['headerRowIndices']

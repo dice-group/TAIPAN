@@ -14,4 +14,9 @@ class PropertyMappingTestCase(unittest.TestCase):
 
     def testMapProperties(self):
         properties = self.simplePropertyMapper.mapProperties(self.testTable)
-        import ipdb; ipdb.set_trace()
+        for _property in properties:
+            (uri, index) = _property
+            print "Property identified: %s" % (uri,)
+            print "Column Index: %s" % (index,)
+            print "Correct?"
+            print self.testTable.isProperty(_property)
