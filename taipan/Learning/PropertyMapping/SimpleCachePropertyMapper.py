@@ -15,8 +15,8 @@ from taipan.Learning.SubjectColumnIdentification.DistantSupervisionIdentifier im
 
 class SimpleCachePropertyMapper(object):
     """
-        This class do the property mapping for a given table
-        Algorithm 2: Taipan Property Mapping Algorithm
+        Performs quite poorly:
+        The current precision is 47,6% and what can be achieved is 71% (maximum)
     """
 
     def __init__(self):

@@ -16,6 +16,9 @@ test-t2d-sampler:
 test-simple-cache-property-mapping:
 	python -m unittest discover -s ./taipan/Tests/Learning/PropertyMapping -p "SimpleCachePropertyMappingTest.py"
 
+test-simple-property-mapping:
+	python -m unittest discover -s ./taipan/Tests/Learning/PropertyMapping -p "SimplePropertyMappingTest.py"
+
 benchmark:
 	python -m unittest discover -s ./taipan/Tests -p "*Bench.py"
 
