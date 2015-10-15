@@ -62,5 +62,6 @@ class PropertyMappingBenchTestCase(unittest.TestCase):
             self.resultsIterativePrinter(result,resultsFilename)
 
     def testMapProperties(self):
-        tables = [self.testTables]
+        #tables = [self.testTable]
+        tables = self.testTables
         self.simplePropertyMapping(tables)
