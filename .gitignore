@@ -58,5 +58,4 @@ docs/_build/
 target/
 
 taipan/Config/ExternalUris.py
-cache
 cache-onerow
