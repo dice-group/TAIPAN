@@ -50,7 +50,10 @@ class SimplePropertyMapper(object):
         for row in relations:
             for nonSubjectColumn in nonSubjectColumns:
                 #This is properties for atomic table with h_i, i = nonSubjectColumn
-                properties[nonSubjectColumn].append(row[subjectColumn][nonSubjectColumn])
+                try:
+                    properties[nonSubjectColumn].append(row[subjectColumn][nonSubjectColumn])
+                except:
+                    pass
 
         #Flatten the properties
         topProperties = []
