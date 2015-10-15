@@ -13,7 +13,7 @@ from taipan.Config.Pathes import cacheFolder
 from taipan.Utils.Exceptions import RelationsDataStructureNotFound
 from taipan.Learning.SubjectColumnIdentification.DistantSupervisionIdentifier import DistantSupervisionIdentifier
 
-class SimplePropertyMapper(object):
+class SimpleCachePropertyMapper(object):
     """
         This class do the property mapping for a given table
         Algorithm 2: Taipan Property Mapping Algorithm

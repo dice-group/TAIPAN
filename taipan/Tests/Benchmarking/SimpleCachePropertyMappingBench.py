@@ -2,15 +2,15 @@ import unittest
 
 from taipan.T2D.Sampler import T2DSampler
 from taipan.T2D.Table import T2DTable
-from taipan.Learning.PropertyMapping.SimplePropertyMapper import SimplePropertyMapper
+from taipan.Learning.PropertyMapping.SimpleCachePropertyMapper import SimpleCachePropertyMapper
 
 from taipan.Logging.Logger import Logger
 
-class PropertyMappingBenchTestCase(unittest.TestCase):
+class SimpleCachePropertyMappingBenchTestCase(unittest.TestCase):
     def setUp(self):
         sampler = T2DSampler()
         self.logger = Logger().getLogger(__name__)
-        self.simplePropertyMapper = SimplePropertyMapper()
+        self.simplePropertyMapper = SimpleCachePropertyMapper()
         self.testTable = sampler.getTestTable()
         #self.testTables20 = sampler.get20Tables()
         self.testTables = sampler.getTablesSubjectIdentification()
