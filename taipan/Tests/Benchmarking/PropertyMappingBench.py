@@ -13,7 +13,7 @@ class PropertyMappingBenchTestCase(unittest.TestCase):
         self.simplePropertyMapper = SimplePropertyMapper()
         self.testTable = sampler.getTestTable()
         #self.testTables20 = sampler.get20Tables()
-        self.testTables = sampler.getTablesSubjectIdentification()
+        #self.testTables = sampler.getTablesSubjectIdentification()
 
     def determineResultsFilename(self, filename):
         import os
@@ -37,12 +37,13 @@ class PropertyMappingBenchTestCase(unittest.TestCase):
     def simplePropertyMapping(self, tables):
         resultsFilename = "propertyMapping.results.csv.1"
         resultsFilename = self.determineResultsFilename(resultsFilename)
-        header = ["tableId","propertyIdentified","correct","falsePositives","falseNegatives", "executionTime"]
+        header = ["tableId","propertyIdentified","correct","falsePositives","falseNegatives","seedListContains","executionTime"]
         self.resultsIterativePrinter(header,resultsFilename)
 
         for table in tables:
             properties = self.simplePropertyMapper.mapProperties(table)
             executionTimeFull = self.simplePropertyMapper.executionTimeFull
+            seedListContains = self.simplePropertyMapper.seedListContains
             falsePositives = 0
             falseNegatives = table.getNumberOfProperties()
             correct = 0
@@ -60,10 +61,10 @@ class PropertyMappingBenchTestCase(unittest.TestCase):
                 else:
                     propertiesString += uri + u"|"
 
-            result = [table.id, propertiesString, correct, falsePositives,falseNegatives,executionTimeFull]
+            result = [table.id, propertiesString, correct, falsePositives,falseNegatives,seedListContains,executionTimeFull]
             self.resultsIterativePrinter(result,resultsFilename)
 
     def testMapProperties(self):
-        #tables = [self.testTable]
-        tables = self.testTables
+        tables = [self.testTable]
+        #tables = self.testTables
         self.simplePropertyMapping(tables)

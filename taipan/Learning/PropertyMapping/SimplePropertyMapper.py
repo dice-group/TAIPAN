@@ -68,4 +68,11 @@ class SimplePropertyMapper(object):
 
         self.endTime = time.time()
         self.executionTimeFull = self.endTime - self.startTime
+
+        #check if seed properties contain properties we are trying to find
+        self.seedListContains = 0
+        for _property in table.properties:
+            if _property['uri'] in properties[_property['columnIndex']]:
+                self.seedListContains += 1
+
         return topProperties
