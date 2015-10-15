@@ -159,6 +159,9 @@ class T2DTable(object):
 
         return False
 
+    def getNumberOfProperties(self):
+        return len(self.properties)
+
     def getClassIndex(self):
         if(len(self.classes) > 0):
             return self.classes[0]['headerRowIndices']

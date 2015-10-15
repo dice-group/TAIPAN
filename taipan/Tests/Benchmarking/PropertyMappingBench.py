@@ -37,13 +37,14 @@ class PropertyMappingBenchTestCase(unittest.TestCase):
     def simplePropertyMapping(self, tables):
         resultsFilename = "propertyMapping.results.csv.1"
         resultsFilename = self.determineResultsFilename(resultsFilename)
-        header = ["tableId","propertyIdentified","correct","falsePositives","executionTime"]
+        header = ["tableId","propertyIdentified","correct","falsePositives","falseNegatives", "executionTime"]
         self.resultsIterativePrinter(header,resultsFilename)
 
         for table in tables:
             properties = self.simplePropertyMapper.mapProperties(table)
             executionTimeFull = self.simplePropertyMapper.executionTimeFull
             falsePositives = 0
+            falseNegatives = table.getNumberOfProperties()
             correct = 0
             propertiesString = u""
             lastItem = len(properties) - 1
@@ -51,6 +52,7 @@ class PropertyMappingBenchTestCase(unittest.TestCase):
                 (uri, index) = _property
                 if table.isProperty(_property):
                     correct += 1
+                    falseNegatives -= 1
                 else:
                     falsePositives += 1
                 if i == lastItem:
@@ -58,7 +60,7 @@ class PropertyMappingBenchTestCase(unittest.TestCase):
                 else:
                     propertiesString += uri + u"|"
 
-            result = [table.id, propertiesString, correct, falsePositives,executionTimeFull]
+            result = [table.id, propertiesString, correct, falsePositives,falseNegatives,executionTimeFull]
             self.resultsIterativePrinter(result,resultsFilename)
 
     def testMapProperties(self):
