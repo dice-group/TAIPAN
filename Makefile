@@ -13,6 +13,9 @@ test:
 test-t2d-sampler:
 	python -m unittest discover -s ./taipan/Tests/T2D -p "SamplerTest.py"
 
+test-property-mapping:
+	python -m unittest discover -s ./taipan/Tests/Learning/PropertyMapping -p "PropertyMappingTest.py"
+
 benchmark:
 	python -m unittest discover -s ./taipan/Tests -p "*Bench.py"
 

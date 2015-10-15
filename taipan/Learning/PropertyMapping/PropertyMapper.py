@@ -9,6 +9,8 @@ from taipan.Logging.Logger import Logger
 class PropertyMapper(object):
     """
         This class do the property mapping for a given table
+        I just keep this here for historic reasons, have to clean up later
+        This class is not used anywhere for the approach described in WWW paper
     """
 
     def __init__(self):
