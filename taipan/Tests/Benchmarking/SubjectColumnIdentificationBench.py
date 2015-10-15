@@ -79,8 +79,8 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             Subject Column Identified Correctly: 1461
             Precision: 0.866034380557
         """
-        for tries in range(0, 10):
-            for rowsFromCache in range(1, 20):
+        for rowsFromCache in range(1, 20):
+            for tries in range(0, 10):
                 self.distantLearningIdentifier(20, rowsFromCache, self.testTables)
 
     # def testSimpleColumnIdentifierAll(self):
