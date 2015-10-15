@@ -13,4 +13,5 @@ class PropertyMappingTestCase(unittest.TestCase):
         #self.testTables = sampler.getTablesSubjectIdentification()
 
     def testMapProperties(self):
-        self.simplePropertyMapper.mapProperties(self.testTable)
+        properties = self.simplePropertyMapper.mapProperties(self.testTable)
+        import ipdb; ipdb.set_trace()
