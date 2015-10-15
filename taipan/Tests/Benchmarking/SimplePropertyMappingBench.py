@@ -11,9 +11,9 @@ class SimpleCachePropertyMappingBenchTestCase(unittest.TestCase):
         sampler = T2DSampler()
         self.logger = Logger().getLogger(__name__)
         self.simplePropertyMapper = SimplePropertyMapper()
-        self.testTable = sampler.getTestTable()
+        #self.testTable = sampler.getTestTable()
         #self.testTables20 = sampler.get20Tables()
-        #self.testTables = sampler.getTablesSubjectIdentification()
+        self.testTables = sampler.getTablesSubjectIdentification()
 
     def determineResultsFilename(self, filename):
         import os
@@ -69,6 +69,6 @@ class SimpleCachePropertyMappingBenchTestCase(unittest.TestCase):
             self.resultsIterativePrinter(result,resultsFilename)
 
     def testMapProperties(self):
-        tables = [self.testTable]
-        #tables = self.testTables
+        #tables = [self.testTable]
+        tables = self.testTables
         self.simplePropertyMapping(tables)
