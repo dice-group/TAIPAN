@@ -150,7 +150,10 @@ class SimplePropertyMapper(object):
             propertiesAggregate[nonSubjectColumn] = []
         for row in properties:
             for nonSubjectColumn in nonSubjectColumns:
-                propertiesAggregate[nonSubjectColumn].append(properties[row][nonSubjectColumn])
+                try:
+                    propertiesAggregate[nonSubjectColumn].append(properties[row][nonSubjectColumn])
+                except:
+                    pass
 
         #Flatten
         topProperties = []
