@@ -45,13 +45,17 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             spamwriter.writerow(row)
 
 
-    def distantLearningIdentifier(self, rowsToAnalyze, tables, resultsFilename):
+    def distantLearningIdentifier(self, rowsToAnalyze, rowsFromCache, tables):
+        resultsFilename = str(rowsFromCache) + "rows.hot.csv.1"
         resultsFilename = self.determineResultsFilename(resultsFilename)
         header = ["tableId","rowsToAnalyze","tableSize","subjectColumnIdx","identifiedCorrectly","executionTimeFull","executionTimePure","queryTime","disambiguationTime"]
         self.resultsIterativePrinter(header,resultsFilename)
 
+        if rowsFromCache != None:
+            rowsToAnalyze = rowsFromCache
+
         for table in tables:
-            colNumber = self.dlIdentifier.identifySubjectColumn(table)
+            colNumber = self.dlIdentifier.identifySubjectColumn(table,rowsFromCache=rowsFromCache)
             identifiedCorrectly = table.isSubjectColumn(colNumber)
             tableSize = len(table.getData())
             result = [table.id, rowsToAnalyze, tableSize, colNumber, identifiedCorrectly, self.dlIdentifier.executionTimeFull, self.dlIdentifier.executionTimePure, self.dlIdentifier.queryTime, self.dlIdentifier.agdistisTime]
@@ -75,7 +79,9 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             Subject Column Identified Correctly: 1461
             Precision: 0.866034380557
         """
-        self.distantLearningIdentifier(20, self.testTables, "testAlltables.20rows.csv")
+        for tries in range(0, 10):
+            for rowsFromCache in range(1, 20):
+                self.distantLearningIdentifier(20, rowsFromCache, self.testTables)
 
     # def testSimpleColumnIdentifierAll(self):
     #     """

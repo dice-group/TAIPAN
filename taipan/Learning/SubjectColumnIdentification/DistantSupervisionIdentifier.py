@@ -20,7 +20,7 @@ class DistantSupervisionIdentifier(object):
         self.logger = Logger().getLogger(__name__)
         self.agdistisIdentifier = AgdistisIdentifier()
 
-    def identifySubjectColumn(self, table, rowsToAnalyze=20):
+    def identifySubjectColumn(self, table, rowsToAnalyze=20, rowsFromCache=None):
         #limit to 20 rows for analysis
         tableData = table.getData()
         tableHeader = table.getHeader()
@@ -38,6 +38,8 @@ class DistantSupervisionIdentifier(object):
         self.executionStartTimePoint = time.time()
         if(os.path.exists(cacheFile)):
             relations = pickle.load(open(cacheFile, 'rb'))
+            if rowsFromCache != None:
+                relations = relations[:rowsFromCache]
         else:
             relations = []
             entities = []
