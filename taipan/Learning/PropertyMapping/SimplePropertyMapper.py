@@ -78,7 +78,10 @@ class SimplePropertyMapper(object):
             entitySets = pickle.load(open(entitiesCacheFile, 'rb'))
         else:
             for row in tableData[:rowsToDisambiguate]:
-                entitySets.append(self.agdistisIdentifier.identifyEntity(row[subjectColumn]))
+                try:
+                    entitySets.append(self.agdistisIdentifier.identifyEntity(row[subjectColumn]))
+                except:
+                    pass
             pickle.dump(entitySets, open(entitiesCacheFile, "wb" ) )
 
         disambiguationTimeEnd = time.time()
