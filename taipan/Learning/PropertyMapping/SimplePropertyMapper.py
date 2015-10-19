@@ -63,6 +63,15 @@ class SimplePropertyMapper(object):
         self.subjectColumn = subjectColumn
         self.subjectColumnCorrect = table.isSubjectColumn(subjectColumn)
 
+        self.executionTimeFull = 0
+        self.executionTimePure = 0
+        self.disambiguationTime = 0
+        self.classSearchTime = 0
+        self.propertySearchTime = 0
+        self.seedListContains = 0
+        if subjectColumn == None:
+            return []
+
         nonSubjectColumns = range(0,len(tableData[0]))
         nonSubjectColumns.remove(subjectColumn)
 
@@ -71,11 +80,6 @@ class SimplePropertyMapper(object):
         propertyCache = os.path.join(cacheFolder, tableId + ".property.star.cache")
         self.logger.debug("Identifying properties for a table %s"%(tableId))
 
-        self.executionTimeFull = 0
-        self.executionTimePure = 0
-        self.disambiguationTime = 0
-        self.classSearchTime = 0
-        self.propertySearchTime = 0
 
         startTime = time.time()
 
@@ -191,7 +195,6 @@ class SimplePropertyMapper(object):
         self.executionTimePure = self.executionTimeFull - self.disambiguationTime - self.classSearchTime - self.propertySearchTime
 
         #check if seed properties contain properties we are trying to find
-        self.seedListContains = 0
         for _property in table.properties:
             if _property['uri'] in propertiesAggregate[_property['columnIndex']]:
                 self.seedListContains += 1
