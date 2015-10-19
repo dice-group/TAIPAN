@@ -130,7 +130,7 @@ class DistantSupervisionIdentifier(object):
         self.executionTimeFull = self.executionEndTimePoint - self.executionStartTimePoint
         self.executionTimePure = self.executionTimeFull - self.queryTime - self.agdistisTime
 
-        if(len(subjectColumn) < 0):
+        if(len(subjectColumn) <= 0):
             return None
         else:
             return subjectColumn[0]
