@@ -19,6 +19,9 @@ test-simple-cache-property-mapping:
 test-simple-property-mapping:
 	python -m unittest discover -s ./taipan/Tests/Learning/PropertyMapping -p "SimplePropertyMappingTest.py"
 
+test-distant-supervision-identifier:
+	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification -p "DistantSupervisionIdentifierTest.py"
+
 benchmark:
 	python -m unittest discover -s ./taipan/Tests -p "*Bench.py"
 
