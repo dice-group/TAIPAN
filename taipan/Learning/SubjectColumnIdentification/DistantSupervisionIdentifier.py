@@ -20,7 +20,7 @@ class DistantSupervisionIdentifier(object):
         self.logger = Logger().getLogger(__name__)
         self.agdistisIdentifier = AgdistisIdentifier()
 
-    def identifySubjectColumn(self, table, rowsToAnalyze=20, rowsFromCache=None, subjectColumnEntitiesThreshold=80, subjectColumnRelationsThreshold=80):
+    def identifySubjectColumn(self, table, rowsToAnalyze=20, rowsFromCache=None, subjectColumnEntitiesThreshold=50, subjectColumnRelationsThreshold=50):
         """
             rowsToAnalyze -- how many rows should be evaluated
             rowsFromCache -- can be used to reduce number of rows to be read from cache
