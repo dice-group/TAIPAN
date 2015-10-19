@@ -38,3 +38,6 @@ requirements:
 	pip install numpy
 	pip install requests
 	pip install SPARQLWrapper
+
+get-properties-for-table:
+	python scripts/getPropertiesForTable.py ${ARGS}
