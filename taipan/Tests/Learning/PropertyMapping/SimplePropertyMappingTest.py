@@ -4,7 +4,7 @@ from taipan.T2D.Sampler import T2DSampler
 from taipan.T2D.Table import T2DTable
 from taipan.Learning.PropertyMapping.SimplePropertyMapper import SimplePropertyMapper
 
-class SimpleCachePropertyMappingTestCase(unittest.TestCase):
+class SimplePropertyMappingTestCase(unittest.TestCase):
     def setUp(self):
         sampler = T2DSampler()
         self.testTable = sampler.getTestTable()

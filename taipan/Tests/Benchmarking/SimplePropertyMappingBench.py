@@ -11,7 +11,7 @@ class SimpleCachePropertyMappingBenchTestCase(unittest.TestCase):
         sampler = T2DSampler()
         self.logger = Logger().getLogger(__name__)
         self.simplePropertyMapper = SimplePropertyMapper()
-        #self.testTable = sampler.getTestTable()
+        self.testTable = sampler.getTestTable()
         #self.testTables20 = sampler.get20Tables()
         self.testTables = sampler.getTablesSubjectIdentification()
 
@@ -37,11 +37,13 @@ class SimpleCachePropertyMappingBenchTestCase(unittest.TestCase):
     def simplePropertyMapping(self, tables, rowsToDisambiguate=20, threshold=10):
         resultsFilename = "%srows.%sthreshold.propertyMapping.results.csv.1" %(rowsToDisambiguate, threshold)
         resultsFilename = self.determineResultsFilename(resultsFilename)
-        header = ["tableId","propertyIdentified","correctly","falsePositives","notIdentified","seedListContains","executionTimeFull","executionTimePure","disambiguationTime","classSearchTime","propertySearchTime"]
+        header = ["tableId","subjectColumn","subjectColumnCorrect","propertyIdentified","correctly","falsePositives","notIdentified","seedListContains","executionTimeFull","executionTimePure","disambiguationTime","classSearchTime","propertySearchTime"]
         self.resultsIterativePrinter(header,resultsFilename)
 
         for table in tables:
             properties = self.simplePropertyMapper.mapProperties(table,rowsToDisambiguate, threshold)
+            subjectColumn = self.simplePropertyMapper.subjectColumn
+            subjectColumnCorrect = self.simplePropertyMapper.subjectColumnCorrect
             executionTimeFull = self.simplePropertyMapper.executionTimeFull
             executionTimePure = self.simplePropertyMapper.executionTimePure
             disambiguationTime = self.simplePropertyMapper.disambiguationTime
@@ -65,7 +67,7 @@ class SimpleCachePropertyMappingBenchTestCase(unittest.TestCase):
                 else:
                     propertiesString += uri + u"|"
 
-            result = [table.id, propertiesString, correct, falsePositives,falseNegatives,seedListContains,executionTimeFull,executionTimePure,disambiguationTime,classSearchTime,propertySearchTime]
+            result = [table.id, subjectColumn, subjectColumnCorrect, propertiesString, correct, falsePositives,falseNegatives,seedListContains,executionTimeFull,executionTimePure,disambiguationTime,classSearchTime,propertySearchTime]
             self.resultsIterativePrinter(result,resultsFilename)
 
     def testMapProperties(self):

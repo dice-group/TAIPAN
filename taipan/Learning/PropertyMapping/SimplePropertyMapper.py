@@ -57,9 +57,18 @@ class SimplePropertyMapper(object):
         tableData = table.getData()
         tableHeader = table.getHeader()
         tableId = table.id
+        numberOfRows = len(tableData)
+        numberOfColumns = len(tableData[0])
         subjectColumn = self.dlIdentifier.identifySubjectColumn(table)
+        self.subjectColumn = subjectColumn
+        self.subjectColumnCorrect = table.isSubjectColumn(subjectColumn)
+
         nonSubjectColumns = range(0,len(tableData[0]))
         nonSubjectColumns.remove(subjectColumn)
+
+        entitiesCacheFile = os.path.join(cacheFolder, tableId + ".entities.cache")
+        entitiesWithClassesCache = os.path.join(cacheFolder, tableId + ".entities.with.classes.cache")
+        propertyCache = os.path.join(cacheFolder, tableId + ".property.star.cache")
         self.logger.debug("Identifying properties for a table %s"%(tableId))
 
         self.executionTimeFull = 0
@@ -70,78 +79,80 @@ class SimplePropertyMapper(object):
 
         startTime = time.time()
 
-        #disambiguate entities
-        disambiguationTimeStart = time.time()
-        entitiesCacheFile = os.path.join(cacheFolder, tableId + ".entities.cache")
-        entitySets = []
+        #load disambiguation from cache
+        entities = []
         if os.path.exists(entitiesCacheFile):
-            entitySets = pickle.load(open(entitiesCacheFile, 'rb'))
+            entities = pickle.load(open(entitiesCacheFile, 'rb'))
         else:
-            for row in tableData[:rowsToDisambiguate]:
-                try:
-                    entitySets.append(self.agdistisIdentifier.identifyEntity(row[subjectColumn]))
-                except:
-                    pass
-            pickle.dump(entitySets, open(entitiesCacheFile, "wb" ) )
-
-        disambiguationTimeEnd = time.time()
-        self.disambiguationTime = disambiguationTimeEnd - disambiguationTimeStart
+            raise EntitiesDataStructureNotFound("Entities data structure not available. Did you run subject column identification?")
 
         ## get all classes for those
         ## take the most frequent one
         ## filter out all other disambiguations
-        filteredEntitiesCache = os.path.join(cacheFolder, tableId + ".entities.filtered.cache")
-        if os.path.exists(filteredEntitiesCache):
-            entitySets = pickle.load(open(filteredEntitiesCache, 'rb'))
+        ## annotate entities with classes
+        if os.path.exists(entitiesWithClassesCache):
+            entities = pickle.load(open(entitiesWithClassesCache, 'rb'))
         else:
-            classes = []
             classSearchTimeStart = time.time()
-            for entitySet in entitySets:
-                for entity in entitySet:
-                    entity['classes'] = []
-                    if entity['disambiguatedURL']:
-                        entity['classes'] = self.getClassForEntity(entity['disambiguatedURL'])
-                        classes.append(entity['classes'])
+            for rowIndex, entityRow in enumerate(entities):
+                for columnIndex, entity in enumerate(entityRow):
+                    for entityIndex, _entity in enumerate(entity):
+                        entity[entityIndex] = (self.getClassForEntity(_entity), _entity)
             classSearchTimeEnd = time.time()
             self.classSearchTime = classSearchTimeEnd - classSearchTimeStart
-            #flatten classes
-            classes = [item for sublist in classes for item in sublist ]
-            #identify the main class for the subject column
-            try:
-                mainClass = Counter(classes).most_common(1)[0][0]
-            except IndexError:
-                self.logger.debug("Main class could not be identified")
-                mainClass = ""
+            pickle.dump(entities, open(entitiesWithClassesCache, "wb" ) )
 
-            for entitySet in entitySets:
-                entitiesToRemove = []
-                for index, entity in enumerate(entitySet):
-                    if not mainClass in entity['classes']:
-                        entitiesToRemove.append(index)
-                for entityIndex in reversed(entitiesToRemove):
-                    del entitySet[entityIndex]
+        classes = [[]]*numberOfColumns
+        for rowIndex, entityRow in enumerate(entities):
+            for columnIndex, entity in enumerate(entityRow):
+                for entityIndex, _entity in enumerate(entity):
+                    (_class, entityUrl) = _entity
+                    classes[columnIndex].append(_class)
+        #identify the main class for the subject column
+        classesSubjectColumn = [item for sublist in classes[subjectColumn] for item in sublist]
+        try:
+            classCount = len(classesSubjectColumn)
+            (mainClass, mainClassCount) = Counter(classesSubjectColumn).most_common(1)[0]
+            mainClassScore = float(mainClassCount) / classCount * 100
+        except IndexError:
+            self.logger.debug("Main class could not be identified")
+            mainClass = ""
 
-            pickle.dump(entitySets, open(filteredEntitiesCache, "wb" ) )
+        #inject not mainClass row for a test
+        #entities[0][subjectColumn][0] = (["gibberish:class"], "dbpedia:someCountry")
+
+        #Wipe everything which is not mainClass
+        #In subject column
+        for rowIndex, entityRow in enumerate(entities):
+            for columnIndex, entity in enumerate(entityRow):
+                if columnIndex != subjectColumn:
+                    continue
+                for entityIndex, _entity in enumerate(entity):
+                    (_class, entityUrl) = _entity
+                    if not mainClass in _class:
+                        entities[rowIndex][columnIndex][entityIndex] = (None, None)
 
         #find all properties for each entity-value pair
         properties = collections.defaultdict(dict)
-        propertyCache = os.path.join(cacheFolder, tableId + ".property.star.cache")
         if os.path.exists(propertyCache):
             properties = pickle.load(open(propertyCache, 'rb'))
         else:
             propertySearchTimeStart = time.time()
-            for rowIndex, entitySet in enumerate(entitySets):
-                if entitySet == []:
-                    continue
-                entity = entitySet[0]['disambiguatedURL']
-                if entity == "":
-                    continue
-                for nonSubjectColumn in nonSubjectColumns:
-                    try:
-                        cellValue = tableData[rowIndex][nonSubjectColumn]
-                        properties[rowIndex][nonSubjectColumn] = self.propertySearch.uriLiteralSearch(entity,cellValue)
-                    except:
-                        pass
+            for rowIndex, entityRow in enumerate(entities):
+                for columnIndex, entity in enumerate(entityRow):
+                    if columnIndex != subjectColumn:
+                        continue
+                    if len(entity) <= 0:
+                        continue
+                    for entityIndex, _entity in enumerate(entity):
+                        (_class, entityUrl) = _entity
+                        if entityUrl != None:
+                            for nonSubjectColumn in nonSubjectColumns:
+                                try:
+                                    cellValue = tableData[rowIndex][nonSubjectColumn]
+                                    properties[rowIndex][nonSubjectColumn] = self.propertySearch.uriLiteralSearch(entityUrl,cellValue)
+                                except:
+                                    pass
 
             propertySearchTimeEnd = time.time()
             self.propertySearchTime = propertySearchTimeEnd - propertySearchTimeStart
@@ -171,6 +182,9 @@ class SimplePropertyMapper(object):
                     topProperties.append((topProperty,nonSubjectColumn))
             except IndexError:
                 self.logger.debug("No property identified for column %s"%(nonSubjectColumn))
+
+        #if subject column is identified then subject column should have rdfs:label property
+        topProperties.append(("http://www.w3.org/2000/01/rdf-schema#label", subjectColumn))
 
         endTime = time.time()
         self.executionTimeFull = endTime - startTime
