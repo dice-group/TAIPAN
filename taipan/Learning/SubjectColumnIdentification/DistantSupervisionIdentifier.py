@@ -117,7 +117,8 @@ class DistantSupervisionIdentifier(object):
 
         subjectColumnScores = [0]*numberOfColumns
         for subjectColumn in subjectColumns:
-            subjectColumnScores[subjectColumn] += 1
+            if subjectColumn != None:
+                subjectColumnScores[subjectColumn] += 1
 
         #Normalize
         for columnIndex, subjectColumnScore in enumerate(subjectColumnScores):
