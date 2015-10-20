@@ -67,7 +67,10 @@ class DistantSupervisionIdentifier(object):
         for rowIndex, entityRow in enumerate(entities):
             for columnIndex, entity in enumerate(entityRow):
                 if(len(entity) > 0):
-                    columnScores[columnIndex] += 1
+                    try:
+                        columnScores[columnIndex] += 1
+                    except BaseException as e:
+                        print "%s"%(str(e),)
 
         #Normalize
         for columnIndex, columnScore in enumerate(columnScores):
@@ -107,7 +110,10 @@ class DistantSupervisionIdentifier(object):
             #remove non subject column
             for columnIndex, columnScore in enumerate(columnScores):
                 if columnScore < subjectColumnEntitiesThreshold:
-                    del scores[columnIndex]
+                    try:
+                        del scores[columnIndex]
+                    except BaseException as e:
+                        print "%s"%(str(e))
 
             maximum = None
             if len(scores) > 0:
@@ -118,7 +124,10 @@ class DistantSupervisionIdentifier(object):
         subjectColumnScores = [0]*numberOfColumns
         for subjectColumn in subjectColumns:
             if subjectColumn != None:
-                subjectColumnScores[subjectColumn] += 1
+                try:
+                    subjectColumnScores[subjectColumn] += 1
+                except BaseException as e:
+                    print "%s" % (str(e),)
 
         #Normalize
         for columnIndex, subjectColumnScore in enumerate(subjectColumnScores):

@@ -111,7 +111,10 @@ class SimplePropertyMapper(object):
             for columnIndex, entity in enumerate(entityRow):
                 for entityIndex, _entity in enumerate(entity):
                     (_class, entityUrl) = _entity
-                    classes[columnIndex].append(_class)
+                    try:
+                        classes[columnIndex].append(_class)
+                    except BaseException as e:
+                        print "%s" % (str(e),) 
         #identify the main class for the subject column
         classesSubjectColumn = [item for sublist in classes[subjectColumn] for item in sublist]
         try:
