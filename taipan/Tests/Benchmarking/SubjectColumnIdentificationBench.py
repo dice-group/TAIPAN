@@ -23,8 +23,8 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
         self.testTable = sampler.getTestTable()
         self.dlIdentifier = DistantSupervisionIdentifier()
         self.simpleIdentifier = SimpleIdentifier()
-        #self.testTables20 = sampler.get20Tables()
-        self.testTables = sampler.getTablesSubjectIdentification()
+        self.testTables20 = sampler.get20Tables()
+        #self.testTables = sampler.getTablesSubjectIdentification()
 
     def determineResultsFilename(self, filename):
         import os
@@ -45,8 +45,8 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             spamwriter.writerow(row)
 
 
-    def distantLearningIdentifier(self, rowsToAnalyze, rowsFromCache, tables):
-        resultsFilename = str(rowsFromCache) + "rows.hot.csv.1"
+    def distantLearningIdentifier(self, rowsToAnalyze, rowsFromCache, tables, support, connectivity):
+        resultsFilename = "rows_%s.support_%s.connectivity_%s.hot.csv.1" % (str(rowsFromCache), str(support), str(connectivity),)
         resultsFilename = self.determineResultsFilename(resultsFilename)
         header = ["tableId","rowsToAnalyze","tableSize","subjectColumnIdx","identifiedCorrectly","executionTimeFull","executionTimePure","queryTime","disambiguationTime"]
         self.resultsIterativePrinter(header,resultsFilename)
@@ -55,7 +55,7 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             rowsToAnalyze = rowsFromCache
 
         for table in tables:
-            colNumber = self.dlIdentifier.identifySubjectColumn(table,rowsFromCache=rowsFromCache)
+            colNumber = self.dlIdentifier.identifySubjectColumn(table,rowsFromCache=rowsFromCache,subjectColumnEntitiesThreshold=support,subjectColumnRelationsThreshold=connectivity)
             identifiedCorrectly = table.isSubjectColumn(colNumber)
             tableSize = len(table.getData())
             result = [table.id, rowsToAnalyze, tableSize, colNumber, identifiedCorrectly, self.dlIdentifier.executionTimeFull, self.dlIdentifier.executionTimePure, self.dlIdentifier.queryTime, self.dlIdentifier.agdistisTime]
@@ -79,9 +79,11 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             Subject Column Identified Correctly: 1461
             Precision: 0.866034380557
         """
-        for rowsFromCache in range(1, 20):
-            for tries in range(0, 10):
-                self.distantLearningIdentifier(20, rowsFromCache, self.testTables)
+        #for rowsFromCache in range(1, 20):
+        for support in range(0, 100, 10):
+            for connectivity in range(0, 100, 10):
+                for tries in range(0, 10):
+                    self.distantLearningIdentifier(20, 20, self.testTables20, support, connectivity)
 
     # def testSimpleColumnIdentifierAll(self):
     #     """
