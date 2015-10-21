@@ -23,8 +23,8 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
         self.testTable = sampler.getTestTable()
         self.dlIdentifier = DistantSupervisionIdentifier()
         self.simpleIdentifier = SimpleIdentifier()
-        self.testTables20 = sampler.get20Tables()
-        #self.testTables = sampler.getTablesSubjectIdentification()
+        #self.testTables20 = sampler.get20Tables()
+        self.testTables = sampler.getTablesSubjectIdentification()
 
     def determineResultsFilename(self, filename):
         import os
@@ -83,7 +83,7 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
         for support in range(0, 100, 10):
             for connectivity in range(0, 100, 10):
                 for tries in range(0, 10):
-                    self.distantLearningIdentifier(20, 20, self.testTables20, support, connectivity)
+                    self.distantLearningIdentifier(20, 20, self.testTables, support, connectivity)
 
     # def testSimpleColumnIdentifierAll(self):
     #     """
