@@ -35,10 +35,10 @@ class T2DSampler(object):
 
     def getTablesSubjectIdentification(self):
         tables = []
-        idList = self.getListOfTableIdsWithClasses()
-        for id in idList:
-            if(not id in self.blackList):
-                tables.append(self.getTable(id))
+        idList = self.loadCsv(os.path.join(t2dDataDir, 'subject_column.csv'))
+        for row in idList:
+            _id = row[0]
+            tables.append(self.getTable(_id))
         return tables
 
     def get20Tables(self):

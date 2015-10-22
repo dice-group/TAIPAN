@@ -80,9 +80,9 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             Precision: 0.866034380557
         """
         #for rowsFromCache in range(1, 20):
-        support = 0
-        for connectivity in range(0, 100, 1):
-            self.distantLearningIdentifier(20, 20, self.testTables, support, connectivity)
+        for connectivity in range(0, 100, 10):
+            for support in range(0, 100, 10):
+                self.distantLearningIdentifier(20, 20, self.testTables, support, connectivity)
 
     # def testSimpleColumnIdentifierAll(self):
     #     """

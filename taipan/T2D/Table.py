@@ -9,7 +9,18 @@ class T2DTable(object):
         self.table = self.getTableComplete(id)
         self.classes = self.getClassesComplete(id)
         self.properties = self.getAttributesComplete(id)
+        self.subjectColumn = self.getSubjectColumn(id)
         #self.entities = self.getEntitiesInstance(id)
+
+    def getSubjectColumn(self, id):
+        csv = self.loadCsv(os.path.join(t2dDataDir, 'subject_column.csv'))
+        return self.parseSubjectColumn(csv, id)
+
+    def parseSubjectColumn(self, csv, id):
+        for row in csv:
+            if row[0] == id:
+                return row[1]
+        return None
 
     def getTableComplete(self, id):
         return self.loadCsv(os.path.join(t2dDataDir, 'tables_complete', id))
@@ -145,11 +156,7 @@ class T2DTable(object):
         return self.columnIndex.index(columnNumber)
 
     def isSubjectColumn(self, columnIndex):
-        """
-            This function is wrong! Returns just the number of the row for the header
-        """
-        classIndex = self.getClassIndex()
-        if(columnIndex in classIndex):
+        if(columnIndex == self.subjectColumn):
             return True
         else:
             return False
