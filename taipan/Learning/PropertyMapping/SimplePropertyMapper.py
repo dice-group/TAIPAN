@@ -53,7 +53,7 @@ class SimplePropertyMapper(object):
         results = self.dbpediaSparql.query().convert()['results']['bindings']
         return self.parseResults(results, variableName="class")
 
-    def mapProperties(self, table, rowsToDisambiguate=20, threshold=10):
+    def mapProperties(self, table, rowsToDisambiguate=20, threshold=10, support=0, connectivity=0):
         tableData = table.getData()
         tableHeader = table.getHeader()
         tableId = table.id
@@ -114,7 +114,7 @@ class SimplePropertyMapper(object):
                     try:
                         classes[columnIndex].append(_class)
                     except BaseException as e:
-                        print "%s" % (str(e),) 
+                        print "%s" % (str(e),)
         #identify the main class for the subject column
         classesSubjectColumn = [item for sublist in classes[subjectColumn] for item in sublist]
         try:
@@ -191,7 +191,7 @@ class SimplePropertyMapper(object):
                 self.logger.debug("No property identified for column %s"%(nonSubjectColumn))
 
         #if subject column is identified then subject column should have rdfs:label property
-        topProperties.append(("http://www.w3.org/2000/01/rdf-schema#label", subjectColumn))
+        #topProperties.append(("http://www.w3.org/2000/01/rdf-schema#label", subjectColumn))
 
         endTime = time.time()
         self.executionTimeFull = endTime - startTime

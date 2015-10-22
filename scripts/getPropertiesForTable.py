@@ -11,5 +11,4 @@ subjectColumn = dlIdentifier.identifySubjectColumn(table)
 print subjectColumn
 print table.properties
 print table.classes
-print table.getData()[0:2]
-print table.table
+print table.table[0:10]

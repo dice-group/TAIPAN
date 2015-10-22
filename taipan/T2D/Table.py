@@ -145,6 +145,9 @@ class T2DTable(object):
         return self.columnIndex.index(columnNumber)
 
     def isSubjectColumn(self, columnIndex):
+        """
+            This function is wrong! Returns just the number of the row for the header
+        """
         classIndex = self.getClassIndex()
         if(columnIndex in classIndex):
             return True
