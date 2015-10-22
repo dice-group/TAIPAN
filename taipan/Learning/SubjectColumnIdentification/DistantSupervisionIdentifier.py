@@ -20,12 +20,12 @@ class DistantSupervisionIdentifier(object):
         self.logger = Logger().getLogger(__name__)
         self.agdistisIdentifier = AgdistisIdentifier()
 
-    def identifySubjectColumn(self, table, rowsToAnalyze=20, rowsFromCache=None, subjectColumnEntitiesThreshold=50, subjectColumnRelationsThreshold=50):
+    def identifySubjectColumn(self, table, rowsToAnalyze=20, rowsFromCache=None, support=0, connectivity=0):
         """
             rowsToAnalyze -- how many rows should be evaluated
             rowsFromCache -- can be used to reduce number of rows to be read from cache
-            subjectColumnEntitiesThreshold -- percentage of entities to occur in a column to be considered a candidate for a subject column (columns without entities are not subject column per definition)
-            subjectColumnRelationsThreshold -- percentage of subject columns identified inside the analyzed part of the table (divided by the total number of rows), i.e. 80% means that the same subject column identified for 80% of rows
+            support -- percentage of entities to occur in a column to be considered a candidate for a subject column (columns without entities are not subject column per definition)
+            connectivity -- percentage of subject columns identified inside the analyzed part of the table (divided by the total number of rows), i.e. 80% means that the same subject column identified for 80% of rows
         """
         tableData = table.getData()
         tableHeader = table.getHeader()
@@ -109,7 +109,7 @@ class DistantSupervisionIdentifier(object):
 
             #remove non subject column
             for columnIndex, columnScore in enumerate(columnScores):
-                if columnScore < subjectColumnEntitiesThreshold:
+                if columnScore < support:
                     try:
                         del scores[columnIndex]
                     except BaseException as e:
@@ -133,7 +133,7 @@ class DistantSupervisionIdentifier(object):
         for columnIndex, subjectColumnScore in enumerate(subjectColumnScores):
             subjectColumnScores[columnIndex] = float(subjectColumnScore) / numberOfRows * 100
 
-        subjectColumn = [columnIndex for columnIndex, columnScore in enumerate(subjectColumnScores) if columnScore >= subjectColumnRelationsThreshold]
+        subjectColumn = [columnIndex for columnIndex, columnScore in enumerate(subjectColumnScores) if columnScore >= connectivity]
 
         self.executionEndTimePoint = time.time()
         self.executionTimeFull = self.executionEndTimePoint - self.executionStartTimePoint
