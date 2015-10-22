@@ -19,7 +19,7 @@ class T2DTable(object):
     def parseSubjectColumn(self, csv, id):
         for row in csv:
             if row[0] == id:
-                return row[1]
+                return int(row[1])
         return None
 
     def getTableComplete(self, id):
@@ -156,6 +156,9 @@ class T2DTable(object):
         return self.columnIndex.index(columnNumber)
 
     def isSubjectColumn(self, columnIndex):
+        if(columnIndex == None):
+            columnIndex = -1
+
         if(columnIndex == self.subjectColumn):
             return True
         else:

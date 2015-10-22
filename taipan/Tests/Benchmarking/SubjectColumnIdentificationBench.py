@@ -55,7 +55,7 @@ class SubjectColumnIdentificationBenchTestCase(unittest.TestCase):
             rowsToAnalyze = rowsFromCache
 
         for table in tables:
-            colNumber = self.dlIdentifier.identifySubjectColumn(table,rowsFromCache=rowsFromCache,subjectColumnEntitiesThreshold=support,subjectColumnRelationsThreshold=connectivity)
+            colNumber = self.dlIdentifier.identifySubjectColumn(table,rowsFromCache=rowsFromCache,support=support,connectivity=connectivity)
             identifiedCorrectly = table.isSubjectColumn(colNumber)
             tableSize = len(table.getData())
             result = [table.id, rowsToAnalyze, tableSize, colNumber, identifiedCorrectly, self.dlIdentifier.executionTimeFull, self.dlIdentifier.executionTimePure, self.dlIdentifier.queryTime, self.dlIdentifier.agdistisTime]
