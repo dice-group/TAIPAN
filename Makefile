@@ -10,6 +10,9 @@ install: requirements
 test:
 	python -m unittest discover -s ./taipan/Tests -p "*Test.py"
 
+test-subject-column-support-identifier:
+	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification -p "SupportIdentifierTest.py"
+
 test-t2d-sampler:
 	python -m unittest discover -s ./taipan/Tests/T2D -p "SamplerTest.py"
 
