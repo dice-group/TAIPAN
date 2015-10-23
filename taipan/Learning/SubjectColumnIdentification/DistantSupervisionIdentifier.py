@@ -20,12 +20,13 @@ class DistantSupervisionIdentifier(object):
         self.logger = Logger().getLogger(__name__)
         self.agdistisIdentifier = AgdistisIdentifier()
 
-    def identifySubjectColumn(self, table, rowsToAnalyze=20, rowsFromCache=None, support=0, connectivity=0):
+    def identifySubjectColumn(self, table, rowsToAnalyze=20, rowsFromCache=None, support=0, connectivity=0, threshold=0):
         """
             rowsToAnalyze -- how many rows should be evaluated
             rowsFromCache -- can be used to reduce number of rows to be read from cache
             support -- percentage of entities to occur in a column to be considered a candidate for a subject column (columns without entities are not subject column per definition)
-            connectivity -- percentage of subject columns identified inside the analyzed part of the table (divided by the total number of rows), i.e. 80% means that the same subject column identified for 80% of rows
+            connectivity -- a number of relations subject column should have at least (absolute number)
+            threshold -- percentage of subject columns identified inside the analyzed part of the table (divided by the total number of rows), i.e. 80% means that the same subject column identified for 80% of rows
         """
         tableData = table.getData()
         tableHeader = table.getHeader()
@@ -46,6 +47,7 @@ class DistantSupervisionIdentifier(object):
 
         self.executionStartTimePoint = time.time()
         #identify entities
+        #TODO: get the score from agdistis
         agdistisStartTimePoint = time.time()
         if(os.path.exists(cacheFileEntities)):
             entities = pickle.load(open(cacheFileEntities, 'rb'))
@@ -62,19 +64,18 @@ class DistantSupervisionIdentifier(object):
         agdistisEndTimePoint = time.time()
         self.agdistisTime = agdistisEndTimePoint - agdistisStartTimePoint
 
-        #we consider only column which has at least 80% entities
+        #we consider only column which has at least given support
         columnScores = [0]*numberOfColumns
         for rowIndex, entityRow in enumerate(entities):
             for columnIndex, entity in enumerate(entityRow):
                 if(len(entity) > 0):
-                    try:
-                        columnScores[columnIndex] += 1
-                    except BaseException as e:
-                        print "%s"%(str(e),)
+                    columnScores[columnIndex] += 1
 
         #Normalize
         for columnIndex, columnScore in enumerate(columnScores):
             columnScores[columnIndex] = float(columnScore) / numberOfRows * 100
+
+        #Support based approach ends here: refactor into class
 
         if(os.path.exists(cacheFileRelations)):
             relations = pickle.load(open(cacheFileRelations, 'rb'))
@@ -84,56 +85,61 @@ class DistantSupervisionIdentifier(object):
             relations = []
             for rowIndex, row in enumerate(tableData[:rowsToAnalyze]):
                 rowRels = collections.defaultdict(dict)
-                for itemIndex, item in enumerate(row):
-                    entity = entitiesRow[itemIndex]
-                    for otherItemIndex, otherItem in enumerate(row[itemIndex:]):
-                        otherItemIndex = itemIndex + otherItemIndex
-                        if(row[itemIndex] == row[otherItemIndex]):
-                            rowRels[itemIndex][otherItemIndex] = []
+                for columnIndex, columnValue in enumerate(row):
+                    entity = entities[rowIndex][columnIndex]
+                    for otherColumnIndex, otherColumnValue in enumerate(row[columnIndex:]):
+                        otherColumnIndex = columnIndex + otherColumnIndex
+                        if(row[columnIndex] == row[otherColumnIndex]):
+                            rowRels[columnIndex][otherColumnIndex] = []
                         else:
-                            rel = self.findRelation(item, otherItem, entitiesRow[itemIndex], entitiesRow[otherItemIndex])
-                            rowRels[itemIndex][otherItemIndex] = rel
-                            rowRels[otherItemIndex][itemIndex] = rel
+                            rel = self.findRelation(columnValue, otherColumnValue, entities[rowIndex][columnIndex], entities[rowIndex][otherColumnIndex])
+                            rowRels[columnIndex][otherColumnIndex] = rel
+                            rowRels[otherColumnIndex][columnIndex] = rel
                 relations.append(dict(rowRels))
             #save cache
             pickle.dump(relations, open(cacheFileRelations, "wb" ) )
 
-        subjectColumns = []
-        for relation in relations:
-            scores = collections.defaultdict(dict)
-            for column in relation:
-                score = 0
-                for otherColumn in relation[column]:
-                    score += len(relation[column][otherColumn])
-                scores[column] = score
+        #Make just a connectivity approach!!!
 
-            #remove non subject column
-            for columnIndex, columnScore in enumerate(columnScores):
-                if columnScore < support:
-                    try:
-                        del scores[columnIndex]
-                    except BaseException as e:
-                        print "%s"%(str(e))
+        subjectColumns = []
+        for rowIndex, relation in enumerate(relations):
+            scores = collections.defaultdict(dict)
+            for columnIndex in relation:
+                if columnScores[columnIndex] < support:
+                    continue
+                score = 0
+                for otherColumnIndex in relation[columnIndex]:
+                    score += len(relation[columnIndex][otherColumnIndex])
+                scores[columnIndex] = score
 
             maximum = None
-            if len(scores) > 0:
+            #Connectivity goes here: accept only columns which has more than x relationships
+            if len(scores) > connectivity:
                 maximum = max(scores.iteritems(), key=operator.itemgetter(1))[0]
 
             subjectColumns.append(maximum)
 
+        #Calculate the connectivity for all the rows and then take average!
+        #What we have a boolean classifier
+        #Linear combination is better
+        #Ten cross fold validation (or inverse)
+        #just try different different weights a*connectivity + (1-a)*support --> equivalent for a*connectivity + b+support
+        #For the combination -->
+
+        import ipdb; ipdb.set_trace()
+
         subjectColumnScores = [0]*numberOfColumns
         for subjectColumn in subjectColumns:
             if subjectColumn != None:
-                try:
-                    subjectColumnScores[subjectColumn] += 1
-                except BaseException as e:
-                    print "%s" % (str(e),)
+                subjectColumnScores[subjectColumn] += 1
 
         #Normalize
         for columnIndex, subjectColumnScore in enumerate(subjectColumnScores):
             subjectColumnScores[columnIndex] = float(subjectColumnScore) / numberOfRows * 100
 
-        subjectColumn = [columnIndex for columnIndex, columnScore in enumerate(subjectColumnScores) if columnScore >= connectivity]
+        import ipdb; ipdb.set_trace()
+        #WRONG!!!!
+        #subjectColumn = [columnIndex for columnIndex, columnScore in enumerate(subjectColumnScores) if columnScore >= threshold]
 
         self.executionEndTimePoint = time.time()
         self.executionTimeFull = self.executionEndTimePoint - self.executionStartTimePoint
