@@ -23,8 +23,13 @@ class SupportIdentifier(object):
 
         return supports
 
-    def identifySubjectColumn(self, table, support):
-        entities = self.agdistis.disambiguateTable(table)
-        supports = self.calculateSupport(entities)
-        #Return column with maximum support 
+    def identifySubjectColumn(self, table, supportCeil, supportFloor):
+        supports = self.getSupport(table)
+        #Return column with maximum support
+        supports = [support if support < supportCeil and support > supportFloor else 0 for support in supports]
+        print supports
         return supports.index(max(supports))
+
+    def getSupport(self, table):
+        entities = self.agdistis.disambiguateTable(table)
+        return self.calculateSupport(entities)

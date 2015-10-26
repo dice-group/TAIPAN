@@ -59,23 +59,6 @@ class DistantSupervisionIdentifier(object):
 
         #Make just a connectivity approach!!!
 
-        subjectColumns = []
-        for rowIndex, relation in enumerate(relations):
-            scores = collections.defaultdict(dict)
-            for columnIndex in relation:
-                if columnScores[columnIndex] < support:
-                    continue
-                score = 0
-                for otherColumnIndex in relation[columnIndex]:
-                    score += len(relation[columnIndex][otherColumnIndex])
-                scores[columnIndex] = score
-
-            maximum = None
-            #Connectivity goes here: accept only columns which has more than x relationships
-            if len(scores) > connectivity:
-                maximum = max(scores.iteritems(), key=operator.itemgetter(1))[0]
-
-            subjectColumns.append(maximum)
 
         #Calculate the connectivity for all the rows and then take average!
         #What we have a boolean classifier

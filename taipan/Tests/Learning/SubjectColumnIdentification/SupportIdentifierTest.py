@@ -15,11 +15,19 @@ class SupportIdentifierTestCase(unittest.TestCase):
         self.testTables = sampler.getTablesSubjectIdentification()
 
     def testSupportIdentifier(self):
-        for table in self.testTables:
-            print table.table
-            support = 0
-            subjectColumn = self.scIdentifier.identifySubjectColumn(table, support=support)
-            import ipdb; ipdb.set_trace()
-            print "subjectColumn %s" % (table.subjectColumn,)
-            print "identified %s" % (subjectColumn,)
-            print table.table[0:5]
+        """
+           support = 0 100 | 0.327868852459
+           support = 0.8 97 | 0.327868852459
+           support = 0.8 30 | 0.459016393443
+           support = 0.8 40 | 0.409836065574
+           support = 10 70 | 0.475409836066
+        """
+        precision = 0
+        for tableNum, table in enumerate(self.testTables):
+            supportFloor = 10
+            supportCeil = 70
+            subjectColumn = self.scIdentifier.identifySubjectColumn(table, supportCeil, supportFloor)
+            if table.isSubjectColumn(subjectColumn):
+                precision += 1
+
+        print float(precision) / len(self.testTables)

@@ -1,3 +1,10 @@
+try:
+   import cPickle as pickle
+except:
+   import pickle
+import os.path
+import collections
+
 from taipan.Logging.Logger import Logger
 from taipan.Config.Pathes import cacheFolder
 from taipan.Search.PropertySearch import PropertySearchDbpediaSparql
@@ -7,7 +14,7 @@ class PropertyTableSearch(object):
         self.logger = Logger().getLogger(__name__)
 
     def findRelationsForTable(self, table, entities):
-        cacheFileRelations = os.path.join(cacheFolder, tableId + ".relations.cache")
+        cacheFileRelations = os.path.join(cacheFolder, table.id + ".relations.cache")
         tableData = table.getData()
 
         if(os.path.exists(cacheFileRelations)):
