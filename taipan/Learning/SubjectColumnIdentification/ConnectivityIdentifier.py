@@ -33,13 +33,15 @@ class ConnectivityIdentifier(object):
                 _weights[columnIndex] += weight
 
             #Apply weights
-            if applyWeights:
-                maximumWeight = max(_weights)
-                if maximumWeight == 0:
-                    connectivity[columnIndex] = _connectivity[columnIndex]
+            maximumWeight = max(_weights)
+            for columnIndex, w in enumerate(_weights):
+                if applyWeights:
+                    if maximumWeight == 0:
+                        connectivity[columnIndex] += _connectivity[columnIndex]
+                    else:
+                        connectivity[columnIndex] += _connectivity[columnIndex] * (float(w) / maximumWeight)
                 else:
-                    for columnIndex, w in enumerate(_weights):
-                        connectivity[columnIndex] = _connectivity[columnIndex] * (float(w) / maximumWeight)
+                    connectivity[columnIndex] += _connectivity[columnIndex]
 
         #Normalize by number of rows
         for columnIndex, _connectivity in enumerate(connectivity):
@@ -47,9 +49,16 @@ class ConnectivityIdentifier(object):
 
         return connectivity
 
-    def identifySubjectColumn(self, table, applyWeights=False):
+    def identifySubjectColumn(self, table, applyWeights=False, connectivityFloor=0, connectivityCeil=100):
+        connectivity = self.getConnectivity(table, applyWeights)
+        connectivity = [_connectivity if _connectivity > connectivityFloor and _connectivity < connectivityCeil else 0 for _connectivity in connectivity]
+        #Return column with maximum support
+        if max(connectivity) == 0:
+            return -1
+        else:
+            return connectivity.index(max(connectivity))
+
+    def getConnectivity(self, table, applyWeights=False):
         entities = self.agdistis.disambiguateTable(table)
         relations = self.propertyTableSearch.findRelationsForTable(table, entities)
-        connectivity = self.calculateConnectivity(relations, applyWeights)
-        #Return column with maximum support
-        return connectivity.index(max(connectivity))
+        return self.calculateConnectivity(relations, applyWeights)

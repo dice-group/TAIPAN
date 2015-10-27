@@ -13,6 +13,9 @@ test:
 test-subject-column-support-identifier:
 	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification -p "SupportIdentifierTest.py"
 
+test-subject-column-support-connectivity-identifier:
+	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification -p "SupportConnectivityIdentifierTest.py"
+
 test-subject-column-connectivity-identifier:
 	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification -p "ConnectivityIdentifierTest.py"
 
