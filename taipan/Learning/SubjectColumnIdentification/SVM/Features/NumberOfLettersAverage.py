@@ -6,7 +6,7 @@ class NumberOfLettersAverage(FeatureInterface):
     def __init__(self):
         self.decimal = re.compile(r'[\d.]+')
 
-    def calculate(self, column):
+    def calculate(self, column, columnIndex, table):
         count = 0
         for cell in column:
             filteredCell = self.decimal.sub('', cell)

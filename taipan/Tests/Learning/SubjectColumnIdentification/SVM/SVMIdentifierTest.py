@@ -28,5 +28,5 @@ class SVMIdentifierTestCase(unittest.TestCase):
         precision_1 = float(falsePositives) / len(testTables)
         fmeasure = recall*precision_1
         print "recall: %s" % recall
-        print "precision_1: %s" % precision_1
-        print "f measure: %s" % fmeasure
+        print "false positives: %s" % precision_1
+        #print "f measure: %s" % fmeasure

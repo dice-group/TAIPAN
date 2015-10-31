@@ -20,16 +20,16 @@ class SVMIdentifier(object):
     fold=10
 
     def __init__(self):
-        self.clf = svm.SVC(gamma=0.001, C=100.)
+        self.clf = svm.SVC()
+        #self.clf = svm.LinearSVC()
         trainingTables = self.getAnnotatedTables()
         (featureVectors, targetVector) = self.calculateFeaturesTables(trainingTables)
-        import ipdb; ipdb.set_trace()
         self.clf.fit(featureVectors, targetVector)
 
-    def calculateFeaturesColumn(self, column, columnIndex):
+    def calculateFeaturesColumn(self, column, columnIndex, table):
         featureVector = []
         for feature in FeatureList:
-            featureVector.append(feature.calculate(column))
+            featureVector.append(feature.calculate(column, columnIndex, table))
         return featureVector
 
     def calculateFeaturesTable(self, table):
@@ -38,7 +38,7 @@ class SVMIdentifier(object):
         columnFeatureVectors = []
         targetVector = []
         for columnIndex, column in enumerate(tableColumns):
-            columnFeatureVectors.append(self.calculateFeaturesColumn(column, columnIndex))
+            columnFeatureVectors.append(self.calculateFeaturesColumn(column, columnIndex, table))
             targetVector.append(table.isSubjectColumn(columnIndex))
         return (columnFeatureVectors, targetVector)
 
