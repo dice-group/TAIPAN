@@ -16,15 +16,15 @@ class SVMIdentifier(object):
         - Average number of words in each cell
         - Column index from left
     """
+    #set to None for production
     fold=10
+
     def __init__(self):
         self.clf = svm.SVC(gamma=0.001, C=100.)
-        (featureVectors, targetVector) = self.calculateFeaturesTables()
-        self.trainingFeatureVectors = featureVectors[:fold-1]
-        self.trainingTargetVector = targetVector[:fold-1]
-        self.validationFeatureVectors = featureVectors[fold-1:]
-        self.validationTargetVector = targetVector[fold-1:]
-        self.clf.fit(self.trainingFeatureVectors, self.trainingTargetVector)
+        trainingTables = self.getAnnotatedTables()
+        (featureVectors, targetVector) = self.calculateFeaturesTables(trainingTables)
+        import ipdb; ipdb.set_trace()
+        self.clf.fit(featureVectors, targetVector)
 
     def calculateFeaturesColumn(self, column, columnIndex):
         featureVector = []
@@ -47,22 +47,50 @@ class SVMIdentifier(object):
         targetVector = []
         for table in annotatedTables:
             (tableFeatureVector, tableTargetVector) = self.calculateFeaturesTable(table)
-            featureVectors.extend(columnFeatureVectors)
+            featureVectors.extend(tableFeatureVector)
             targetVector.extend(tableTargetVector)
         return (featureVectors, targetVector)
 
-    def getAnnotatedTables(self):
+    def getTables(self):
         sampler = T2DSampler()
-        tables = sampler.getTablesSubjectIdentification()[:self.fold]
+        return sampler.getTablesSubjectIdentification()
+
+    def getAnnotatedTables(self):
+        fold = self.fold
+        tables = self.getTables()
+        if fold != None:
+            length = int(len(tables)/fold*(fold-1))
+            return tables[:length]
+        else:
+            return tables
 
     def getTestingTables(self):
-        sampler = T2DSampler()
-        return sampler.getTablesSubjectIdentification()[self.fold:]
+        fold = self.fold
+        tables = self.getTables()
+        if fold != None:
+            length = int(len(tables)/fold*(fold-1))
+            return tables[length:]
+        else:
+            return []
+
+    def getIndicesValue(self, lst, value):
+        start_at = -1
+        locs = []
+        while True:
+            try:
+                loc = lst.index(value,start_at+1)
+            except ValueError:
+                break
+            else:
+                locs.append(loc)
+                start_at = loc
+        return locs
 
     def identifySubjectColumn(self, table):
-        predictedValues = self.clf.predict(validationData)
-
-if __name__ == "__main__":
-    import ipdb; ipdb.set_trace()
-    svm = SVMIdentifier()
-    svm.nFoldValidation(3)
+        (tableFeatureVector, tableTargetVector) = self.calculateFeaturesTable(table)
+        predictedValues = self.clf.predict(tableFeatureVector).tolist()
+        subjectColumnIndices = self.getIndicesValue(predictedValues, True)
+        if subjectColumnIndices == []:
+            return [-1]
+        else:
+            return subjectColumnIndices
