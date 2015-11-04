@@ -4,6 +4,8 @@ from sklearn.linear_model import SGDClassifier
 from sklearn import tree
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.neighbors.nearest_centroid import NearestCentroid
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
 
 import numpy as np
 
@@ -23,7 +25,8 @@ class SupervisedIdentifier(object):
         - Column index from left
     """
     #set to None for production
-    fold=10
+    fold = 10
+    selectKBest = SelectKBest(chi2, k=5) #use only 5 top features
 
     classifiers = [
         svm.SVC(),
@@ -32,7 +35,8 @@ class SupervisedIdentifier(object):
         SGDClassifier(loss="hinge", penalty="l2"),
         tree.DecisionTreeClassifier(max_depth=5),
         GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=1, random_state=0),
-        NearestCentroid()
+        NearestCentroid(),
+        SGDClassifier(loss="perceptron", eta0=1, learning_rate="constant", penalty=None)
     ]
 
     def __init__(self, classifierType=4):
@@ -64,7 +68,11 @@ class SupervisedIdentifier(object):
             (tableFeatureVector, tableTargetVector) = self.calculateFeaturesTable(table)
             featureVectors.extend(tableFeatureVector)
             targetVector.extend(tableTargetVector)
-        return (featureVectors, targetVector)
+
+        #get k best features
+        self.selectKBest.fit(featureVectors, targetVector)
+
+        return (self.selectKBest.transform(featureVectors), targetVector)
 
     def getTables(self):
         sampler = T2DSampler()
@@ -103,6 +111,7 @@ class SupervisedIdentifier(object):
 
     def identifySubjectColumn(self, table):
         (tableFeatureVector, tableTargetVector) = self.calculateFeaturesTable(table)
+        tableFeatureVector = self.selectKBest.transform(tableFeatureVector)
         predictedValues = self.clf.predict(tableFeatureVector).tolist()
         subjectColumnIndices = self.getIndicesValue(predictedValues, True)
         if subjectColumnIndices == []:

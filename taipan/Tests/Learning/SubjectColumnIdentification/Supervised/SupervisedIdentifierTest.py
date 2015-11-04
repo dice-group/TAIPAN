@@ -40,7 +40,6 @@ class SVMIdentifierTestCase(unittest.TestCase):
                 recall: 0.8
                 false positives: 0.2
 
-
             5 -- GradientBoostingClassifier()
                 recall: 0.533333333333
                 false positives: 0.466666666667
@@ -48,6 +47,12 @@ class SVMIdentifierTestCase(unittest.TestCase):
             6 -- NearestCentroid()
                 recall: 0.416666666667
                 false positives: 0.958333333333
+
+            7 -- SGDClassifier(loss="perceptron", eta0=1, learning_rate="constant", penalty=None)
+                recall: 0.333333333333
+                false positives: 0.666666666667
+
+
         """
         testTables = self.scIdentifier.getTestingTables()
         recall = 0
