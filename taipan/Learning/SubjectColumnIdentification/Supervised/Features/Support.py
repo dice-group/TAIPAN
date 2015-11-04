@@ -1,6 +1,6 @@
 from taipan.Learning.SubjectColumnIdentification.SupportIdentifier import SupportIdentifier
 
-from taipan.Learning.SubjectColumnIdentification.SVM.Features.FeatureInterface import FeatureInterface
+from .FeatureInterface import FeatureInterface
 
 class Support(FeatureInterface):
     def __init__(self):

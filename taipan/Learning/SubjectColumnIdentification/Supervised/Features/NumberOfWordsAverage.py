@@ -1,6 +1,6 @@
 import re
 
-from taipan.Learning.SubjectColumnIdentification.SVM.Features.FeatureInterface import FeatureInterface
+from .FeatureInterface import FeatureInterface
 
 class NumberOfWordsAverage(FeatureInterface):
     def calculate(self, column, columnIndex, table):

@@ -1,10 +1,16 @@
 from sklearn import svm
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import SGDClassifier
+from sklearn import tree
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.neighbors.nearest_centroid import NearestCentroid
+
 import numpy as np
 
 from taipan.T2D.Sampler import T2DSampler
-from taipan.Learning.SubjectColumnIdentification.SVM.Features import FeatureList
+from taipan.Learning.SubjectColumnIdentification.Supervised.Features import FeatureList
 
-class SVMIdentifier(object):
+class SupervisedIdentifier(object):
     """
         According to Recovering Semantics of Tables on The Web, 2011
         should have precision of 94%
@@ -19,9 +25,18 @@ class SVMIdentifier(object):
     #set to None for production
     fold=10
 
-    def __init__(self):
-        self.clf = svm.SVC()
-        #self.clf = svm.LinearSVC()
+    classifiers = [
+        svm.SVC(),
+        svm.LinearSVC(),
+        KNeighborsClassifier(),
+        SGDClassifier(loss="hinge", penalty="l2"),
+        tree.DecisionTreeClassifier(max_depth=5),
+        GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=1, random_state=0),
+        NearestCentroid()
+    ]
+
+    def __init__(self, classifierType=4):
+        self.clf = self.classifiers[classifierType]
         trainingTables = self.getAnnotatedTables()
         (featureVectors, targetVector) = self.calculateFeaturesTables(trainingTables)
         self.clf.fit(featureVectors, targetVector)

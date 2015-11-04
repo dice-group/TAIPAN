@@ -13,8 +13,8 @@ test:
 test-subject-column-support-identifier:
 	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification -p "SupportIdentifierTest.py"
 
-test-subject-column-svm-identifier:
-	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification/SVM -p "SVMIdentifierTest.py"
+test-subject-column-supervised-identifier:
+	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification/Supervised -p "SupervisedIdentifierTest.py"
 
 test-subject-column-support-connectivity-identifier:
 	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification -p "SupportConnectivityIdentifierTest.py"
@@ -53,6 +53,15 @@ requirements:
 	pip install numpy
 	pip install requests
 	pip install SPARQLWrapper
+
+requirements-server:
+	pip install flask
+	pip install psycopg2
+	pip install sqlalchemy flask-sqlalchemy
+
+database:
+	sudo -u postgres psql -c "create user iermilov with password 'sup3rstr0ngpassw0rd!!!';"
+	sudo -u postgres psql -c "create database tableannotations owner iermilov encoding 'utf-8';"
 
 get-properties-for-table:
 	python scripts/getPropertiesForTable.py ${ARGS}

@@ -1,6 +1,6 @@
 from taipan.Learning.SubjectColumnIdentification.ConnectivityIdentifier import ConnectivityIdentifier
 
-from taipan.Learning.SubjectColumnIdentification.SVM.Features.FeatureInterface import FeatureInterface
+from .FeatureInterface import FeatureInterface
 
 class Connectivity(FeatureInterface):
     def __init__(self):

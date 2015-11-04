@@ -1,4 +1,4 @@
-from taipan.Learning.SubjectColumnIdentification.SVM.Features.FeatureInterface import FeatureInterface
+from .FeatureInterface import FeatureInterface
 
 class CellsWithUniqueContentFraction(FeatureInterface):
     def calculate(self, column, columnIndex, table):
