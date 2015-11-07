@@ -51,8 +51,6 @@ class SVMIdentifierTestCase(unittest.TestCase):
             7 -- SGDClassifier(loss="perceptron", eta0=1, learning_rate="constant", penalty=None)
                 recall: 0.333333333333
                 false positives: 0.666666666667
-
-
         """
         testTables = self.scIdentifier.getTestingTables()
         recall = 0
