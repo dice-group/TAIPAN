@@ -26,7 +26,7 @@ class SupervisedIdentifier(object):
     """
     #set to None for production
     fold = 10
-    selectKBest = SelectKBest(chi2, k=5) #use only 5 top features
+    selectKBest = SelectKBest(chi2, k="all") #use only 5 top features
 
     classifiers = [
         svm.SVC(),
@@ -57,7 +57,9 @@ class SupervisedIdentifier(object):
         columnFeatureVectors = []
         targetVector = []
         for columnIndex, column in enumerate(tableColumns):
-            columnFeatureVectors.append(self.calculateFeaturesColumn(column, columnIndex, table))
+            featureVector = self.calculateFeaturesColumn(column, columnIndex, table)
+            #featureVector.append(columnIndex)
+            columnFeatureVectors.append(featureVector)
             targetVector.append(table.isSubjectColumn(columnIndex))
         return (columnFeatureVectors, targetVector)
 

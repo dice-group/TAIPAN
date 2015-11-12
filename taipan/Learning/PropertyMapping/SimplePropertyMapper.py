@@ -19,13 +19,8 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from taipan.Config.ExternalUris import dbpediaSparqlEndpointUri
 
 class SimplePropertyMapper(object):
-    """
-
-    """
-
     def __init__(self):
         self.logger = Logger().getLogger(__name__)
-        self.dlIdentifier = DistantSupervisionIdentifier()
         self.agdistisIdentifier = AgdistisIdentifier()
         self.dbpediaSparql = SPARQLWrapper(dbpediaSparqlEndpointUri)
         self.dbpediaSparql.setReturnFormat(JSON)
@@ -53,59 +48,27 @@ class SimplePropertyMapper(object):
         results = self.dbpediaSparql.query().convert()['results']['bindings']
         return self.parseResults(results, variableName="class")
 
-    def mapProperties(self, table, rowsToDisambiguate=20, threshold=10, support=0, connectivity=0):
-        tableData = table.getData()
-        tableHeader = table.getHeader()
-        tableId = table.id
-        numberOfRows = len(tableData)
-        numberOfColumns = len(tableData[0])
-        subjectColumn = self.dlIdentifier.identifySubjectColumn(table)
-        self.subjectColumn = subjectColumn
-        self.subjectColumnCorrect = table.isSubjectColumn(subjectColumn)
-
-        self.executionTimeFull = 0
-        self.executionTimePure = 0
-        self.disambiguationTime = 0
-        self.classSearchTime = 0
-        self.propertySearchTime = 0
-        self.seedListContains = 0
-        if subjectColumn == None:
-            return []
-
-        nonSubjectColumns = range(0,len(tableData[0]))
-        nonSubjectColumns.remove(subjectColumn)
-
+    def getEntities(self, tableId):
         entitiesCacheFile = os.path.join(cacheFolder, tableId + ".entities.cache")
-        entitiesWithClassesCache = os.path.join(cacheFolder, tableId + ".entities.with.classes.cache")
-        propertyCache = os.path.join(cacheFolder, tableId + ".property.star.cache")
-        self.logger.debug("Identifying properties for a table %s"%(tableId))
-
-
-        startTime = time.time()
-
-        #load disambiguation from cache
-        entities = []
         if os.path.exists(entitiesCacheFile):
-            entities = pickle.load(open(entitiesCacheFile, 'rb'))
+            return pickle.load(open(entitiesCacheFile, 'rb'))
         else:
             raise EntitiesDataStructureNotFound("Entities data structure not available. Did you run subject column identification?")
 
-        ## get all classes for those
-        ## take the most frequent one
-        ## filter out all other disambiguations
-        ## annotate entities with classes
+    def getEntitiesWithClasses(self, tableId):
+        entities = self.getEntities(tableId)
+        entitiesWithClassesCache = os.path.join(cacheFolder, tableId + ".entities.with.classes.cache")
         if os.path.exists(entitiesWithClassesCache):
             entities = pickle.load(open(entitiesWithClassesCache, 'rb'))
         else:
-            classSearchTimeStart = time.time()
             for rowIndex, entityRow in enumerate(entities):
                 for columnIndex, entity in enumerate(entityRow):
                     for entityIndex, _entity in enumerate(entity):
                         entity[entityIndex] = (self.getClassForEntity(_entity), _entity)
-            classSearchTimeEnd = time.time()
-            self.classSearchTime = classSearchTimeEnd - classSearchTimeStart
             pickle.dump(entities, open(entitiesWithClassesCache, "wb" ) )
+        return entities
 
+    def getClasses(self, entities, numberOfColumns):
         classes = [[]]*numberOfColumns
         for rowIndex, entityRow in enumerate(entities):
             for columnIndex, entity in enumerate(entityRow):
@@ -115,7 +78,9 @@ class SimplePropertyMapper(object):
                         classes[columnIndex].append(_class)
                     except BaseException as e:
                         print "%s" % (str(e),)
-        #identify the main class for the subject column
+        return classes
+
+    def getMainClassForSubjectColumn(self, classes, subjectColumn):
         classesSubjectColumn = [item for sublist in classes[subjectColumn] for item in sublist]
         try:
             classCount = len(classesSubjectColumn)
@@ -124,12 +89,9 @@ class SimplePropertyMapper(object):
         except IndexError:
             self.logger.debug("Main class could not be identified")
             mainClass = ""
+        return mainClass
 
-        #inject not mainClass row for a test
-        #entities[0][subjectColumn][0] = (["gibberish:class"], "dbpedia:someCountry")
-
-        #Wipe everything which is not mainClass
-        #In subject column
+    def filterNonMainClassEntities(self, entities, mainClass, subjectColumn):
         for rowIndex, entityRow in enumerate(entities):
             for columnIndex, entity in enumerate(entityRow):
                 if columnIndex != subjectColumn:
@@ -138,13 +100,14 @@ class SimplePropertyMapper(object):
                     (_class, entityUrl) = _entity
                     if not mainClass in _class:
                         entities[rowIndex][columnIndex][entityIndex] = (None, None)
+        return entities
 
-        #find all properties for each entity-value pair
+    def findProperties(self, tableId, tableData, entities, subjectColumn, nonSubjectColumns):
+        propertyCache = os.path.join(cacheFolder, tableId + ".property.star.cache")
         properties = collections.defaultdict(dict)
         if os.path.exists(propertyCache):
             properties = pickle.load(open(propertyCache, 'rb'))
         else:
-            propertySearchTimeStart = time.time()
             for rowIndex, entityRow in enumerate(entities):
                 for columnIndex, entity in enumerate(entityRow):
                     if columnIndex != subjectColumn:
@@ -155,32 +118,24 @@ class SimplePropertyMapper(object):
                         (_class, entityUrl) = _entity
                         if entityUrl != None:
                             for nonSubjectColumn in nonSubjectColumns:
-                                try:
-                                    cellValue = tableData[rowIndex][nonSubjectColumn]
-                                    properties[rowIndex][nonSubjectColumn] = self.propertySearch.uriLiteralSearch(entityUrl,cellValue)
-                                except:
-                                    pass
-
-            propertySearchTimeEnd = time.time()
-            self.propertySearchTime = propertySearchTimeEnd - propertySearchTimeStart
+                                cellValue = tableData[rowIndex][nonSubjectColumn]
+                                properties[rowIndex][nonSubjectColumn] = self.propertySearch.uriLiteralSearch(entityUrl,cellValue)
             pickle.dump(properties, open(propertyCache, "wb" ) )
+        return properties
 
-        #Aggregate properties for each atomic table
+    def aggregateProperties(self, properties, nonSubjectColumns):
         propertiesAggregate = collections.defaultdict(dict)
         for nonSubjectColumn in nonSubjectColumns:
             propertiesAggregate[nonSubjectColumn] = []
         for row in properties:
             for nonSubjectColumn in nonSubjectColumns:
-                try:
                     propertiesAggregate[nonSubjectColumn].append(properties[row][nonSubjectColumn])
-                except:
-                    pass
+        return propertiesAggregate
 
-        #Flatten
+    def getTopProperties(self, propertiesAggregate, nonSubjectColumns, threshold):
         topProperties = []
         for nonSubjectColumn in nonSubjectColumns:
             propertiesAggregate[nonSubjectColumn] = [item for sublist in propertiesAggregate[nonSubjectColumn] for item in sublist]
-            #And take top property
             try:
                 (topProperty, support) = Counter(propertiesAggregate[nonSubjectColumn]).most_common(1)[0]
                 #In percents
@@ -189,17 +144,32 @@ class SimplePropertyMapper(object):
                     topProperties.append((topProperty,nonSubjectColumn))
             except IndexError:
                 self.logger.debug("No property identified for column %s"%(nonSubjectColumn))
+        return topProperties
+
+    def mapProperties(self, table, rowsToDisambiguate=20, threshold=10, support=0, connectivity=0):
+        tableData = table.getData()
+        tableHeader = table.getHeader()
+        tableId = table.id
+        numberOfRows = len(tableData)
+        numberOfColumns = len(tableData[0])
+        subjectColumn = table.subjectColumn
+        if subjectColumn == None or subjectColumn == -1:
+            return []
+
+        nonSubjectColumns = range(0,len(tableData[0]))
+        nonSubjectColumns.remove(subjectColumn)
+
+        self.logger.debug("Identifying properties for a table %s"%(tableId))
+
+        entities = self.getEntitiesWithClasses(tableId)
+        classes = self.getClasses(entities, numberOfColumns)
+        mainClass = self.getMainClassForSubjectColumn(classes, subjectColumn)
+        entities = self.filterNonMainClassEntities(entities, mainClass, subjectColumn)
+        properties = self.findProperties(tableId, tableData, entities, subjectColumn, nonSubjectColumns)
+        propertiesAggregate = self.aggregateProperties(properties, nonSubjectColumns)
+        topProperties = self.getTopProperties(propertiesAggregate, nonSubjectColumns, threshold)
 
         #if subject column is identified then subject column should have rdfs:label property
         #topProperties.append(("http://www.w3.org/2000/01/rdf-schema#label", subjectColumn))
-
-        endTime = time.time()
-        self.executionTimeFull = endTime - startTime
-        self.executionTimePure = self.executionTimeFull - self.disambiguationTime - self.classSearchTime - self.propertySearchTime
-
-        #check if seed properties contain properties we are trying to find
-        for _property in table.properties:
-            if _property['uri'] in propertiesAggregate[_property['columnIndex']]:
-                self.seedListContains += 1
 
         return topProperties

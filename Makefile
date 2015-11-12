@@ -56,12 +56,9 @@ requirements:
 
 requirements-server:
 	pip install flask
-	pip install psycopg2
-	pip install sqlalchemy flask-sqlalchemy
-
-database:
-	sudo -u postgres psql -c "create user iermilov with password 'sup3rstr0ngpassw0rd!!!';"
-	sudo -u postgres psql -c "create database tableannotations owner iermilov encoding 'utf-8';"
+	pip install flask-wtf
+	pip install oauth2client
+	pip install PyOpenSSL
 
 get-properties-for-table:
 	python scripts/getPropertiesForTable.py ${ARGS}

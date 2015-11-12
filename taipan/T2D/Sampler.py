@@ -3,6 +3,7 @@ from taipan.T2D.Table import T2DTable
 import os.path
 import os
 import numpy
+import random
 
 class T2DSampler(object):
     blackList = [
@@ -15,6 +16,9 @@ class T2DSampler(object):
         tablesCompletePath = os.path.join(t2dDataDir, 'tables_complete')
         ids = [ f for f in os.listdir(tablesCompletePath) if os.path.isfile(os.path.join(tablesCompletePath,f)) ]
         return ids
+
+    def getRandomTable(self):
+        return random.choice(self.getTables())
 
     def getListOfTableIdsWithClasses(self):
         allClasses = self.loadCsv(os.path.join(t2dDataDir, 'classes_complete.csv'))

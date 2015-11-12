@@ -7,16 +7,21 @@ from taipan.Learning.PropertyMapping.SimplePropertyMapper import SimplePropertyM
 class SimplePropertyMappingTestCase(unittest.TestCase):
     def setUp(self):
         sampler = T2DSampler()
-        self.testTable = sampler.getTestTable()
+        self.testTables = sampler.getTablesSubjectIdentification()
         self.simplePropertyMapper = SimplePropertyMapper()
-        #self.testTables20 = sampler.get20Tables()
-        #self.testTables = sampler.getTablesSubjectIdentification()
 
     def testMapProperties(self):
-        properties = self.simplePropertyMapper.mapProperties(self.testTable)
-        for _property in properties:
-            (uri, index) = _property
-            print "Property identified: %s" % (uri,)
-            print "Column Index: %s" % (index,)
-            print "Correct?"
-            print self.testTable.isProperty(_property)
+        import logging
+        logger = logging.getLogger("taipan.Learning.PropertyMapping.SimplePropertyMapper")
+        logger.disabled = True
+
+        for num, table in enumerate(self.testTables):
+            print "table %s" %(num,)
+            properties = self.simplePropertyMapper.mapProperties(table)
+            toPrint = ""
+            for _property in properties:
+                (uri, index) = _property
+                toPrint += "Uri: %s Column Index %s \n" % (uri,index)
+            print toPrint
+            print table.properties
+            print table.table[:5]
