@@ -18,7 +18,9 @@ class T2DSampler(object):
         return ids
 
     def getRandomTable(self):
-        return random.choice(self.getTables())
+        ids = self.getListOfTableIds()
+        _id = random.choice(ids)
+        return self.getTable(_id)
 
     def getListOfTableIdsWithClasses(self):
         allClasses = self.loadCsv(os.path.join(t2dDataDir, 'classes_complete.csv'))

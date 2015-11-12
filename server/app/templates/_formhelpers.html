@@ -11,7 +11,7 @@
 {% endmacro %}
 
 {% macro render_field_red(field) %}
-  <div style="color:red;"> 
+  <div style="color:red;">
     {{ field.label }}
     {{ field(**kwargs)|safe }}
     {% if field.errors %}

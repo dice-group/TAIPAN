@@ -4,9 +4,10 @@
 {% block content %}
   <div class="container">
     <h1>Subject Column Annotator</h1>
+
     {% from "_formhelpers.html" import render_field %}
     {% from "_formhelpers.html" import render_field_red %}
-    <form method=post action="/table/annotateSubjectColumn">
+    <form id="SubjectColumnIdentification-form" method=post action="/table/annotateSubjectColumn/{{username}}/{{tableId}}">
       <dl>
         <div class="container">
           <div class="row">
@@ -16,8 +17,26 @@
             <div class="span2">
               {{ render_field_red(form.noSubjectColumn) }}
             </div>
-            <div class="span2" style="position: relative; top:10px;">
-              <input type=submit value=NextTable>
+            <div class="span4">
+              <table>
+                <tr>
+                  {% for subfield in form.tableType %}
+                      <td class="radio-button">{{ subfield.label }} {{ subfield }}</td>
+                  {% endfor %}
+                </tr>
+              </table>
+            </div>
+            <div class="span2" style="position: relative; top:15px;">
+              <table>
+                <tr>
+                  <td>
+                    <input id="submit-button" class="btn btn-primary" type=submit value=NextTable onclick="submitClicked(event)">
+                  </td>
+                  <td>
+                    <div id="spinner" style="display:none;" class="loader"><div class="loader-inner semi-circle-spin"><div></div></div></div>
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
@@ -25,36 +44,79 @@
     </form>
   </div>
 
+  <!-- render table and other data here -->
+
   <div class="container">
     <table class="table">
         <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
+          {% for row in table.table[0:1] %}
+            <tr>
+            {% for cell in row %}
+                <th class="col-{{loop.index - 1}}" onclick="setSubjectColumn(event)" onmouseenter="highlightColumn(event)" onmouseout="unHighlightColumn(event)">{{cell.decode('utf-8')}}</th>
+            {% endfor %}
+            </tr>
+          {% endfor %}
         </thead>
         <tbody>
+          {% for row in table.table[1:10] %}
           <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            {% for cell in row %}
+              <td class="col-{{loop.index - 1}}" onclick="setSubjectColumn(event)" onmouseenter="highlightColumn(event)" onmouseout="unHighlightColumn(event)">{{cell.decode('utf-8')}}</td>
+            {% endfor %}
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
   </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="span12 well" style="type-face:bold; position: relative; top:15px; text-align:center;">
+        <p>{{username}}, you have annotated {{numOfAnnotatedTables}} tables!</p>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    function setSubjectColumn(event) {
+      var columnNumber = event.target.classList[0].split('-');
+      columnNumber = columnNumber[columnNumber.length - 1];
+      var subjectColumnField = document.getElementById("subjectColumn");
+      subjectColumnField.value = columnNumber;
+    }
+
+    function highlightColumn(event) {
+      var columnClass = event.target.classList[0];
+      var columnElements = document.getElementsByClassName(columnClass);
+      for (var i = 0; i < columnElements.length; i++) {
+        columnElements[i].classList.add("well");
+      }
+    }
+
+    function unHighlightColumn(event) {
+      var columnClass = event.target.classList[0];
+      var columnElements = document.getElementsByClassName(columnClass);
+      for (var i = 0; i < columnElements.length; i++) {
+        columnElements[i].classList.remove("well");
+      }
+    }
+
+    function submitClicked(event) {
+      document.getElementById('submit-button').disabled=true;
+      var spinner = document.getElementById('spinner');
+      spinner.style.display = 'block';
+      document.getElementById('SubjectColumnIdentification-form').submit();
+    }
+  </script>
+  <style>
+  table {
+    cursor: pointer;
+  }
+  .radio-button {
+    outline: 1px #073CAC dotted;
+    padding: 10px;
+  }
+  .semi-circle-spin > div {
+    background-image: linear-gradient(transparent 0,transparent 70%,#000 30%,#000 100%);
+  }
+  </style>
 {% endblock %}

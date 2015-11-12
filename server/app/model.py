@@ -3,7 +3,6 @@ import json
 from oauth2client.client import SignedJwtAssertionCredentials
 import os.path
 import uuid
-from collections import Counter
 
 #The spreadsheet should be shared with the email address from the json file
 #see the docs here: http://gspread.readthedocs.org/en/latest/oauth2.html
@@ -22,20 +21,23 @@ class GoogleSpreadsheet(object):
             return self.wks.worksheet(name)
         except gspread.WorksheetNotFound:
             rows = 1
-            cols = 3
+            cols = 4
             worksheet = self.wks.add_worksheet(name, rows, cols)
             worksheet.update_acell('A1', 'TableId')
             worksheet.update_acell('B1', 'SubjectColumnIndex')
             worksheet.update_acell('C1', 'NoSubjectColumn')
+            worksheet.update_acell('D1', 'TableType')
             return worksheet
 
     def getIdentifiedTableIds(self):
-        aggregateWorksheet = self.wks.worksheet("Aggregate")
-        #skip the header
-        identifiedIds = aggregateWorksheet.col_values(1)[1:]
+        worksheets = self.wks.worksheets()
+        identifiedIds = []
+        for worksheet in worksheets:
+            identifiedIds.extend(worksheet.col_values(1)[1:])
         return identifiedIds
 
 if __name__ == "__main__":
     googleSpreadsheet = GoogleSpreadsheet()
-    ivanWorksheet = googleSpreadsheet.createOrGetNamedWorksheet("ivan")
-    ivanWorksheet.append_row(["fdsafdaf", "foidsjfo"])
+    googleSpreadsheet.getIdentifiedTableIds()
+    #ivanWorksheet = googleSpreadsheet.createOrGetNamedWorksheet("ivan")
+    #ivanWorksheet.append_row(["fdsafdaf", "foidsjfo"])
