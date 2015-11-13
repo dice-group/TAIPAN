@@ -35,6 +35,7 @@ RUN	pip install gspread
 
 # Copy the application folder inside the container
 ADD / /taipan
+ADD /server /taipan/server
 
 ENV PYTHONPATH "${PYTHONPATH}:/taipan"
 

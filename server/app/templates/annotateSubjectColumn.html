@@ -22,19 +22,19 @@
               <tr class="btn-group">
                 {% for subfield in form.tableType %}
                   {% if loop.index == 1 %}
-                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="a relational table with or without subject column" data-original-title="a relational table with or without subject column"></span></td>
+                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="a relational table with or without subject column" data-original-title="a relational table with or without subject column"></span></td>
                   {% endif %}
                   {% if loop.index == 2 %}
-                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="yields no meaningful relationships and used for navigation/or layout purposes" data-original-title="yields no meaningful relationships and used for navigation/or layout purposes"></span></td>
+                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="yields no meaningful relationships and used for navigation/or layout purposes" data-original-title="yields no meaningful relationships and used for navigation/or layout purposes"></span></td>
                   {% endif %}
                   {% if loop.index == 3 %}
-                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="has a header in a first column" data-original-title="has a header in a first column"></span></td>
+                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="has a header in a first column" data-original-title="has a header in a first column"></span></td>
                   {% endif %}
                   {% if loop.index == 4 %}
-                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="has two (or more) dimensions with numerical data inside cells" data-original-title="has two (or more) dimensions with numerical data inside cells"></span></td>
+                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="has two (or more) dimensions with numerical data inside cells" data-original-title="has two (or more) dimensions with numerical data inside cells"></span></td>
                   {% endif %}
                   {% if loop.index == 5 %}
-                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="data is not in English" data-original-title="data is not in English"></span></td>
+                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom" title="data is not in English" data-original-title="data is not in English"></span></td>
                   {% endif %}
                 {% endfor %}
               </tr>
@@ -121,6 +121,10 @@
       spinner.style.display = 'block';
       document.getElementById('SubjectColumnIdentification-form').submit();
     }
+
+    $('document').ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
   </script>
   <style>
   table {
