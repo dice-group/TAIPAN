@@ -10,6 +10,18 @@
   {% endif %}
 {% endmacro %}
 
+{% macro render_field_hiddenfield(field) %}
+  {{ field.label }}
+  <div style="display:none;">{{ field(**kwargs)|safe }}</div>
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}
+
 {% macro render_field_red(field) %}
   <div style="color:red;">
     {{ field.label }}

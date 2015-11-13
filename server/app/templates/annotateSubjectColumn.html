@@ -2,86 +2,101 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="container">
-    <h1>Subject Column Annotator</h1>
+  <div class="container-fluid" style="margin:20px;">
+    <div class="row" style="padding:20px;">
+      <h1>Subject Column Annotator</h1>
 
-    {% from "_formhelpers.html" import render_field %}
-    {% from "_formhelpers.html" import render_field_red %}
-    <form id="SubjectColumnIdentification-form" method=post action="/table/annotateSubjectColumn/{{username}}/{{tableId}}">
-      <dl>
-        <div class="container">
-          <div class="row">
-            <div class="span3">
-              {{ render_field(form.subjectColumn) }}
-            </div>
-            <div class="span2">
-              {{ render_field_red(form.noSubjectColumn) }}
-            </div>
-            <div class="span4">
-              <table>
-                <tr>
-                  {% for subfield in form.tableType %}
-                      <td class="radio-button">{{ subfield.label }} {{ subfield }}</td>
-                  {% endfor %}
-                </tr>
-              </table>
-            </div>
-            <div class="span2" style="position: relative; top:15px;">
-              <table>
-                <tr>
-                  <td>
-                    <input id="submit-button" class="btn btn-primary" type=submit value=NextTable onclick="submitClicked(event)">
-                  </td>
-                  <td>
-                    <div id="spinner" style="display:none;" class="loader"><div class="loader-inner semi-circle-spin"><div></div></div></div>
-                  </td>
-                </tr>
-              </table>
-            </div>
+      {% from "_formhelpers.html" import render_field %}
+      {% from "_formhelpers.html" import render_field_red %}
+      {% from "_formhelpers.html" import render_field_hiddenfield %}
+      <form id="SubjectColumnIdentification-form" method=post action="/table/annotateSubjectColumn/{{username}}/{{tableId}}">
+        <dl class="row">
+          <div class="col-xs-2">
+            {{ render_field_hiddenfield(form.subjectColumn) }}
           </div>
-        </div>
-      </dl>
-    </form>
-  </div>
+          <div class="col-xs-2">
+            {{ render_field_red(form.noSubjectColumn) }}
+          </div>
+          <div class="col-xs-5">
+            <table>
+              <tr class="btn-group">
+                {% for subfield in form.tableType %}
+                  {% if loop.index == 1 %}
+                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="a relational table with or without subject column" data-original-title="a relational table with or without subject column"></span></td>
+                  {% endif %}
+                  {% if loop.index == 2 %}
+                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="yields no meaningful relationships and used for navigation/or layout purposes" data-original-title="yields no meaningful relationships and used for navigation/or layout purposes"></span></td>
+                  {% endif %}
+                  {% if loop.index == 3 %}
+                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="has a header in a first column" data-original-title="has a header in a first column"></span></td>
+                  {% endif %}
+                  {% if loop.index == 4 %}
+                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="has two (or more) dimensions with numerical data inside cells" data-original-title="has two (or more) dimensions with numerical data inside cells"></span></td>
+                  {% endif %}
+                  {% if loop.index == 5 %}
+                    <td class="btn btn-primary">{{ subfield.label }} {{ subfield }} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="data is not in English" data-original-title="data is not in English"></span></td>
+                  {% endif %}
+                {% endfor %}
+              </tr>
+            </table>
+          </div>
+          <div class="col-xs-3">
+            <table>
+              <tr>
+                <td>
+                  <input id="submit-button" class="btn btn-primary" type=submit value=NextTable onclick="submitClicked(event)">
+                </td>
+                <td>
+                  <div id="spinner" style="display:none;" class="loader"><div class="loader-inner semi-circle-spin"><div></div></div></div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </dl>
+      </form>
+    </div>
 
   <!-- render table and other data here -->
 
-  <div class="container">
-    <table class="table">
-        <thead>
-          {% for row in table.table[0:1] %}
-            <tr>
-            {% for cell in row %}
-                <th class="col-{{loop.index - 1}}" onclick="setSubjectColumn(event)" onmouseenter="highlightColumn(event)" onmouseout="unHighlightColumn(event)">{{cell.decode('utf-8')}}</th>
-            {% endfor %}
-            </tr>
-          {% endfor %}
-        </thead>
-        <tbody>
-          {% for row in table.table[1:10] %}
-          <tr>
-            {% for cell in row %}
-              <td class="col-{{loop.index - 1}}" onclick="setSubjectColumn(event)" onmouseenter="highlightColumn(event)" onmouseout="unHighlightColumn(event)">{{cell.decode('utf-8')}}</td>
-            {% endfor %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-  </div>
-
-  <div class="container">
     <div class="row">
-      <div class="span12 well" style="type-face:bold; position: relative; top:15px; text-align:center;">
+      <table class="table">
+          <thead>
+            {% for row in table.table[0:1] %}
+              <tr>
+              {% for cell in row %}
+                  <th class="col-{{loop.index - 1}}" onclick="setSubjectColumn(event)" onmouseenter="highlightColumn(event)" onmouseout="unHighlightColumn(event)">{{cell.decode('utf-8')}}</th>
+              {% endfor %}
+              </tr>
+            {% endfor %}
+          </thead>
+          <tbody>
+            {% for row in table.table[1:10] %}
+            <tr>
+              {% for cell in row %}
+                <td class="col-{{loop.index - 1}}" onclick="setSubjectColumn(event)" onmouseenter="highlightColumn(event)" onmouseout="unHighlightColumn(event)">{{cell.decode('utf-8')}}</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 well" style="text-align:center;">
         <p>{{username}}, you have annotated {{numOfAnnotatedTables}} tables!</p>
+        <a href="/help" target="_blank">Open help page!</a>
       </div>
     </div>
   </div>
+
   <script type="text/javascript">
     function setSubjectColumn(event) {
       var columnNumber = event.target.classList[0].split('-');
       columnNumber = columnNumber[columnNumber.length - 1];
       var subjectColumnField = document.getElementById("subjectColumn");
+      var subjectColumnFieldVisible = document.getElementById("subjectColumnValue");
       subjectColumnField.value = columnNumber;
+      subjectColumnFieldVisible.innerHTML = columnNumber;
     }
 
     function highlightColumn(event) {

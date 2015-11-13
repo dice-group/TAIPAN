@@ -6,7 +6,8 @@ from ..model import GoogleSpreadsheet
 
 class SubjectColumnTableSelector(object):
     #least number of annotation for each table
-    agreementThreshold = 2
+    #As the first step we do not require any agreement, just annotated is good
+    agreementThreshold = 1
 
     def __init__(self):
         self.t2dSampler = T2DSampler()

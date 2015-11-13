@@ -3,19 +3,22 @@ from flask import render_template, abort, redirect, url_for
 from flask import request
 
 from forms import SubjectColumnAnnotatorForm
+from forms import UsernameForm
 
 from TableSelector.SubjectColumnTableSelector import SubjectColumnTableSelector
 from model import GoogleSpreadsheet
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    #TODO: get random table id group from database
-    return render_template("index.html")
-    #return redirect(url_for('annotateSubjectColumnRandom', username="ivan"))
+    form = UsernameForm(request.form)
+    if request.method == 'POST' and form.validate():
+        username = request.form.get('username', '')
+        return redirect(url_for('annotateSubjectColumnRandom', username=username))
+    return render_template("index.html", form=form)
 
-@app.route('/table/<path:tableId>')
-def table(tableId):
-    return "%s" % (tableId,)
+@app.route('/help')
+def help():
+    return render_template("help.html")
 
 @app.route('/table/annotateSubjectColumn/<username>')
 def annotateSubjectColumnRandom(username):
