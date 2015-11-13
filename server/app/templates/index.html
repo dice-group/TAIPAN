@@ -4,6 +4,242 @@
 {% block content %}
   <div class="container">
     <div class="row">
+      <h1>Subject Column Annotator</h1>
+      <p>
+        <a href="http://webdatacommons.org/webtables/goldstandard.html">T2D Gold Standard</a> is missing subject columns. This web application fills the gap with your kindest help :)
+      </p>
+      <h2>Information you need to know</h2>
+      <h3>Types of tables</h3>
+        <h4>Normal</h4>
+          <p>We call table "normal" if it is a relational table with or without subject column</p>
+          <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-0">Name</th>
+                    <th class="col-1">Type</th>
+                    <th class="col-2">Latitude</th>
+                    <th class="col-3">Longitude</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                  <td class="col-0">KSBP</td>
+                  <td class="col-1">Origin Airport</td>
+                  <td class="col-2">35.2372659</td>
+                  <td class="col-3">-120.6425974</td>
+              </tr>
+              <tr>
+                  <td class="col-0">FRAMS</td>
+                  <td class="col-1">Reporting Point</td>
+                  <td class="col-2">35.3672028</td>
+                  <td class="col-3">-120.9394194</td>
+              </tr>
+              <tr>
+                  <td class="col-0">CALIS</td>
+                  <td class="col-1">Reporting Point</td>
+                  <td class="col-2">35.4184417</td>
+                  <td class="col-3">-121.0198833</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-0">&amp;nbsp;</th>
+                    <th class="col-1">Capital</th>
+                    <th class="col-2">Currency</th>
+                    <th class="col-3">Language</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                  <td class="col-0">United    Kingdom</td>
+                  <td class="col-1">London</td>
+                  <td class="col-2">British Pound (GBP)</td>
+                  <td class="col-3">English</td>
+              </tr>
+              <tr>
+                  <td class="col-0">Ireland</td>
+                  <td class="col-1">Dublin</td>
+                  <td class="col-2">Euro (EUR)</td>
+                  <td class="col-3">English Gaelic</td>
+              </tr>
+              <tr>
+                  <td class="col-0">France</td>
+                  <td class="col-1">Paris</td>
+                  <td class="col-2">Euro (EUR)</td>
+                  <td class="col-3">French</td>
+              </tr>
+            </tbody>
+          </table>
+        <h4>Layout</h4>
+        <p>Layout tables yield no meaningful relationships and used for navigation/or layout purposes. In the first table below "Manufacturer" is "Compare" for all the cells in the first row, which implies a navigation link.</p>
+        <table class="table">
+        <thead>
+            <tr>
+                <th class="col-0">Manufacturer&amp;nbsp;&amp;nbsp;</th>
+                <th class="col-1">Description&amp;nbsp;&amp;nbsp;</th>
+                <th class="col-2">Price&amp;nbsp;&amp;nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td class="col-0">Compare</td>
+              <td class="col-1">'Twas the Night Before CurtainModel# HL-35027153As the curtain goes up on 'Twas the Night Before Curtain we are presented with the musical version of the frantic night before the opening of a show complete with the inevitable drama that every ensemble experiences! The comical story is told...</td>
+              <td class="col-2">List: $1.80Price: $1.80</td>
+          </tr>
+          <tr>
+              <td class="col-0">Compare</td>
+              <td class="col-1">'Twas the Night Before CurtainModel# HL-35027154As the curtain goes up on 'Twas the Night Before Curtain we are presented with the musical version of the frantic night before the opening of a show complete with the inevitable drama that every ensemble experiences! The comical story is told...</td>
+              <td class="col-2">List: $1.80Price: $1.80</td>
+          </tr>
+          <tr>
+              <td class="col-0">Compare</td>
+              <td class="col-1">'Twas the Night Before CurtainModel# HL-35027155As the curtain goes up on 'Twas the Night Before Curtain we are presented with the musical version of the frantic night before the opening of a show complete with the inevitable drama that every ensemble experiences! The comical story is told...</td>
+              <td class="col-2">List: $1.80Price: $1.80</td>
+          </tr>
+          <tr>
+              <td class="col-0">Compare</td>
+              <td class="col-1">'Twas the Night Before CurtainModel# HL-35027156As the curtain goes up on 'Twas the Night Before Curtain we are presented with the musical version of the frantic night before the opening of a show complete with the inevitable drama that every ensemble experiences! The comical story is told...</td>
+              <td class="col-2">List: $26.99Price: $26.99</td>
+          </tr>
+        </tbody>
+      </table>
+        <h4>Vertical</h4>
+        <p>Vertical tables have a header in a first column.</p>
+        <table class="table">
+        <thead>
+            <tr>
+                <th class="col-0">Calculate Your Mortgage Information</th>
+                <th class="col-1">Calculate Your Mortgage Information</th>
+                <th class="col-2">Calculate Your Mortgage Information</th>
+                <th class="col-3">Calculate Your Mortgage Information</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td class="col-0">&amp;nbsp;</td>
+              <td class="col-1">&amp;nbsp;</td>
+              <td class="col-2">&amp;nbsp;</td>
+              <td class="col-3">&amp;nbsp;</td>
+          </tr>
+          <tr>
+              <td class="col-0">House Price:</td>
+              <td class="col-1">$</td>
+              <td class="col-2"></td>
+              <td class="col-3">&amp;nbsp;</td>
+          </tr>
+          <tr>
+              <td class="col-0">Down Payment:</td>
+              <td class="col-1">$</td>
+              <td class="col-2"></td>
+              <td class="col-3">&amp;nbsp;</td>
+          </tr>
+          <tr>
+              <td class="col-0">Annual Interest Rate:</td>
+              <td class="col-1">&amp;nbsp;</td>
+              <td class="col-2"></td>
+              <td class="col-3">%</td>
+          </tr>
+        </tbody>
+      </table>
+
+        <h4>Statistical</h4>
+        <p>Statistical tables have two (or more) dimensions with numerical data inside cells. The example table below is about temperature at different points of time (dimension 1) for the different conditions (dimension 2). Statistical data has to be represented as cubes using for instance RDF DataCube vocabulary.</p>
+        <table class="table">
+          <thead>
+            <tr>
+                <th class="col-0">&amp;nbsp;</th>
+                <th class="col-1">thu may 24</th>
+                <th class="col-2">fri may 25</th>
+                <th class="col-3">sat may 26</th>
+                <th class="col-4">sun may 27</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-0">tmin18-06</td>
+              <td class="col-1">22&amp;deg;c</td>
+              <td class="col-2">23&amp;deg;c</td>
+              <td class="col-3">23&amp;deg;c</td>
+              <td class="col-4">23&amp;deg;c</td>
+            </tr>
+            <tr>
+              <td class="col-0">tmax06-18</td>
+              <td class="col-1">31&amp;deg;c</td>
+              <td class="col-2">32&amp;deg;c</td>
+              <td class="col-3">32&amp;deg;c</td>
+              <td class="col-4">32&amp;deg;c</td>
+            </tr>
+          </tbody>
+        </table>
+        <h4>Not English</h4>
+        <p>We do not consider any other languages, therefore if table is not in English mark it as "Not English".</p>
+      <h3>Examples of subject columns</h3>
+      <p>The subject column contains the entity, which connect to any other column via property. You should be able to represent any row as a set of triples with entity as a subject. Therefore, subject column is a center of a star-like graph.</p>
+      <p>The table below is talking about persons providing services. The subject column is column 0 (Name).</p>
+      <table class="table">
+        <thead>
+            <tr>
+                <th class="col-0">Name</th>
+                <th class="col-1">City/Website</th>
+                <th class="col-2">Phone/Email</th>
+                <th class="col-3">Practice</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td class="col-0">Diane Doiron (CT)</td>
+              <td class="col-1">Brunswick</td>
+              <td class="col-2">(207) 725-8799       dandiane@suscom-maine.net</td>
+              <td class="col-3">Integral       Qigong &amp;amp; Tai Chi&amp;#8482;</td>
+          </tr>
+          <tr>
+              <td class="col-0">Diana       McCain (TCEPL CT)</td>
+              <td class="col-1">Brunswick</td>
+              <td class="col-2">(207) 729-2404 or       (207) 729-7323      mccaind@link75.org</td>
+              <td class="col-3">Integral Qigong Tai Chi Easy&amp;trade; 60 Movement Tai Chi Classes Ongoing. Call for schedule.</td>
+          </tr>
+          <tr>
+              <td class="col-0">Joe Moceus (TCEPL)</td>
+              <td class="col-1">Farmington</td>
+              <td class="col-2">joemoceus@hotmail.com</td>
+              <td class="col-3">Integral       Qigong &amp;amp; Tai Chi&amp;#8482;</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>The table below is about trips/or hotel rooms. It does not have a subject column (or a column which can form a star-like graph from each row). In this case, we say that such a column exists outside of a row and mark the table as "without subject column".</p>
+      <table class="table">
+        <thead>
+            <tr>
+                <th class="col-0">trip lenght</th>
+                <th class="col-1">2/4 paxs</th>
+                <th class="col-2">itinerary</th>
+                <th class="col-3">&amp;nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td class="col-0">2 days                   / 1 night</td>
+              <td class="col-1">usd                 245</td>
+              <td class="col-2">read                   more</td>
+              <td class="col-3" ></td>
+          </tr>
+          <tr>
+              <td class="col-0">3 days / 2 nights</td>
+              <td class="col-1">usd                 325</td>
+              <td class="col-2">read                   more</td>
+              <td class="col-3"></td>
+          </tr>
+          <tr>
+              <td class="col-0" >4 days / 3 nights</td>
+              <td class="col-1" >usd                 475</td>
+              <td class="col-2" >read                   more</td>
+              <td class="col-3" ></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 {% endblock %}

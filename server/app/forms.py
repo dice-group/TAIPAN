@@ -6,4 +6,4 @@ class SubjectColumnAnnotatorForm(Form):
     subjectColumn = TextField('Subject Column Number [0-based]')
     noSubjectColumn = BooleanField('No Subject Column!')
     #tableType = SelectMultipleField('Table Type', choices=["Normal", "Vertical", "Layout", "Not English"])
-    tableType = RadioField('Table Type', default="Normal", choices=[("Normal","Normal"), ("Vertical", "Vertical"), ("Layout", "Layout"), ("NotEnglish", "Not English")])
+    tableType = RadioField('Table Type', default="Normal", choices=[("Normal","Normal"), ("Layout", "Layout"), ("Vertical", "Vertical"), ("NotEnglish", "Not English"), ("Statistical", "Statistical")])
