@@ -59,6 +59,7 @@ requirements-server:
 	pip install flask-wtf
 	pip install oauth2client
 	pip install PyOpenSSL
+	pip install pymongo
 
 get-properties-for-table:
 	python scripts/getPropertiesForTable.py ${ARGS}

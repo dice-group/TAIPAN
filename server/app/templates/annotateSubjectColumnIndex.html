@@ -1,0 +1,24 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container-fluid" style="margin:20px;">
+    <div class="row">
+      <h1>Subject Column Annotator</h1>
+      <p>
+        <a href="http://webdatacommons.org/webtables/goldstandard.html">T2D Gold Standard</a> is missing subject columns. This web application fills the gap with your kindest help :)
+      </p>
+    <h2>Type your name and start annotating!</h2>
+    {% from "_formhelpers.html" import render_field %}
+    <form id="username-form" method=post action="/subjectColumnAnnotation">
+      <dl>
+        <div>
+          {{ render_field(form.username) }}
+        </div>
+        <div>
+          <input id="submit-button" class="btn btn-primary btn-lg" type=submit value=Start>
+        </div>
+      </dl>
+    </form>
+  </div>
+{% endblock %}
