@@ -14,7 +14,7 @@
           <div class="col-xs-2">
             {{ render_field_hiddenfield(form.index) }}
           </div>
-          <div class="col-xs-4">
+          <div class="col-xs-3">
             {{ render_field_red(form.hasProperty) }}
           </div>
           <div class="col-xs-2">
@@ -109,6 +109,21 @@
       }
     };
 
+    function unbindSubjectColumn() {
+      var subjectColumn = $(".col-{{subjectColumn}}");
+      subjectColumn.each(function(index, element) {
+        element.onclick = function(){};
+        element.onmouseenter = function(){};
+      });
+    };
+
+    function highlightSubjectColumn() {
+      var subjectColumn = $(".col-{{subjectColumn}}");
+      subjectColumn.each(function(index, element) {
+        element.classList.add("info");
+      });
+    }
+
     function rebindCells() {
       var dataTable = $("#data-table");
       var cells = $("#data-table").children().children().children();
@@ -117,6 +132,7 @@
         cells[i].onclick = setColumn;
         cells[i].onmouseenter = highlightColumn;
         cells[i].onmouseout = unHighlightColumn;
+        unbindSubjectColumn();
       }
     }
 
@@ -160,6 +176,10 @@
     };
 
     $('document').ready(function(){
+
+      unbindSubjectColumn();
+      highlightSubjectColumn();
+
       function renderProperties(props) {
         var tableBody = $("#property-annotation-list");
         var htmlToRender = "";

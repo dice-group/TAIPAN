@@ -10,6 +10,7 @@ from forms import UsernameForm
 
 from TableSelector.SubjectColumnTableSelector import SubjectColumnTableSelector
 from model import GoogleSpreadsheet
+from .mongolab.connector import MongoLabConnector
 
 from taipan.T2D.Sampler import T2DSampler
 
@@ -72,7 +73,6 @@ def annotateSubjectColumn(username, tableId):
     table = tableSelector.getTable(tableId)
     return render_template("annotateSubjectColumn.html", form=form, table=table, username=username, tableId=tableId, numOfAnnotatedTables=numOfAnnotatedTables)
 
-from .mongolab.connector import MongoLabConnector
 @app.route('/table/annotateProperty/<username>/<tableId>', methods=['GET', 'POST'])
 def annotateProperty(username, tableId):
     if request.method == 'POST':
@@ -89,4 +89,4 @@ def annotateProperty(username, tableId):
     form = PropertyAnnotatorForm()
     tableSelector = SubjectColumnTableSelector()
     table = tableSelector.getTable(tableId)
-    return render_template("annotateProperty.html", form=form, table=table, username=username, tableId=tableId, numOfAnnotatedTables=numOfAnnotatedTables)
+    return render_template("annotateProperty.html", form=form, table=table, username=username, tableId=tableId, numOfAnnotatedTables=numOfAnnotatedTables, subjectColumn=table.subjectColumn)
