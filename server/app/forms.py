@@ -10,3 +10,8 @@ class SubjectColumnAnnotatorForm(Form):
 
 class UsernameForm(Form):
     username = TextField('Your name', [Regexp("^[a-zA-Z0-9_]*$", message="only alphanumerical usernames are allowed"), Required(message="please provide a username")])
+
+class PropertyAnnotatorForm(Form):
+    index = TextField('Column #: <span class="label label-default" id="subjectColumnValue">Click to select</span>')
+    hasProperty = BooleanField('This column has property which is not in DBpedia!')
+    propertyUri = TextField('Property URI')

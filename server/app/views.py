@@ -1,8 +1,11 @@
+import random
+
 from app import app
 from flask import render_template, abort, redirect, url_for
 from flask import request
 
 from forms import SubjectColumnAnnotatorForm
+from forms import PropertyAnnotatorForm
 from forms import UsernameForm
 
 from TableSelector.SubjectColumnTableSelector import SubjectColumnTableSelector
@@ -40,7 +43,7 @@ def annotateSubjectColumnRandom(username):
     tableId = tableSelector.getRandomTableId()
     return redirect(url_for('annotateSubjectColumn', username=username, tableId=tableId))
 
-@app.route('/table/annotateProperty/<username>')
+@app.route('/table/annotatePropertyRandom/<username>')
 def annotatePropertyRandom(username):
     t2dSampler = T2DSampler()
     tableIds = t2dSampler.getTablesSubjectIdentificationIds()
@@ -69,24 +72,21 @@ def annotateSubjectColumn(username, tableId):
     table = tableSelector.getTable(tableId)
     return render_template("annotateSubjectColumn.html", form=form, table=table, username=username, tableId=tableId, numOfAnnotatedTables=numOfAnnotatedTables)
 
+from .mongolab.connector import MongoLabConnector
 @app.route('/table/annotateProperty/<username>/<tableId>', methods=['GET', 'POST'])
 def annotateProperty(username, tableId):
-    #gSpread = GoogleSpreadsheet()
-    #worksheet = gSpread.createOrGetNamedWorksheet(username)
     if request.method == 'POST':
-        noSubjectColumn = request.form.get('noSubjectColumn', "FALSE")
-        if noSubjectColumn == 'y':
-            noSubjectColumn = "TRUE"
-        subjectColumn =  request.form.get('subjectColumn', None)
-        tableType =  request.form.get('tableType', None)
-        if subjectColumn == '' and noSubjectColumn == "FALSE" and tableType == "Normal":
-            pass
-        else:
-            worksheet.append_row([tableId, subjectColumn, noSubjectColumn, tableType])
-            return redirect(url_for('annotateSubjectColumnRandom', username=username))
-
-    numOfAnnotatedTables = worksheet.row_count - 1
-    form = SubjectColumnAnnotatorForm()
+        prop = {
+          "tableId": tableId,
+          "username": username,
+          "annotatedColumns": request.json
+        }
+        mlConnector = MongoLabConnector()
+        mlConnector.insertPropertyAnnotation(prop)
+        return url_for('annotatePropertyRandom', username=username)
+    #numOfAnnotatedTables = worksheet.row_count - 1
+    numOfAnnotatedTables = 1
+    form = PropertyAnnotatorForm()
     tableSelector = SubjectColumnTableSelector()
     table = tableSelector.getTable(tableId)
-    return render_template("annotateSubjectColumn.html", form=form, table=table, username=username, tableId=tableId, numOfAnnotatedTables=numOfAnnotatedTables)
+    return render_template("annotateProperty.html", form=form, table=table, username=username, tableId=tableId, numOfAnnotatedTables=numOfAnnotatedTables)
