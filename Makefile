@@ -34,6 +34,9 @@ test-simple-property-mapping:
 test-distant-supervision-identifier:
 	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification -p "DistantSupervisionIdentifierTest.py"
 
+test-simple-property-recommender:
+	python -m unittest discover -s ./taipan/Tests/Learning/PropertyRecommendation -p "SimplePropertyRecommenderTest.py"
+
 benchmark:
 	python -m unittest discover -s ./taipan/Tests -p "*Bench.py"
 

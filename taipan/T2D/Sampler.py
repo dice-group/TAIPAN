@@ -51,6 +51,9 @@ class T2DSampler(object):
         idList = self.loadCsv(os.path.join(t2dDataDir, 'subject_column.csv'))
         return map((lambda x: x[0]), idList)
 
+    def getTablesPropertyAnnotation(self):
+        return self.getTablesSubjectIdentification()
+
     def get20Tables(self):
         tables = []
         idList = self.getListOfTableIds()
