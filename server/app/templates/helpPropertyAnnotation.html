@@ -1,0 +1,20 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container" style="margin:20px;">
+  <h3>Interface</h3>
+  <img src="/static/img/help.png" width="1000px">
+  <p>Subject column of a table (i.e. column which contains entities) is marked with blue color. Your task is to define relationships between blue column and all others if they exist. To accomplish the task, you click on a column, type property in the input box (start typing "db..." to see suggestions from LOV API) and click add button. After you are done with a table click "Next Table" button, it will save your results and redirect you to the next table.</p>
+  <h3>Where to look for DBpedia properties</h3>
+  <p>
+    <ul>
+      <li><a href="http://lov.okfn.org/dataset/lov/terms" target="_blank">Look for DBpedia properties on LOV</a></li>
+      <li><a href="http://wiki.dbpedia.org/services-resources/ontology" target="_blank">DBpedia ontology</a></li>
+      <li><a href="http://mappings.dbpedia.org/index.php/Exploring_the_Ontology" target="_blank">Exploring DBpedia ontology</a></li>
+    </ul>
+  </p>
+</div>
+
+{% endblock %}

@@ -17,7 +17,7 @@
           <div class="col-xs-3">
             {{ render_field_red(form.hasProperty) }}
           </div>
-          <div class="col-xs-2">
+          <div class="col-xs-4">
             {{ render_field_red(form.propertyUri) }}
           </div>
           <div class="col-xs-1">
@@ -77,7 +77,7 @@
     <div class="row">
       <div class="col-xs-12 well" style="text-align:center;">
         <p>{{username}}, you have annotated {{numOfAnnotatedTables}} tables!</p>
-        <a href="/help" target="_blank">Open help page!</a>
+        <a href="/help/propertyAnnotation" target="_blank">Open help page!</a>
       </div>
     </div>
   </div>
@@ -136,6 +136,19 @@
       }
     }
 
+    function suggestPropertiesForColumn(columnNumber) {
+      var properties = document.propertiesRecommended[columnNumber]["properties"];
+      for(var i = 0; i < properties.length; i++) {
+        properties[i]["data"] = properties[i]["uri"];
+        properties[i]["value"] = properties[i]["prefixedName"];
+      }
+      var autocomplete = $('#propertyUri').autocomplete({
+          lookup: properties,
+          autoSelectFirst: true,
+          //onSelect: function (suggestion) {}
+      });
+    }
+
     function setColumn(event) {
       var columnClass = event.target.classList[0];
       var columnElements = document.getElementsByClassName(columnClass);
@@ -147,6 +160,9 @@
 
       var columnNumber = event.target.classList[0].split('-');
       columnNumber = columnNumber[columnNumber.length - 1];
+
+      suggestPropertiesForColumn(columnNumber);
+
       var indexField = document.getElementById("index");
       var subjectColumnFieldVisible = document.getElementById("subjectColumnValue");
       indexField.value = columnNumber;
@@ -211,6 +227,7 @@
         return arr;
       };
 
+      document.propertiesRecommended = JSON.parse({{properties|tojson|safe}});
       document.Properties = new ArrayWithListeners();
 
       $('[data-toggle="tooltip"]').tooltip();
@@ -245,5 +262,39 @@
   .semi-circle-spin > div {
     background-image: linear-gradient(transparent 0,transparent 70%,#000 30%,#000 100%);
   }
+
+  #propertyUri { width: 80%; text-align: center; margin-bottom: 20px; }
+
+  #propertyUri form {
+    display: inline-block;
+    background: #eeefed;
+    padding: 0;
+    margin: 0;
+    padding: 5px;
+    border-radius: 3px;
+    margin: 5px 0 0 0;
+  }
+  #propertyUri form .biginput {
+    width: 600px;
+    height: 40px;
+    padding: 0 10px 0 10px;
+    background-color: #fff;
+    border: 1px solid #c8c8c8;
+    border-radius: 3px;
+    color: #aeaeae;
+    font-weight:normal;
+    font-size: 1.5em;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+  }
+  #propertyUri form .biginput:focus {
+    color: #858585;
+  }
+
+  .autocomplete-suggestions { border: 1px solid #999; background: #fff; cursor: default; overflow: auto; }
+  .autocomplete-suggestion { padding: 10px 5px; font-size: 1.2em; white-space: nowrap; overflow: hidden; }
+  .autocomplete-selected { background: #f0f0f0; }
+  .autocomplete-suggestions strong { font-weight: normal; color: #3399ff; }
   </style>
 {% endblock %}

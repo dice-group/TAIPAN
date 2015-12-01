@@ -1,4 +1,5 @@
 import random
+import json
 
 from app import app
 from flask import render_template, abort, redirect, url_for
@@ -13,6 +14,7 @@ from model import GoogleSpreadsheet
 from .mongolab.connector import MongoLabConnector
 
 from taipan.T2D.Sampler import T2DSampler
+from taipan.Learning.PropertyRecommendation.SimplePropertyRecommender import SimplePropertyRecommender
 
 @app.route('/', methods=['GET'])
 def index():
@@ -37,6 +39,10 @@ def annotatePropertyIndex():
 @app.route('/help')
 def help():
     return render_template("help.html")
+
+@app.route('/help/propertyAnnotation')
+def helpPropertyAnnotation():
+    return render_template("helpPropertyAnnotation.html")
 
 @app.route('/table/annotateSubjectColumn/<username>')
 def annotateSubjectColumnRandom(username):
@@ -89,4 +95,7 @@ def annotateProperty(username, tableId):
     form = PropertyAnnotatorForm()
     tableSelector = SubjectColumnTableSelector()
     table = tableSelector.getTable(tableId)
-    return render_template("annotateProperty.html", form=form, table=table, username=username, tableId=tableId, numOfAnnotatedTables=numOfAnnotatedTables, subjectColumn=table.subjectColumn)
+    spr = SimplePropertyRecommender()
+    properties = json.dumps(spr.recommendPropertiesForTable(table))
+    return render_template("annotateProperty.html", form=form, table=table, username=username, tableId=tableId, numOfAnnotatedTables=numOfAnnotatedTables, subjectColumn=table.subjectColumn,
+    properties=properties)
