@@ -53,8 +53,13 @@ def annotateSubjectColumnRandom(username):
 @app.route('/table/annotatePropertyRandom/<username>')
 def annotatePropertyRandom(username):
     t2dSampler = T2DSampler()
-    tableIds = t2dSampler.getTablesSubjectIdentificationIds()
-    tableId = random.choice(tableIds)
+
+    mlc = MongoLabConnector()
+    tableId = mlc.getTableUnderConsensus(username)
+    print "tableId: %s" % (tableId,)
+    if tableId is None:
+        tableIds = t2dSampler.getTablesSubjectIdentificationIds()
+        tableId = random.choice(tableIds)
     return redirect(url_for('annotateProperty', username=username, tableId=tableId))
 
 @app.route('/table/annotateSubjectColumn/<username>/<tableId>', methods=['GET', 'POST'])
@@ -81,17 +86,20 @@ def annotateSubjectColumn(username, tableId):
 
 @app.route('/table/annotateProperty/<username>/<tableId>', methods=['GET', 'POST'])
 def annotateProperty(username, tableId):
+    mlc = MongoLabConnector()
     if request.method == 'POST':
+        #release lock
+        mlc.unlockTable(tableId, username)
         prop = {
           "tableId": tableId,
           "username": username,
           "annotatedColumns": request.json
         }
-        mlConnector = MongoLabConnector()
-        mlConnector.insertPropertyAnnotation(prop)
+        mlc.insertPropertyAnnotation(prop)
         return url_for('annotatePropertyRandom', username=username)
-    #numOfAnnotatedTables = worksheet.row_count - 1
-    numOfAnnotatedTables = 1
+    #make lock
+    mlc.lockTable(tableId, username)
+    numOfAnnotatedTables = mlc.getUserAnnotationsCount(username)
     form = PropertyAnnotatorForm()
     tableSelector = SubjectColumnTableSelector()
     table = tableSelector.getTable(tableId)
