@@ -18,7 +18,10 @@
             {{ render_field_red(form.hasProperty) }}
           </div>
           <div class="col-xs-4">
-            {{ render_field_red(form.propertyUri) }}
+            {{ render_field(form.propertyUri) }}
+          </div>
+          <div class="col-xs-1">
+            <a target="_blank" href="http://lov.okfn.org/dataset/lov/terms" id="search-button" class="btn btn-default btn-primary">Search On LOV</a>
           </div>
           <div class="col-xs-1">
             <button id="property-add-button" class="btn btn-default btn-primary">Add</button>
