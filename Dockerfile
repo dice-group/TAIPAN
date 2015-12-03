@@ -32,6 +32,7 @@ RUN	pip install flask
 RUN	pip install flask-wtf
 RUN	pip install oauth2client pyopenssl ndg-httpsclient pyasn1
 RUN	pip install gspread
+RUN	pip install pymongo
 
 # Copy the application folder inside the container
 ADD / /taipan

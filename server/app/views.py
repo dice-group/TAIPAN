@@ -60,7 +60,9 @@ def annotatePropertyRandom(username):
     if tableId is None:
         annotatedTableIds = mlc.getAnnotatedTables()
         tableIds = t2dSampler.getTableIdsSubjectIdentificationGoldStandard()
+        myTables = mlc.getMyTables(username)
         tableIdsUnfinished = [ti for ti in tableIds if ti not in annotatedTableIds]
+        tableIdsUnfinished = [ti for ti in tableIdsUnfinished if ti not in myTables]
         if len(tableIdsUnfinished) > 0:
             tableId = random.choice(tableIdsUnfinished)
         else:
