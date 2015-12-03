@@ -58,8 +58,13 @@ def annotatePropertyRandom(username):
     tableId = mlc.getTableUnderConsensus(username)
     print "tableId: %s" % (tableId,)
     if tableId is None:
-        tableIds = t2dSampler.getTablesSubjectIdentificationIds()
-        tableId = random.choice(tableIds)
+        annotatedTableIds = mlc.getAnnotatedTables()
+        tableIds = t2dSampler.getTableIdsSubjectIdentificationGoldStandard()
+        tableIdsUnfinished = [ti for ti in tableIds if ti not in annotatedTableIds]
+        if len(tableIdsUnfinished) > 0:
+            tableId = random.choice(tableIdsUnfinished)
+        else:
+            tableId = random.choice(tableIds)
     return redirect(url_for('annotateProperty', username=username, tableId=tableId))
 
 @app.route('/table/annotateSubjectColumn/<username>/<tableId>', methods=['GET', 'POST'])

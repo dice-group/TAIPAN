@@ -13,7 +13,7 @@ class T2DTable(object):
         #self.entities = self.getEntitiesInstance(id)
 
     def getSubjectColumn(self, id):
-        csv = self.loadCsv(os.path.join(t2dDataDir, 'subject_column.csv'))
+        csv = self.loadCsv(os.path.join(t2dDataDir, 'subject_column', 'subject_column_gold.csv'))
         return self.parseSubjectColumn(csv, id)
 
     def parseSubjectColumn(self, csv, id):

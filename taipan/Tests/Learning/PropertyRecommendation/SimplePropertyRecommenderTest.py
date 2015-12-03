@@ -11,16 +11,10 @@ class SimplePropertyRecommenderTestCase(unittest.TestCase):
         self.spr = SimplePropertyRecommender()
 
     def testRecommendPropertiesForTable(self):
-        # import logging
-        # logger = logging.getLogger("taipan.Learning.PropertyMapping.SimplePropertyMapper")
-        # logger.disabled = True
-
         for num, table in enumerate(self.testTables):
             print "table %s" %(num,)
             properties = self.spr.recommendPropertiesForTable(table)
             import ipdb; ipdb.set_trace()
-
-        pass
 
     def testLookupPropertiesLOV(self):
         columnHeader = "city"
