@@ -7,7 +7,9 @@ import random
 
 class T2DSampler(object):
     blackList = [
-        "41612329_0_7158224623202100303.csv" #too much inconsistency
+        "41612329_0_7158224623202100303.csv", #too much inconsistency
+        "3038093_0_432192469782772690.csv", #too much inconsistency
+        "23038093_0_432192469782772690.csv" #too much inconsistency
     ]
     def __init__(self):
         pass
@@ -36,6 +38,8 @@ class T2DSampler(object):
         tables = []
         idList = self.getListOfTableIds()
         for id in idList:
+            if(id in self.blackList):
+                continue
             tables.append(self.getTable(id))
         return tables
 
