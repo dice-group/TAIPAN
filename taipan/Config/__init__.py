@@ -1,0 +1,1 @@
+numberOfRowsToAnalyze = 20

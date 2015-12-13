@@ -34,6 +34,16 @@ class T2DSampler(object):
     def getTable(self, id):
         return T2DTable(id)
 
+    def getTableForAnalysis(self, id):
+        """
+            Get only first N rows
+            N = taipan.config.numberOfRowsToAnalyze
+        """
+        from taipan.Config import numberOfRowsToAnalyze
+        table = T2DTable(id)
+        table.table = table.table[:numberOfRowsToAnalyze]
+        return table
+
     def getTables(self):
         tables = []
         idList = self.getListOfTableIds()
@@ -58,6 +68,13 @@ class T2DSampler(object):
     def getTableIdsSubjectIdentificationGoldStandard(self):
         idList = self.loadCsv(os.path.join(t2dDataDir, 'subject_column', 'subject_column_gold.csv'))
         return map((lambda x: x[0]), idList)
+
+    def getTablesSubjectIdentificationGoldStandard(self):
+        idList = self.getTableIdsSubjectIdentificationGoldStandard()
+        tables = []
+        for _id in idList:
+            tables.append(self.getTableForAnalysis(_id))
+        return tables
 
     def getTablesPropertyAnnotation(self):
         return self.getTablesSubjectIdentification()

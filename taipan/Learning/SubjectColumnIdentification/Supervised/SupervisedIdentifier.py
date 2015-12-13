@@ -26,7 +26,9 @@ class SupervisedIdentifier(object):
     """
     #set to None for production
     fold = 10
-    selectKBest = SelectKBest(chi2, k="all") #use only 5 top features
+    inverseCrossValidation = False
+    useColumnIndex = False
+    selectKBest = SelectKBest(chi2, k="all")
 
     classifiers = [
         svm.SVC(),
@@ -39,7 +41,9 @@ class SupervisedIdentifier(object):
         SGDClassifier(loss="perceptron", eta0=1, learning_rate="constant", penalty=None)
     ]
 
-    def __init__(self, classifierType=4):
+    def __init__(self, classifierType=4, inverseCrossValidation=False, useColumnIndex=False):
+        self.inverseCrossValidation = inverseCrossValidation
+        self.useColumnIndex = useColumnIndex
         self.clf = self.classifiers[classifierType]
         trainingTables = self.getAnnotatedTables()
         (featureVectors, targetVector) = self.calculateFeaturesTables(trainingTables)
@@ -58,7 +62,8 @@ class SupervisedIdentifier(object):
         targetVector = []
         for columnIndex, column in enumerate(tableColumns):
             featureVector = self.calculateFeaturesColumn(column, columnIndex, table)
-            #featureVector.append(columnIndex)
+            if self.useColumnIndex:
+                featureVector.append(columnIndex)
             columnFeatureVectors.append(featureVector)
             targetVector.append(table.isSubjectColumn(columnIndex))
         return (columnFeatureVectors, targetVector)
@@ -78,25 +83,32 @@ class SupervisedIdentifier(object):
 
     def getTables(self):
         sampler = T2DSampler()
-        return sampler.getTablesSubjectIdentification()
+        return sampler.getTablesSubjectIdentificationGoldStandard()
 
     def getAnnotatedTables(self):
         fold = self.fold
         tables = self.getTables()
-        if fold != None:
+        if fold == None:
+            return tables
+        if not self.inverseCrossValidation:
             length = int(len(tables)/fold*(fold-1))
             return tables[:length]
         else:
-            return tables
+            length = int(len(tables)/fold)
+            return tables[:length]
 
     def getTestingTables(self):
         fold = self.fold
         tables = self.getTables()
-        if fold != None:
+        if fold == None:
+            return []
+
+        if not self.inverseCrossValidation:
             length = int(len(tables)/fold*(fold-1))
             return tables[length:]
         else:
-            return []
+            length = int(len(tables)/fold)
+            return tables[length:]
 
     def getIndicesValue(self, lst, value):
         start_at = -1

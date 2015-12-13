@@ -11,10 +11,9 @@ class SVMIdentifierTestCase(unittest.TestCase):
     def setUp(self):
         sampler = T2DSampler()
         self.testTable = sampler.getTestTable()
-        self.scIdentifier = SupervisedIdentifier(4)
-        #self.testTables = sampler.getTablesSubjectIdentification()
+        self.scIdentifier = SupervisedIdentifier(7, inverseCrossValidation=True, useColumnIndex=False)
 
-    def testSVMIdentifier(self):
+    def testSupervisedIdentifier(self):
         """
             0 -- svm.SVC()
                 recall: 0.466666666667
@@ -53,6 +52,7 @@ class SVMIdentifierTestCase(unittest.TestCase):
                 false positives: 0.666666666667
         """
         testTables = self.scIdentifier.getTestingTables()
+        annotatedTables = self.scIdentifier.getAnnotatedTables()
         recall = 0
         falsePositives = 0
         for table in testTables:
@@ -61,9 +61,10 @@ class SVMIdentifierTestCase(unittest.TestCase):
                 recall += 1
             elif len(subjectColumns) > 0:
                 falsePositives += len(subjectColumns)
+        tableGuessedCorrectly = recall
         recall = float(recall) / len(testTables)
         precision_1 = float(falsePositives) / len(testTables)
         fmeasure = recall*precision_1
-        print "recall: %s" % recall
-        print "false positives: %s" % precision_1
-        #print "f measure: %s" % fmeasure
+        print "table guessed: %s" % len(testTables)
+        print "table guessed correctly: %s" % tableGuessedCorrectly
+        print "table used for learning: %s" % len(annotatedTables)
