@@ -25,10 +25,14 @@ class SimpleIdentifier(object):
             for character in columnString:
                 if character.isdigit():
                     digitsInString = digitsInString + 1
-            digitsRatio = float(digitsInString)/len(columnString)
+            if(len(columnString) > 0):
+                digitsRatio = float(digitsInString)/len(columnString)
+            else:
+                digitsRatio = 0
             if(digitsRatio < self.identificationThreshold):
                 self.logger.debug("Subject column identified: %s" %(columnNumber,))
                 self.logger.debug("%s" %(column,))
                 return columnNumber
 
-        raise SubjectColumnNotFoundError("SimpleIdentifier could not find subject column")
+        return 0
+        #raise SubjectColumnNotFoundError("SimpleIdentifier could not find subject column")

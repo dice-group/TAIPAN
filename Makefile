@@ -22,6 +22,9 @@ test-subject-column-support-connectivity-identifier:
 test-subject-column-connectivity-identifier:
 	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification -p "ConnectivityIdentifierTest.py"
 
+test-subject-column-simple-identifier:
+	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification -p "SimpleIdentifierTest.py"
+
 test-t2d-sampler:
 	python -m unittest discover -s ./taipan/Tests/T2D -p "SamplerTest.py"
 
