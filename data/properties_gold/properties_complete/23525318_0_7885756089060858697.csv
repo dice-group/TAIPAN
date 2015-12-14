@@ -1,0 +1,4 @@
+propertyUri,columnIndex,hasProperty
+http://dbpedia.org/ontology/country,0,FALSE
+,2,TRUE
+http://dbpedia.org/ontology/currency,3,FALSE

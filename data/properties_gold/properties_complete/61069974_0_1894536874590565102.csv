@@ -1,0 +1,4 @@
+propertyUri,columnIndex,hasProperty
+http://dbpedia.org/ontology/currency,1,FALSE
+,3,TRUE
+,4,TRUE

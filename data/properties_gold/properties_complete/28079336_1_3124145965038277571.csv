@@ -1,0 +1,7 @@
+propertyUri,columnIndex,hasProperty
+http://dbpedia.org/ontology/rank,0,FALSE
+http://dbpedia.org/ontology/country,2,FALSE
+http://dbpedia.org/ontology/industry,3,FALSE
+,5,TRUE
+http://dbpedia.org/ontology/assets,6,FALSE
+http://dbpedia.org/ontology/marketCapitalisation,7,FALSE

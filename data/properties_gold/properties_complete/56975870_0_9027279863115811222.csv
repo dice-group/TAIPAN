@@ -1,0 +1,4 @@
+propertyUri,columnIndex,hasProperty
+http://dbpedia.org/ontology/populationTotal,2,FALSE
+http://dbpedia.org/ontology/populationDensity,3,FALSE
+http://dbpedia.org/ontology/capital,4,FALSE

@@ -1,0 +1,5 @@
+propertyUri,columnIndex,hasProperty
+,1,TRUE
+http://dbpedia.org/ontology/sales,2,FALSE
+http://dbpedia.org/ontology/netIncome,3,FALSE
+http://dbpedia.org/ontology/industry,4,FALSE

@@ -1,0 +1,4 @@
+propertyUri,columnIndex,hasProperty
+http://dbpedia.org/ontology/state,1,FALSE
+,2,TRUE
+http://dbpedia.org/ontology/website,3,FALSE

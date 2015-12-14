@@ -1,0 +1,5 @@
+propertyUri,columnIndex,hasProperty
+http://dbpedia.org/ontology/language,0,FALSE
+http://dbpedia.org/ontology/location,2,FALSE
+http://dbpedia.org/ontology/reference,3,FALSE
+http://dbpedia.org/ontology/comment,4,FALSE

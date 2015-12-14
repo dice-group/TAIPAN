@@ -1,0 +1,5 @@
+propertyUri,columnIndex,hasProperty
+http://dbpedia.org/ontology/rating,0,FALSE
+http://dbpedia.org/ontology/industry,2,FALSE
+,3,TRUE
+,4,TRUE

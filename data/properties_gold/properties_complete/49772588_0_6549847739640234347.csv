@@ -1,0 +1,10 @@
+propertyUri,columnIndex,hasProperty
+,10,TRUE
+,11,TRUE
+,12,TRUE
+http://dbpedia.org/ontology/populationTotal,2,FALSE
+http://dbpedia.org/ontology/catholicPercentage,3,FALSE
+,6,TRUE
+,7,TRUE
+,8,TRUE
+,9,TRUE

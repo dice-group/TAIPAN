@@ -1,0 +1,5 @@
+propertyUri,columnIndex,hasProperty
+http://dbpedia.org/ontology/continent,0,FALSE
+http://dbpedia.org/ontology/region,1,FALSE
+http://dbpedia.org/ontology/capital,3,FALSE
+,8,TRUE

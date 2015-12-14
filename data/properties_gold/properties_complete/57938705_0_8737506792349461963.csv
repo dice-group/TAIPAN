@@ -1,0 +1,9 @@
+propertyUri,columnIndex,hasProperty
+,10,TRUE
+http://dbpedia.org/ontology/year,3,FALSE
+http://dbpedia.org/ontology/genre,4,FALSE
+http://dbpedia.org/ontology/publisher,5,FALSE
+,6,TRUE
+,7,TRUE
+,8,TRUE
+,9,TRUE

@@ -1,0 +1,3 @@
+propertyUri,columnIndex,hasProperty
+http://dbpedia.org/ontology/ingredient,1,FALSE
+http://dbpedia.org/ontology/manufacturer,2,FALSE

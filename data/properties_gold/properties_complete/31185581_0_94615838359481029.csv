@@ -1,0 +1,4 @@
+propertyUri,columnIndex,hasProperty
+http://dbpedia.org/ontology/location,2,FALSE
+http://dbpedia.org/ontology/revenue,3,FALSE
+,4,TRUE

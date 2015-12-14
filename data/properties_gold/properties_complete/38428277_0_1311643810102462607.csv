@@ -1,0 +1,4 @@
+propertyUri,columnIndex,hasProperty
+http://dbpedia.org/ontology/rank,0,FALSE
+http://dbpedia.org/ontology/year,2,FALSE
+http://dbpedia.org/ontology/director,3,FALSE

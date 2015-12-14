@@ -1,0 +1,4 @@
+propertyUri,columnIndex,hasProperty
+http://dbpedia.org/ontology/industry,1,FALSE
+http://dbpedia.org/ontology/country,2,FALSE
+,3,TRUE
