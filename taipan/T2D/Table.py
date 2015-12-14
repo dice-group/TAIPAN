@@ -9,6 +9,7 @@ class T2DTable(object):
         self.table = self.getTableComplete(id)
         self.classes = self.getClassesComplete(id)
         self.properties = self.getAttributesComplete(id)
+        self.propertiesGold = self.getPropertiesGold(id)
         self.subjectColumn = self.getSubjectColumn(id)
         #self.entities = self.getEntitiesInstance(id)
 
@@ -32,6 +33,10 @@ class T2DTable(object):
         attributesRaw = self.loadCsv(os.path.join(t2dDataDir, 'attributes_complete', id))
         return self.parseAttributes(attributesRaw)
 
+    def getPropertiesGold(self, id):
+        attributesRaw = self.loadCsv(os.path.join(t2dDataDir, 'properties_gold', 'dbpedia_properties', id))
+        return self.parseAttributes(attributesRaw)
+
     def getAttributesInstance(self, id):
         attributesRaw = self.loadCsv(os.path.join(t2dDataDir, 'attributes_instance', id))
         return self.parseAttributes(attributesRaw)
@@ -48,7 +53,7 @@ class T2DTable(object):
                     "isKey": False if row[2] == "False" else True,
                     "columnIndex": int(row[3])
                 }
-            attributes.append(attribute)
+                attributes.append(attribute)
         else:
             row = attributesRaw
             attribute = {
@@ -57,6 +62,7 @@ class T2DTable(object):
                 "isKey": False if row[2] == "False" else True,
                 "columnIndex": int(row[3])
             }
+            attributes.append(attribute)
         return attributes
 
     def getEntitiesInstance(self, id):

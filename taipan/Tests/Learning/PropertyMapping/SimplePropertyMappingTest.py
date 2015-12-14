@@ -7,14 +7,10 @@ from taipan.Learning.PropertyMapping.SimplePropertyMapper import SimplePropertyM
 class SimplePropertyMappingTestCase(unittest.TestCase):
     def setUp(self):
         sampler = T2DSampler()
-        self.testTables = sampler.getTablesSubjectIdentification()
+        self.testTables = sampler.getTablesPropertyAnnotationDbpediaGoldStandard()
         self.simplePropertyMapper = SimplePropertyMapper()
 
     def testMapProperties(self):
-        import logging
-        logger = logging.getLogger("taipan.Learning.PropertyMapping.SimplePropertyMapper")
-        logger.disabled = True
-
         for num, table in enumerate(self.testTables):
             print "table %s" %(num,)
             properties = self.simplePropertyMapper.mapProperties(table)

@@ -79,6 +79,18 @@ class T2DSampler(object):
     def getTablesPropertyAnnotation(self):
         return self.getTablesSubjectIdentification()
 
+    def getTablesPropertyAnnotationDbpediaGoldStandardIds(self):
+        tablesCompletePath = os.path.join(t2dDataDir, 'properties_gold','dbpedia_properties')
+        ids = [ f for f in os.listdir(tablesCompletePath) if os.path.isfile(os.path.join(tablesCompletePath,f)) ]
+        return ids
+
+    def getTablesPropertyAnnotationDbpediaGoldStandard(self):
+        idList = self.getTablesPropertyAnnotationDbpediaGoldStandardIds()
+        tables = []
+        for _id in idList:
+            tables.append(self.getTableForAnalysis(_id))
+        return tables
+
     def get20Tables(self):
         tables = []
         idList = self.getListOfTableIds()
