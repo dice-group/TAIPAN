@@ -4,9 +4,9 @@ from taipan.Logging.Logger import Logger
 from taipan.Learning.PropertyRecommendation.SimplePropertyRecommender import SimplePropertyRecommender
 
 class LovPropertyMapper(object):
-    scoreThreshold = 0.5
+    scoreThreshold = 0.8
 
-    def __init__(self, scoreThreshold=0.5):
+    def __init__(self, scoreThreshold=0.8):
         self.scoreThreshold = scoreThreshold
         self.logger = Logger().getLogger(__name__)
 
