@@ -1,4 +1,5 @@
 import unittest
+import logging
 
 from taipan.T2D.Sampler import T2DSampler
 from taipan.T2D.Table import T2DTable
@@ -11,6 +12,7 @@ class SimplePropertyMappingTestCase(unittest.TestCase):
         self.simplePropertyMapper = SimplePropertyMapper()
 
     def testMapProperties(self):
+        logging.disable(logging.DEBUG)
         for num, table in enumerate(self.testTables):
             print "table %s" %(num,)
             properties = self.simplePropertyMapper.mapProperties(table)
@@ -19,5 +21,5 @@ class SimplePropertyMappingTestCase(unittest.TestCase):
                 (uri, index) = _property
                 toPrint += "Uri: %s Column Index %s \n" % (uri,index)
             print toPrint
-            print table.properties
+            print table.propertiesGold
             print table.table[:5]
