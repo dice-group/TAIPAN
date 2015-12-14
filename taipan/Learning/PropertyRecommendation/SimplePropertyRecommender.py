@@ -30,5 +30,5 @@ class SimplePropertyRecommender(object):
         r = requests.get(lovSearchUri, params=params)
         if r.status_code == requests.codes.ok:
             properties = r.json()
-            properties = [ {'uri': _property['uri'][0], 'prefixedName': _property['prefixedName'][0]} for _property in properties['results'] ]
+            properties = [ {'uri': _property['uri'][0], 'prefixedName': _property['prefixedName'][0], 'score': _property['score']} for _property in properties['results'] ]
             return properties
