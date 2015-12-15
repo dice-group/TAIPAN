@@ -130,21 +130,60 @@ class SimplePropertyMapper(object):
         for row in properties:
             for nonSubjectColumn in nonSubjectColumns:
                     propertiesAggregate[nonSubjectColumn].append(properties[row][nonSubjectColumn])
+
+        for nonSubjectColumn in nonSubjectColumns:
+            propertiesAggregate[nonSubjectColumn] = [item for sublist in propertiesAggregate[nonSubjectColumn] for item in sublist]
+
         return propertiesAggregate
 
     def getTopProperties(self, propertiesAggregate, nonSubjectColumns, threshold):
         topProperties = []
         for nonSubjectColumn in nonSubjectColumns:
-            propertiesAggregate[nonSubjectColumn] = [item for sublist in propertiesAggregate[nonSubjectColumn] for item in sublist]
             try:
                 (topProperty, support) = Counter(propertiesAggregate[nonSubjectColumn]).most_common(1)[0]
                 #In percents
                 support = (float(support) / len(propertiesAggregate[nonSubjectColumn])) * 100
                 if support > threshold:
-                    topProperties.append((topProperty,nonSubjectColumn))
+                    topProperties.append({"uri": topProperty,
+                     "columnIndex": nonSubjectColumn})
             except IndexError:
                 self.logger.debug("No property identified for column %s"%(nonSubjectColumn))
         return topProperties
+
+    def calculateScores(self, propertiesAggregate, nonSubjectColumns):
+        scores = collections.defaultdict(dict)
+        for nonSubjectColumn in nonSubjectColumns:
+            scores[nonSubjectColumn] = []
+
+        for nonSubjectColumn in nonSubjectColumns:
+            scores[nonSubjectColumn] = Counter(propertiesAggregate[nonSubjectColumn])
+
+        return scores
+
+    def getScores(self, table, rowsToDisambiguate=20, threshold=10, support=0, connectivity=0):
+        tableData = table.getData()
+        tableHeader = table.getHeader()
+        tableId = table.id
+        numberOfRows = len(tableData)
+        numberOfColumns = len(tableData[0])
+        subjectColumn = table.subjectColumn
+        if subjectColumn == None or subjectColumn == -1:
+            return []
+
+        nonSubjectColumns = range(0,len(tableData[0]))
+        nonSubjectColumns.remove(subjectColumn)
+
+        self.logger.debug("Identifying properties for a table %s"%(tableId))
+
+        entities = self.getEntitiesWithClasses(tableId)
+        classes = self.getClasses(entities, numberOfColumns)
+        mainClass = self.getMainClassForSubjectColumn(classes, subjectColumn)
+        entities = self.filterNonMainClassEntities(entities, mainClass, subjectColumn)
+        properties = self.findProperties(tableId, tableData, entities, subjectColumn, nonSubjectColumns)
+        propertiesAggregate = self.aggregateProperties(properties, nonSubjectColumns)
+        propertyScores = self.calculateScores(propertiesAggregate, nonSubjectColumns)
+
+        return propertyScores
 
     def mapProperties(self, table, rowsToDisambiguate=20, threshold=10, support=0, connectivity=0):
         tableData = table.getData()
@@ -167,9 +206,8 @@ class SimplePropertyMapper(object):
         entities = self.filterNonMainClassEntities(entities, mainClass, subjectColumn)
         properties = self.findProperties(tableId, tableData, entities, subjectColumn, nonSubjectColumns)
         propertiesAggregate = self.aggregateProperties(properties, nonSubjectColumns)
-        topProperties = self.getTopProperties(propertiesAggregate, nonSubjectColumns, threshold)
+        propertyScores = self.calculateScores(propertiesAggregate, nonSubjectColumns)
 
-        #if subject column is identified then subject column should have rdfs:label property
-        #topProperties.append(("http://www.w3.org/2000/01/rdf-schema#label", subjectColumn))
+        topProperties = self.getTopProperties(propertiesAggregate, nonSubjectColumns, threshold)
 
         return topProperties
