@@ -1,0 +1,3 @@
+"webtable column","dbpedia property uri","similarity","correct","correct value"
+"industry","http://dbpedia.org/ontology/industry","0.014653007996476149","false",
+"country","http://dbpedia.org/ontology/locationCountry","0.020495964068981742","false",

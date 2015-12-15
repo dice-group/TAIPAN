@@ -1,0 +1,4 @@
+"webtable column","dbpedia property uri","similarity","correct","correct value"
+"genre","http://dbpedia.org/ontology/genre","0.03424623884245461","false",
+"platform","http://dbpedia.org/ontology/computingPlatform","0.12452136566134533","false",
+"release","http://dbpedia.org/ontology/releaseDate","0.05377290863776175","false",

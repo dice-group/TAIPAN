@@ -1,0 +1,3 @@
+"webtable column","dbpedia property uri","similarity","correct","correct value"
+"mass language(s)","http://dbpedia.org/ontology/language","0.021926519442177772","true","[http://dbpedia.org/ontology/Language]"
+"official language(s)","http://dbpedia.org/ontology/language","0.029273668187594193","true","[http://dbpedia.org/ontology/Language]"

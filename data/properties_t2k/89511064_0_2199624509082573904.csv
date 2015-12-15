@@ -1,0 +1,4 @@
+"webtable column","dbpedia property uri","similarity","correct","correct value"
+"capital","http://dbpedia.org/ontology/capital","0.09913216664061333","true","[http://dbpedia.org/ontology/City]"
+"iso (2)","http://dbpedia.org/ontology/demonym","0.004968043922613135","false",
+"internet","http://dbpedia.org/ontology/demonym","0.004968043922613135","false",

@@ -1,0 +1,4 @@
+"webtable column","dbpedia property uri","similarity","correct","correct value"
+"capital","http://dbpedia.org/ontology/capital","0.07522964431928612","true","[http://dbpedia.org/ontology/City]"
+"currency","http://dbpedia.org/ontology/currency","0.06124772268925557","true","[http://dbpedia.org/ontology/Currency]"
+"language","http://dbpedia.org/ontology/demonym","0.04531918401614832","false","[http://dbpedia.org/ontology/Language]"

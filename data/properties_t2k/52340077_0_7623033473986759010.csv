@@ -1,0 +1,4 @@
+"webtable column","dbpedia property uri","similarity","correct","correct value"
+"area (square km)","http://dbpedia.org/ontology/PopulatedPlace/areaTotal","0.05413554180675984","false",
+"population","http://dbpedia.org/ontology/populationTotal","0.022282451821905382","false",
+"population density (per square km)","http://dbpedia.org/ontology/populationDensity","0.04451870302769288","false",

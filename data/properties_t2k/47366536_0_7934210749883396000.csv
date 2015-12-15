@@ -1,0 +1,2 @@
+"webtable column","dbpedia property uri","similarity","correct","correct value"
+"capital","http://dbpedia.org/ontology/capital","0.027061985602708633","true","[http://dbpedia.org/ontology/City]"

@@ -1,0 +1,3 @@
+"webtable column","dbpedia property uri","similarity","correct","correct value"
+"class","http://dbpedia.org/ontology/class","0.0632115691266868","false",
+"phylum","http://dbpedia.org/ontology/phylum","0.006145571300024099","false","[http://dbpedia.org/ontology/PopulatedPlace]"

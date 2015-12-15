@@ -37,6 +37,10 @@ test-simple-property-mapping:
 test-lov-property-mapping:
 	python -m unittest discover -s ./taipan/Tests/Learning/PropertyMapping -p "LovPropertyMappingTest.py"
 
+test-t2k-property-mapping:
+	python -m unittest discover -s ./taipan/Tests/Learning/PropertyMapping -p "T2KPropertyMappingTest.py"
+
+
 test-distant-supervision-identifier:
 	python -m unittest discover -s ./taipan/Tests/Learning/SubjectColumnIdentification -p "DistantSupervisionIdentifierTest.py"
 

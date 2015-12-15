@@ -1,0 +1,5 @@
+"webtable column","dbpedia property uri","similarity","correct","correct value"
+"country","http://dbpedia.org/ontology/country","0.06429846333332828","true","[http://dbpedia.org/ontology/Country]"
+"city            population","http://dbpedia.org/ontology/populationTotal","0.017305868460384934","false",
+"metro            population","http://dbpedia.org/ontology/populationTotal","0.00685853515827544","false",
+"mayor","http://dbpedia.org/ontology/leaderName","0.013694129734271381","false","[http://dbpedia.org/ontology/Mayor]"

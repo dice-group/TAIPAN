@@ -1,0 +1,4 @@
+"webtable column","dbpedia property uri","similarity","correct","correct value"
+"currency","http://dbpedia.org/ontology/currency","0.07496805259712425","true","[http://dbpedia.org/ontology/Currency]"
+"alphabetic code","http://dbpedia.org/ontology/currency","0.0375546025153491","false",
+"symbol","http://dbpedia.org/ontology/currency","0.022820086611745817","false",
