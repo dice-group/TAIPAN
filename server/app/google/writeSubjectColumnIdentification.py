@@ -2,7 +2,7 @@ import gspread
 import json
 from oauth2client.client import SignedJwtAssertionCredentials
 
-json_key = json.load(open('WebTables-ec825f0c327b.json'))
+json_key = json.load(open('google-key-example.json'))
 #The spreadsheet should be shared with the email address from the json file
 #see the docs here: http://gspread.readthedocs.org/en/latest/oauth2.html
 scope = ['https://spreadsheets.google.com/feeds']
