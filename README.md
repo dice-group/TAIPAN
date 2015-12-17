@@ -17,10 +17,14 @@ To run annotation application you will have to setup google and mongolab connect
 
 ## Subject Column Identification
 
-Subject column identification can be run via:
+Simple rule based subject column identification can be run via:
 ```
-make test-subject-column-supervised-identifier #supervised identifier
-make test-subject-column-simple-identifier #rule-based identifier
+make test-subject-column-simple-identifier
+```
+
+To run supervised subject column identification run:
+```
+make test-subject-column-supervised-identifier
 ```
 
 See unit tests for more information.
