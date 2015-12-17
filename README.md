@@ -2,7 +2,7 @@
 Web Tables Automatic Property Mapping
 
 ## Installation
-Install the project into python virtualenv and run make install:
+Install the project into python [virtualenv](https://virtualenvwrapper.readthedocs.org/en/latest/) and run make install:
 ```
    mkvirtualenv taipan
    cdvirtualenv
@@ -13,7 +13,7 @@ Install the project into python virtualenv and run make install:
    make requirements
 ```
 
-To run annotation application you will have to setup google and mongolab connectors with your credentials. Also, additional dependencies are required by the app (make requirements-server).
+To run annotation web UI flask application (server/run.py) you will have to setup google and mongolab connectors with your credentials. Also, additional dependencies are required by the app (make requirements-server).
 
 ## Subject Column Identification
 
