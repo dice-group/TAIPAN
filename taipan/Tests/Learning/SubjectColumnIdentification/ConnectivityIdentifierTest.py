@@ -13,20 +13,21 @@ class ConnectivityIdentifierTestCase(unittest.TestCase):
         sampler = T2DSampler()
         self.testTable = sampler.getTestTable()
         self.scIdentifier = ConnectivityIdentifier()
-        self.testTables = sampler.getTablesSubjectIdentification()
+        self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
 
     def testConnectivityIdentifier(self):
         """
             0.409836065574
         """
         connectivityCeil = 0.32
-        connectivityFloors = np.arange(0,0.1,0.001)
+        connectivityFloors = np.arange(0,1.0,0.1)
         for connectivityFloor in connectivityFloors:
-            precision = 0
+            correctly = 0
             for table in self.testTables:
                 subjectColumn = self.scIdentifier.identifySubjectColumn(table, applyWeights=False, connectivityFloor=connectivityFloor, connectivityCeil=connectivityCeil)
                 if table.isSubjectColumn(subjectColumn):
-                    precision += 1
+                    correctly += 1
             print "connectivity floor: %s" % connectivityFloor
             print "connectivity ceil: %s" % connectivityCeil
-            print float(precision) / len(self.testTables)
+            print correctly
+            print float(correctly) / len(self.testTables)

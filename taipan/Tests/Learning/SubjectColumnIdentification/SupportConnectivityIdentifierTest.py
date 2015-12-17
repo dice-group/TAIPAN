@@ -13,18 +13,19 @@ class SupportConnectivityIdentifierTestCase(unittest.TestCase):
         sampler = T2DSampler()
         self.testTable = sampler.getTestTable()
         self.scIdentifier = SupportConnectivityIdentifier()
-        self.testTables = sampler.getTablesSubjectIdentification()
+        self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
 
     def testSupportConnectivityIdentifier(self):
         alphas = numpy.arange(0,1.1,0.05)
         for alpha in alphas:
-            precision = 0
+            correctly = 0
             for table in self.testTables[:]:
                 supportCeil = 100
                 supportFloor = 0
                 connectivityThreshold = 0
                 subjectColumn = self.scIdentifier.identifySubjectColumn(table, supportFloor, supportCeil, connectivityThreshold, alpha)
                 if table.isSubjectColumn(subjectColumn):
-                    precision += 1
+                    correctly += 1
             print "alpha: %s" %(alpha)
-            print float(precision) / len(self.testTables)
+            print correctly
+            print float(correctly) / len(self.testTables)

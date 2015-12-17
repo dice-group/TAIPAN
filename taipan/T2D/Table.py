@@ -165,7 +165,7 @@ class T2DTable(object):
         if(columnIndex == None):
             columnIndex = -1
 
-        if(self.columnIndex):
+        if(hasattr(self, 'columnIndex')):
             columnIndex = self.translateColumnIndex(columnIndex)
 
         if(columnIndex == self.subjectColumn):

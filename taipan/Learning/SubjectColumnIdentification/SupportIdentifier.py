@@ -27,7 +27,6 @@ class SupportIdentifier(object):
         supports = self.getSupport(table)
         #Return column with maximum support
         supports = [support if support < supportCeil and support > supportFloor else 0 for support in supports]
-        print supports
         return supports.index(max(supports))
 
     def getSupport(self, table):

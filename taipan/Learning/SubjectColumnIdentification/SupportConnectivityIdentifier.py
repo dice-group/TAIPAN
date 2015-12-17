@@ -8,7 +8,7 @@ class SupportConnectivityIdentifier(object):
         self.connectivityIdentifier = ConnectivityIdentifier()
         self.supportIdentifier = SupportIdentifier()
 
-    def identifySubjectColumn(self, table, supportFloor=10, supportCeil=70, connectivityThreshold=0.01, alpha):
+    def identifySubjectColumn(self, table, supportFloor=10, supportCeil=70, connectivityThreshold=0.01, alpha=0.5):
         connectivities = self.connectivityIdentifier.getConnectivity(table, applyWeights=False)
         supports = self.supportIdentifier.getSupport(table)
 
@@ -22,7 +22,5 @@ class SupportConnectivityIdentifier(object):
         consups = [0]*len(connectivities)
         for columnIndex, item in enumerate(consups):
             consups[columnIndex] = alpha*supports[columnIndex] + (1-alpha)*connectivities[columnIndex]
-
-        print consups
 
         return consups.index(max(consups))

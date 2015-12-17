@@ -12,7 +12,7 @@ class SupportIdentifierTestCase(unittest.TestCase):
         sampler = T2DSampler()
         self.testTable = sampler.getTestTable()
         self.scIdentifier = SupportIdentifier()
-        self.testTables = sampler.getTablesSubjectIdentification()
+        self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
 
     def testSupportIdentifier(self):
         """
@@ -22,12 +22,15 @@ class SupportIdentifierTestCase(unittest.TestCase):
            support = 0.8 40 | 0.409836065574
            support = 10 70 | 0.475409836066
         """
-        precision = 0
+        correctly = 0
         for tableNum, table in enumerate(self.testTables):
             supportFloor = 10
             supportCeil = 70
             subjectColumn = self.scIdentifier.identifySubjectColumn(table, supportCeil, supportFloor)
             if table.isSubjectColumn(subjectColumn):
-                precision += 1
+                correctly += 1
 
-        print float(precision) / len(self.testTables)
+        macroAccuracy = float(correctly) / len(self.testTables)
+        print correctly
+        print len(self.testTables)
+        print macroAccuracy
