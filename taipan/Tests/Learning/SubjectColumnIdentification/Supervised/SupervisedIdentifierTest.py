@@ -11,7 +11,7 @@ class SVMIdentifierTestCase(unittest.TestCase):
     def setUp(self):
         sampler = T2DSampler()
         self.testTable = sampler.getTestTable()
-        self.scIdentifier = SupervisedIdentifier(7, inverseCrossValidation=True, useColumnIndex=False)
+        self.scIdentifier = SupervisedIdentifier(0, inverseCrossValidation=False, useColumnIndex=True)
 
     def testSupervisedIdentifier(self):
         """
