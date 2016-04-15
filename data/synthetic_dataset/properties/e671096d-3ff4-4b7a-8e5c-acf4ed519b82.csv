@@ -1,0 +1,5 @@
+"http://dbpedia.org/ontology/birthPlace","","False","1"
+"http://dbpedia.org/property/deathPlace","","False","2"
+"http://dbpedia.org/ontology/deathDate","","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","","True","4"
+"http://dbpedia.org/ontology/deathPlace","","False","5"

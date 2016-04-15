@@ -1,0 +1,7 @@
+"http://dbpedia.org/ontology/author","","False","1"
+"http://dbpedia.org/ontology/numberOfVolumes","","False","2"
+"http://dbpedia.org/ontology/publisher","","False","3"
+"http://dbpedia.org/ontology/lastPublicationDate","","False","4"
+"http://dbpedia.org/ontology/firstPublicationDate","","False","5"
+"http://www.w3.org/2000/01/rdf-schema#label","","True","6"
+"http://dbpedia.org/ontology/magazine","","False","7"
