@@ -1,0 +1,5 @@
+"http://dbpedia.org/ontology/industry","Industry","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","Company","True","0"
+"http://dbpedia.org/ontology/sales","Sales        ($million)","False","1"
+"http://dbpedia.org/ontology/location","Location","False","4"
+"http://dbpedia.org/ontology/numberOfEmployees","Employees","False","3"

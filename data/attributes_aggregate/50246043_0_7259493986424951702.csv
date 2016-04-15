@@ -1,0 +1,3 @@
+"http://dbpedia.org/ontology/careerPrizeMoney","average amount received","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","type of aid","True","0"
+"http://dbpedia.org/ontology/percentageAlcohol","percent receiving aid","False","1"

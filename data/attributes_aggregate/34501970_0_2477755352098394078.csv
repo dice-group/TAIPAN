@@ -1,0 +1,5 @@
+"http://dbpedia.org/ontology/album","album","False","6"
+"http://www.w3.org/2000/01/rdf-schema#label","artist","True","3"
+"http://dbpedia.org/ontology/creationYear","year","False","5"
+"http://dbpedia.org/ontology/Work/runtime","length","False","8"
+"http://www.w3.org/2000/01/rdf-schema#label","title","True","4"

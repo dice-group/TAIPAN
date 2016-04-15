@@ -14,7 +14,7 @@ class T2DTable(object):
         #self.entities = self.getEntitiesInstance(id)
 
     def getSubjectColumn(self, id):
-        csv = self.loadCsv(os.path.join(t2dDataDir, 'subject_column', 'subject_column_gold.csv'))
+        csv = self.loadCsv(os.path.join(t2dDataDir, 'subject_column', 'subject_column_aggregate.csv'))
         return self.parseSubjectColumn(csv, id)
 
     def parseSubjectColumn(self, csv, id):
@@ -24,17 +24,17 @@ class T2DTable(object):
         return None
 
     def getTableComplete(self, id):
-        return self.loadCsv(os.path.join(t2dDataDir, 'tables_complete', id))
+        return self.loadCsv(os.path.join(t2dDataDir, 'tables_aggregate', id))
 
     def getTablesInstance(self, id):
         return self.loadCsv(os.path.join(t2dDataDir, 'tables_instance', id))
 
     def getAttributesComplete(self, id):
-        attributesRaw = self.loadCsv(os.path.join(t2dDataDir, 'attributes_complete', id))
+        attributesRaw = self.loadCsv(os.path.join(t2dDataDir, 'attributes_aggregate', id))
         return self.parseAttributes(attributesRaw)
 
     def getPropertiesGold(self, id):
-        attributesRaw = self.loadCsv(os.path.join(t2dDataDir, 'properties_gold', 'dbpedia_properties', id))
+        attributesRaw = self.loadCsv(os.path.join(t2dDataDir, 'properties_gold', 'dbpedia_properties_aggregate', id))
         return self.parseAttributes(attributesRaw)
 
     def getAttributesInstance(self, id):
@@ -84,7 +84,7 @@ class T2DTable(object):
         return self.parseClasses(allClasses, id)
 
     def getClassesComplete(self, id):
-        allClasses = self.loadCsv(os.path.join(t2dDataDir, 'classes_complete.csv'))
+        allClasses = self.loadCsv(os.path.join(t2dDataDir, 'classes_aggregate.csv'))
         return self.parseClasses(allClasses, id)
 
     def parseClasses(self, classes, id):
@@ -106,7 +106,7 @@ class T2DTable(object):
         return classes
 
     def loadCsv(self, csvPath):
-        #print csvPath
+        print csvPath
         if(os.path.exists(csvPath)):
             csv = numpy.genfromtxt(csvPath, delimiter=",", dtype="S", comments="///", missing_values="NULL")
             if numpy.shape(csv) != (0,):

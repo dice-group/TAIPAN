@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/zipCode","zip:","False","8"
+"http://www.w3.org/2000/01/rdf-schema#label","company name:","True","0"
+"http://dbpedia.org/ontology/country","country/region:","False","7"
+"http://dbpedia.org/ontology/address","street address:","False","6"

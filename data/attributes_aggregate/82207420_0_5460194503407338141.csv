@@ -1,0 +1,3 @@
+"http://www.w3.org/2000/01/rdf-schema#label","Language","True","1"
+"http://dbpedia.org/ontology/numberOfSpeakers","Number of speakers","False","2"
+"http://dbpedia.org/ontology/collectionSize","Where spoken natively by more than 5% of the population or listed as an official language in the countries&rsquo; constitution","False","3"

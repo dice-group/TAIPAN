@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/operatingSystem","os","False","3"
+"http://dbpedia.org/ontology/latestReleaseVersion","{version|}","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","{software|}","True","0"
+"http://dbpedia.org/ontology/company","{company|}","False","1"

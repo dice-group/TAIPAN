@@ -14,8 +14,10 @@ class T2DSampler(object):
     def __init__(self):
         pass
 
-    def getSyntheticTables(self):
-        pass
+    def getListOfSyntheticTableIds(self):
+        tablesCompletePath = os.path.join(t2dDataDir, 'synthetic_dataset','tables')
+        ids = [ f for f in os.listdir(tablesCompletePath) if os.path.isfile(os.path.join(tablesCompletePath,f)) ]
+        return ids
 
     def getListOfTableIds(self):
         tablesCompletePath = os.path.join(t2dDataDir, 'tables_complete')
@@ -89,6 +91,13 @@ class T2DSampler(object):
 
     def getTablesPropertyAnnotationDbpediaGoldStandard(self):
         idList = self.getTablesPropertyAnnotationDbpediaGoldStandardIds()
+        tables = []
+        for _id in idList:
+            tables.append(self.getTableForAnalysis(_id))
+        return tables
+
+    def getTablesSyntheticDbpediaDataset(self):
+        idList = self.getListOfSyntheticTableIds()
         tables = []
         for _id in idList:
             tables.append(self.getTableForAnalysis(_id))

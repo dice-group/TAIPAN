@@ -1,0 +1,4 @@
+"http://www.w3.org/2000/01/rdf-schema#label","driver","True","1"
+"http://dbpedia.org/ontology/Work/runtime","time","False","5"
+"http://dbpedia.org/ontology/collectionSize","country","False","2"
+"http://dbpedia.org/ontology/teamName","team","False","3"

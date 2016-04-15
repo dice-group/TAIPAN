@@ -1,0 +1,5 @@
+"http://dbpedia.org/ontology/owner","Website Owner:","False","4"
+"http://dbpedia.org/ontology/commonName","Title:","False","0"
+"http://dbpedia.org/ontology/description","Description:","False","2"
+"http://dbpedia.org/ontology/category","Category:","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","URL:","True","1"

@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/author","other author(s)","False","4"
+"http://www.w3.org/2000/01/rdf-schema#label","title","True","0"
+"http://dbpedia.org/ontology/firstPublicationDate","year of publication","False","3"
+"http://dbpedia.org/ontology/isbn","isbn-13","False","2"

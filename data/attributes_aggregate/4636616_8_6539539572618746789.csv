@@ -1,0 +1,3 @@
+"http://www.w3.org/2000/01/rdf-schema#label","horse's name","True","2"
+"http://dbpedia.org/ontology/jockey","rider's name","False","3"
+"http://dbpedia.org/ontology/owner","owner's name","False","4"

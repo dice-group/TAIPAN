@@ -1,0 +1,3 @@
+"http://dbpedia.org/ontology/zipCode","postcode:","False","5"
+"http://www.w3.org/2000/01/rdf-schema#label","name:","True","1"
+"http://dbpedia.org/ontology/address","location:","False","4"

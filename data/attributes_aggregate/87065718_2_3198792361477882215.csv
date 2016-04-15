@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/reference","PIER&nbsp;bibliographic&nbsp;reference","False","3"
+"http://dbpedia.org/ontology/language","Language","False","1"
+"http://dbpedia.org/ontology/otherName","Common&nbsp;name","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","Location","True","0"

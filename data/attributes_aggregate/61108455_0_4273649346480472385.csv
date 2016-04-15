@@ -1,0 +1,6 @@
+"http://www.w3.org/2000/01/rdf-schema#label","city","True","2"
+"http://www.w3.org/2000/01/rdf-schema#label","street","True","0"
+"http://dbpedia.org/ontology/federalState","state","False","3"
+"http://dbpedia.org/ontology/Building/floorArea","sq. ft.","False","8"
+"http://dbpedia.org/ontology/zipCode","zip","False","4"
+"http://dbpedia.org/ontology/bedCount","beds","False","6"

@@ -1,0 +1,7 @@
+"http://dbpedia.org/ontology/industry","Industry","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","Name","True","1"
+"http://dbpedia.org/ontology/collectionSize","Country","False","2"
+"http://dbpedia.org/ontology/netIncome","Profits ($bil)","False","5"
+"http://dbpedia.org/ontology/sales","Sales ($bil)","False","4"
+"http://dbpedia.org/ontology/marketCapitalisation","Market Value ($bil)","False","7"
+"http://dbpedia.org/ontology/assets","Assets ($bil)","False","6"

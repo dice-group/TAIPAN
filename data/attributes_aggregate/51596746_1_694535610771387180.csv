@@ -1,0 +1,3 @@
+"http://www.w3.org/2000/01/rdf-schema#label","Country","True","1"
+"http://dbpedia.org/ontology/officialLanguage","Official Language(s)","False","4"
+"http://dbpedia.org/ontology/language","Mass Language(s)","False","3"

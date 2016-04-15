@@ -1,0 +1,4 @@
+"http://www.w3.org/2000/01/rdf-schema#label","Administrative unit","True","1"
+"http://dbpedia.org/ontology/capital","Capital","False","3"
+"http://dbpedia.org/ontology/PopulatedPlace/populationDensity","Population density(inh. per km?)","False","6"
+"http://dbpedia.org/ontology/commonName","Local name","False","2"

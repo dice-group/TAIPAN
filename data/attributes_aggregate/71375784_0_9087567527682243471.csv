@@ -1,0 +1,5 @@
+"http://dbpedia.org/ontology/federalState","State","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","Name","True","1"
+"http://dbpedia.org/ontology/industry","Industry","False","3"
+"http://dbpedia.org/ontology/revenue","Revenue ($bil)","False","4"
+"http://dbpedia.org/ontology/numberOfEmployees","Employees","False","5"

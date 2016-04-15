@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/analogChannel","Dish Channel","False","3"
+"http://dbpedia.org/ontology/affiliate","Affiliate","False","1"
+"http://dbpedia.org/ontology/analogChannel","Local Channel","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","Network","True","0"

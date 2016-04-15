@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/currency","SUB-CURRENCY","False","3"
+"http://dbpedia.org/ontology/currency","CURRENCY","False","1"
+"http://dbpedia.org/ontology/currencyCode","ABREVIATION","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","COUNTRY","True","0"

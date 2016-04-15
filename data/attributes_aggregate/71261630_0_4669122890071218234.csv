@@ -1,0 +1,5 @@
+"http://dbpedia.org/ontology/populationTotal","Total population in 2004 (million)","False","1"
+"http://dbpedia.org/ontology/growingGrape","Annual population growth rate (%)","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","Country","True","0"
+"http://dbpedia.org/ontology/GeopoliticalOrganisation/populationDensity","Population density (persons per square km.)","False","3"
+"http://dbpedia.org/ontology/numberOfHouses","Average number of persons per household","False","4"

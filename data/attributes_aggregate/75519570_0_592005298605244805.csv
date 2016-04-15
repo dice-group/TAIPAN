@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/starring","star","False","1"
+"http://www.w3.org/2000/01/rdf-schema#label","title","True","0"
+"http://dbpedia.org/ontology/director","director","False","3"
+"http://dbpedia.org/ontology/starring","co-star","False","2"

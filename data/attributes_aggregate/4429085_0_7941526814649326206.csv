@@ -1,0 +1,7 @@
+"http://www.w3.org/2000/01/rdf-schema#label","Country","True","1"
+"http://dbpedia.org/ontology/conflict","Song","False","4"
+"http://dbpedia.org/ontology/alternativeTitle","English translation","False","5"
+"http://dbpedia.org/ontology/kinOfLanguage","Language","False","2"
+"http://dbpedia.org/ontology/artist","Artist","False","3"
+"http://dbpedia.org/ontology/soccerTournamentTopScorer","Points","False","7"
+"http://dbpedia.org/ontology/highestRank","Place","False","6"

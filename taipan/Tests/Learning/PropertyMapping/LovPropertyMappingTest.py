@@ -8,7 +8,8 @@ from taipan.Learning.PropertyMapping.LovPropertyMapper import LovPropertyMapper
 class LovPropertyMappingTestCase(unittest.TestCase):
     def setUp(self):
         sampler = T2DSampler()
-        self.testTables = sampler.getTablesPropertyAnnotationDbpediaGoldStandard()
+        #self.testTables = sampler.getTablesPropertyAnnotationDbpediaGoldStandard()
+        self.testTables = sampler.getTablesSyntheticDbpediaDataset()
         self.propertyMapper = LovPropertyMapper(scoreThreshold=1.0)
 
     def testMapProperties(self):
@@ -16,6 +17,7 @@ class LovPropertyMappingTestCase(unittest.TestCase):
         logging.disable(logging.INFO)
         for num, table in enumerate(self.testTables):
             properties = self.propertyMapper.mapProperties(table)
+            import ipdb; ipdb.set_trace()
             (overall, correct) = self.diffProperties(properties, table.propertiesGold)
             print "%s, %s" % (overall, correct,)
 
