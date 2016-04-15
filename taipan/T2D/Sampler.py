@@ -14,6 +14,9 @@ class T2DSampler(object):
     def __init__(self):
         pass
 
+    def getSyntheticTables(self):
+        pass
+
     def getListOfTableIds(self):
         tablesCompletePath = os.path.join(t2dDataDir, 'tables_complete')
         ids = [ f for f in os.listdir(tablesCompletePath) if os.path.isfile(os.path.join(tablesCompletePath,f)) ]
