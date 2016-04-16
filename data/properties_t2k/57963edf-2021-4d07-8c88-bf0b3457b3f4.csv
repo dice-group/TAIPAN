@@ -1,0 +1,3 @@
+"webtable column","dbpedia property uri","similarity","correct","correct value"
+"arm","http://dbpedia.org/ontology/arm","0.027776363429573528","false",
+"band","http://dbpedia.org/ontology/band","0.010127329547608609","false",
