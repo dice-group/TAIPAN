@@ -4,6 +4,9 @@ from taipan.Logging.Logger import Logger
 from taipan.Learning.PropertyRecommendation.SimplePropertyRecommender import SimplePropertyRecommender
 
 class LovPropertyMapper(object):
+    """
+        DBpedia ontology removed from LOV, will not work on DBpedia dataset
+    """
     scoreThreshold = 0.8
 
     def __init__(self, scoreThreshold=0.8):

@@ -28,6 +28,7 @@ class SimplePropertyRecommender(object):
         }
         lovSearchUri = "http://lov.okfn.org/dataset/lov/api/v2/term/search"
         r = requests.get(lovSearchUri, params=params)
+        r.raise_for_status()
         if r.status_code == requests.codes.ok:
             properties = r.json()
             properties = [ {'uri': _property['uri'][0], 'prefixedName': _property['prefixedName'][0], 'score': _property['score']} for _property in properties['results'] ]

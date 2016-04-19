@@ -11,7 +11,8 @@ from taipan.Config.Pathes import t2dDataDir
 class T2KPropertyMappingTestCase(unittest.TestCase):
     def setUp(self):
         sampler = T2DSampler()
-        self.testTables = sampler.getTablesPropertyAnnotationDbpediaGoldStandard()
+        #self.testTables = sampler.getTablesPropertyAnnotationDbpediaGoldStandard()
+        self.testTables = sampler.getTablesSyntheticDbpediaDataset()
 
     def readCsv(self, csvPath):
         if(os.path.exists(csvPath)):
@@ -68,21 +69,34 @@ class T2KPropertyMappingTestCase(unittest.TestCase):
         return propertiesWithColumnIndex
 
     def testMapProperties(self):
+        """
+            Overall: 2619
+            Correct: 6
+            Guessing correctly: http://dbpedia.org/ontology/birthDate
+        """
         logging.disable(logging.DEBUG)
         logging.disable(logging.INFO)
+        aggregateOverall = 0
+        aggregateCorrect = 0
         for num, table in enumerate(self.testTables):
             properties = self.getT2KResult(table.id)
             properties = self.restoreColumnIndex(properties, table)
             (overall, correct) = self.diffProperties(properties, table.propertiesGold)
+            aggregateOverall += overall
+            aggregateCorrect += correct
             print "%s, %s" % (overall, correct,)
+
+        print "Overall: %s" %(aggregateOverall,)
+        print "Correct: %s" %(aggregateCorrect,)
 
     def diffProperties(self, propertiesMapped, propertiesGold):
         correct = 0
-        overall = len(propertiesMapped)
+        overall = len(propertiesGold)
         for propertyMapped in propertiesMapped:
             #find property with the same columnIndex
             for propertyGold in propertiesGold:
                 if propertyMapped['columnIndex'] == propertyGold['columnIndex']:
                     if propertyMapped['uri'] == propertyGold['uri']:
+                        print propertyMapped['uri']
                         correct += 1
         return (overall, correct)
