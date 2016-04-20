@@ -83,7 +83,9 @@ class SupervisedIdentifier(object):
 
     def getTables(self):
         sampler = T2DSampler()
-        return sampler.getTablesSubjectIdentificationGoldStandard()
+        #tables = sampler.getTablesSubjectIdentificationGoldStandard()
+        tables = sampler.getTablesSyntheticDbpediaDataset()
+        return tables
 
     def getAnnotatedTables(self):
         fold = self.fold

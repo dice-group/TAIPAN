@@ -12,7 +12,8 @@ class SupportIdentifierTestCase(unittest.TestCase):
         sampler = T2DSampler()
         self.testTable = sampler.getTestTable()
         self.scIdentifier = SupportIdentifier()
-        self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
+        #self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
+        self.testTables = sampler.getTablesSyntheticDbpediaDataset()
 
     def testSupportIdentifier(self):
         """

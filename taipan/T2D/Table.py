@@ -121,7 +121,10 @@ class T2DTable(object):
         return self.table[0]
 
     def getData(self):
-        return self.table[1:]
+        if self.table[1:].ndim == 1:
+            return numpy.array([self.table[1:]])
+        else:
+            return self.table[1:]
 
     def getHeaderPosition(self):
         return "FIRST_ROW"

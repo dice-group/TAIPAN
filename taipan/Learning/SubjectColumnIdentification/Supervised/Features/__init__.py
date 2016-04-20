@@ -10,6 +10,6 @@ from .VarianceInDateTokens import VarianceInDateTokens
 #FeatureList = [CellsWithUniqueContentFraction(), CellsWithNumericContentFraction(), NumberOfWordsAverage(), NumberOfDigitsAverage(), NumberOfLettersAverage(), Connectivity(), Support()]
 
 #Original (SVM-O)
-FeatureList = [CellsWithUniqueContentFraction(), CellsWithNumericContentFraction(), VarianceInDateTokens(), NumberOfWordsAverage()] #+column index
+#FeatureList = [CellsWithUniqueContentFraction(), CellsWithNumericContentFraction(), VarianceInDateTokens(), NumberOfWordsAverage()] #+column index
 
-#FeatureList = [Connectivity(), Support(), CellsWithUniqueContentFraction(), CellsWithNumericContentFraction(), NumberOfDigitsAverage()]
+FeatureList = [Connectivity(), Support(), CellsWithUniqueContentFraction(), CellsWithNumericContentFraction(), NumberOfDigitsAverage()]

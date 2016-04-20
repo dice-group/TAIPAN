@@ -13,7 +13,8 @@ class ConnectivityIdentifierTestCase(unittest.TestCase):
         sampler = T2DSampler()
         self.testTable = sampler.getTestTable()
         self.scIdentifier = ConnectivityIdentifier()
-        self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
+        #self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
+        self.testTables = sampler.getTablesSyntheticDbpediaDataset()
 
     def testConnectivityIdentifier(self):
         """

@@ -13,7 +13,8 @@ class SupportConnectivityIdentifierTestCase(unittest.TestCase):
         sampler = T2DSampler()
         self.testTable = sampler.getTestTable()
         self.scIdentifier = SupportConnectivityIdentifier()
-        self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
+        #self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
+        self.testTables = sampler.getTablesSyntheticDbpediaDataset()
 
     def testSupportConnectivityIdentifier(self):
         alphas = numpy.arange(0,1.1,0.05)

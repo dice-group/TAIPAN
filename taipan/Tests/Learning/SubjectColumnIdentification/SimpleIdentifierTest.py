@@ -10,7 +10,8 @@ from taipan.Logging.Logger import Logger
 class SVMIdentifierTestCase(unittest.TestCase):
     def setUp(self):
         sampler = T2DSampler()
-        self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
+        #self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
+        self.testTables = sampler.getTablesSyntheticDbpediaDataset()
         self.scIdentifier = SimpleIdentifier()
 
     def testSimpleIdentifier(self):
