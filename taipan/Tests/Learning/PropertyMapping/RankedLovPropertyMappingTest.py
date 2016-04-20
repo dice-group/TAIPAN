@@ -8,7 +8,8 @@ from taipan.Learning.PropertyMapping.RankedLovPropertyMapper import RankedLovPro
 class RankedLovPropertyMappingTestCase(unittest.TestCase):
     def setUp(self):
         sampler = T2DSampler()
-        self.testTables = sampler.getTablesPropertyAnnotationDbpediaGoldStandard()
+        #self.testTables = sampler.getTablesPropertyAnnotationDbpediaGoldStandard()
+        self.testTables = sampler.getTablesSyntheticDbpediaDataset()
         self.propertyMapper = RankedLovPropertyMapper(scoreThreshold=0.8)
 
     def testMapProperties(self):

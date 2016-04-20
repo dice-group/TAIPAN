@@ -76,18 +76,23 @@ class T2KPropertyMappingTestCase(unittest.TestCase):
         """
         logging.disable(logging.DEBUG)
         logging.disable(logging.INFO)
-        aggregateOverall = 0
-        aggregateCorrect = 0
+        retrieved = 0
+        correctly = 0
+        propertiesGold = 0
         for num, table in enumerate(self.testTables):
             properties = self.getT2KResult(table.id)
             properties = self.restoreColumnIndex(properties, table)
             (overall, correct) = self.diffProperties(properties, table.propertiesGold)
-            aggregateOverall += overall
-            aggregateCorrect += correct
-            print "%s, %s" % (overall, correct,)
+            retrieved += overall
+            correctly += correct
+            propertiesGold += len(table.propertiesGold)
 
-        print "Overall: %s" %(aggregateOverall,)
-        print "Correct: %s" %(aggregateCorrect,)
+        precision = float(correctly) / retrieved
+        recall = float(correctly) / propertiesGold
+        fmeasure = 2*(recall*precision)/(recall+precision)
+        print "precision: %s"%(precision,)
+        print "recall: %s"%(recall,)
+        print "fmeasure: %s"%(fmeasure,)
 
     def diffProperties(self, propertiesMapped, propertiesGold):
         correct = 0
