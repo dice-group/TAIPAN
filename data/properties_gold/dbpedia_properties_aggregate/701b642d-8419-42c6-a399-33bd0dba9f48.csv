@@ -1,0 +1,4 @@
+"http://dbpedia.org/property/birthPlace","","False","1"
+"http://www.w3.org/2000/01/rdf-schema#label","","True","2"
+"http://dbpedia.org/ontology/birthPlace","","False","3"
+"http://dbpedia.org/ontology/birthDate","","False","4"
