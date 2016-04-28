@@ -83,6 +83,9 @@ class RankedLovPropertyMapper(object):
         header = table.getHeader()
         propertyRecommender = SimplePropertyRecommender()
         for columnIndex, headerItem in enumerate(header):
+            if columnIndex == table.subjectColumn:
+                properties.append({"columnIndex": columnIndex, "uri": "http://www.w3.org/2000/01/rdf-schema#label", "lovScore": None, "taipanScore": None, "score": 1.0})
+                continue
             lovProperties = propertyRecommender.lookupPropertiesLOV(headerItem)
             _columnProperties = self.mergeLovAndTaipanProperties(lovProperties, scores[columnIndex])
 
