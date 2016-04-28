@@ -164,13 +164,13 @@ class SimplePropertyMapper(object):
         tableData = table.getData()
         tableHeader = table.getHeader()
         tableId = table.id
-        numberOfRows = len(tableData)
-        numberOfColumns = len(tableData[0])
+        numberOfRows = len(tableData[0]) #first column
+        numberOfColumns = len(tableHeader)
         subjectColumn = table.subjectColumn
         if subjectColumn == None or subjectColumn == -1:
             return []
 
-        nonSubjectColumns = range(0,len(tableData[0]))
+        nonSubjectColumns = range(0,numberOfColumns)
         nonSubjectColumns.remove(subjectColumn)
 
         self.logger.debug("Identifying properties for a table %s"%(tableId))

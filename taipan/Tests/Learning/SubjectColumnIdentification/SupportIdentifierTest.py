@@ -13,7 +13,7 @@ class SupportIdentifierTestCase(unittest.TestCase):
         self.testTable = sampler.getTestTable()
         self.scIdentifier = SupportIdentifier()
         #self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
-        self.testTables = sampler.getTablesSyntheticDbpediaDataset()
+        self.testTables = sampler.getTablesDbpediaWhitelistDataset()
 
     def testSupportIdentifier(self):
         """
@@ -25,6 +25,7 @@ class SupportIdentifierTestCase(unittest.TestCase):
         """
         correctly = 0
         for tableNum, table in enumerate(self.testTables):
+            print "%s out of %s" % (tableNum, len(self.testTables))
             supportFloor = 10
             supportCeil = 70
             subjectColumn = self.scIdentifier.identifySubjectColumn(table, supportCeil, supportFloor)

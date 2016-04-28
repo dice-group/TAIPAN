@@ -14,7 +14,7 @@ class SupportConnectivityIdentifierTestCase(unittest.TestCase):
         self.testTable = sampler.getTestTable()
         self.scIdentifier = SupportConnectivityIdentifier()
         #self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
-        self.testTables = sampler.getTablesSyntheticDbpediaDataset()
+        self.testTables = sampler.getTablesDbpediaWhitelistDataset()
 
     def testSupportConnectivityIdentifier(self):
         alphas = numpy.arange(0,1.1,0.05)

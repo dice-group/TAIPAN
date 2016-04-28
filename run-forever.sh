@@ -2,6 +2,6 @@
 
 while true;
 do
-    make test-subject-column-connectivity-identifier
+    make test-ranked-lov-property-mapping
     sleep 1
 done

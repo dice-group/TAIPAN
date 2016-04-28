@@ -118,7 +118,10 @@ class T2DTable(object):
             return []
 
     def getHeader(self):
-        return self.table[0]
+        if self.table[0].ndim == 0:
+            return numpy.array([self.table[0]])
+        else:
+            return self.table[0]
 
     def getData(self):
         if self.table[1:].ndim == 1:

@@ -14,7 +14,7 @@ class ConnectivityIdentifierTestCase(unittest.TestCase):
         self.testTable = sampler.getTestTable()
         self.scIdentifier = ConnectivityIdentifier()
         #self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
-        self.testTables = sampler.getTablesSyntheticDbpediaDataset()
+        self.testTables = sampler.getTablesDbpediaWhitelistDataset()
 
     def testConnectivityIdentifier(self):
         """
