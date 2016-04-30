@@ -8,15 +8,20 @@ class SupportConnectivityIdentifier(object):
         self.connectivityIdentifier = ConnectivityIdentifier()
         self.supportIdentifier = SupportIdentifier()
 
-    def identifySubjectColumn(self, table, supportFloor=10, supportCeil=70, connectivityThreshold=0.01, alpha=0.5):
+    def identifySubjectColumn(self, table, supportFloor=10, supportCeil=70, connectivityThreshold=0.1, alpha=0.5):
         connectivities = self.connectivityIdentifier.getConnectivity(table, applyWeights=False)
         supports = self.supportIdentifier.getSupport(table)
 
         supports = [support if support < supportCeil and support > supportFloor else 0 for support in supports]
+        if max(supports) > 0:
+            supports = map(lambda x: x/max(supports), supports)
+
         connectivities = [connectivity if connectivity > connectivityThreshold else 0 for connectivity in connectivities]
+        if max(connectivities) > 0:
+            connectivities = map(lambda x: x/max(connectivities), connectivities)
 
         #Make supports and connectivities on the same scale
-        connectivities = [connectivity * 100 for connectivity in connectivities]
+        #connectivities = [connectivity * 100 for connectivity in connectivities]
         #supports = [support / 10 for support in supports]
 
         consups = [0]*len(connectivities)

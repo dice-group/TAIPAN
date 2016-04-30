@@ -13,13 +13,14 @@ class RankedLovPropertyMappingTestCase(unittest.TestCase):
         #self.testTables = sampler.getTablesPropertyAnnotationDbpediaGoldStandard()
         #self.propertyMapper = RankedLovPropertyMapper(scoreThreshold=0.8)
         #self.testTables = sampler.getTablesSyntheticDbpediaDataset()
-        self.testTables = sampler.getTablesDbpediaWhitelistDataset()
+        #self.testTables = sampler.getTablesDbpediaWhitelistDataset()
+        self.testTables = sampler.getTablesDbpediaDataset()
 
     def testMapProperties(self):
         logging.disable(logging.DEBUG)
         logging.disable(logging.INFO)
         pp = pprint.PrettyPrinter(indent=4)
-        for i in [0.8]:
+        for i in [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]:
             propertyMapper = RankedLovPropertyMapper(scoreThreshold=i)
             retrieved = 0
             correctly = 0
@@ -31,11 +32,11 @@ class RankedLovPropertyMappingTestCase(unittest.TestCase):
                 retrieved += overall
                 correctly += correct
                 propertiesGold += len(table.propertiesGold)
-                print "%s" %(table.id)
-                print "Overall: %s" % (overall,)
-                pp.pprint(allproperties)
-                print "Correct: %s" % (correct,)
-                pp.pprint(table.propertiesGold)
+                # print "%s" %(table.id)
+                # print "Overall: %s" % (overall,)
+                # pp.pprint(allproperties)
+                # print "Correct: %s" % (correct,)
+                # pp.pprint(table.propertiesGold)
 
             precision = float(correctly) / retrieved
             recall = float(correctly) / propertiesGold
@@ -48,16 +49,6 @@ class RankedLovPropertyMappingTestCase(unittest.TestCase):
     def diffProperties(self, propertiesMapped, propertiesGold, subjectColumn):
         correct = 0
         overall = len(propertiesMapped)
-
-        mapped = False
-        for propertyMapped in propertiesMapped:
-            if propertyMapped['columnIndex'] == subjectColumn:
-                correct += 1
-                mapped = True
-
-        if(not mapped):
-            correct += 1
-            overall += 1
 
         for propertyMapped in propertiesMapped:
             #find property with the same columnIndex

@@ -13,11 +13,12 @@ class SupportConnectivityIdentifierTestCase(unittest.TestCase):
         sampler = T2DSampler()
         self.testTable = sampler.getTestTable()
         self.scIdentifier = SupportConnectivityIdentifier()
-        #self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
-        self.testTables = sampler.getTablesDbpediaWhitelistDataset()
+        self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
+        #self.testTables = sampler.getTablesDbpediaWhitelistDataset()
+        #self.testTables = sampler.getTablesDbpediaDataset()
 
     def testSupportConnectivityIdentifier(self):
-        alphas = numpy.arange(0,1.1,0.05)
+        alphas = numpy.arange(0,1.1,0.1)
         for alpha in alphas:
             correctly = 0
             for table in self.testTables[:]:

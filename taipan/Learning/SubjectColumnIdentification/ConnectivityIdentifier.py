@@ -47,6 +47,9 @@ class ConnectivityIdentifier(object):
         for columnIndex, _connectivity in enumerate(connectivity):
             connectivity[columnIndex] = float(_connectivity) / numberOfRows
 
+        # if max(connectivity) > 0:
+        #     connectivity = map(lambda x: x/max(connectivity), connectivity)
+
         return connectivity
 
     def identifySubjectColumn(self, table, applyWeights=False, connectivityFloor=0, connectivityCeil=100):

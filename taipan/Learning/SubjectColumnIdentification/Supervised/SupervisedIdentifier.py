@@ -26,6 +26,7 @@ class SupervisedIdentifier(object):
     """
     #set to None for production
     fold = 10
+    offset = 0
     inverseCrossValidation = False
     useColumnIndex = False
     selectKBest = SelectKBest(chi2, k="all")
@@ -41,7 +42,8 @@ class SupervisedIdentifier(object):
         SGDClassifier(loss="perceptron", eta0=1, learning_rate="constant", penalty=None)
     ]
 
-    def __init__(self, classifierType=4, inverseCrossValidation=False, useColumnIndex=False):
+    def __init__(self, classifierType=4, inverseCrossValidation=False, useColumnIndex=False, trainingOffset=0):
+        self.trainingOffset = trainingOffset
         self.inverseCrossValidation = inverseCrossValidation
         self.useColumnIndex = useColumnIndex
         self.clf = self.classifiers[classifierType]
@@ -83,34 +85,62 @@ class SupervisedIdentifier(object):
 
     def getTables(self):
         sampler = T2DSampler()
-        #tables = sampler.getTablesSubjectIdentificationGoldStandard()
-        tables = sampler.getTablesSyntheticDbpediaDataset()
+        tables = sampler.getTablesSubjectIdentificationGoldStandard()
+        #tables = sampler.getTablesDbpediaDataset()
         return tables
 
     def getAnnotatedTables(self):
+        trainingOffset = self.trainingOffset
         fold = self.fold
         tables = self.getTables()
         if fold == None:
             return tables
-        if not self.inverseCrossValidation:
-            length = int(len(tables)/fold*(fold-1))
-            return tables[:length]
+
+        if trainingOffset == None:
+            return []
+        _tables = self.splitArray(tables, fold)
+
+        if trainingOffset > len(_tables):
+            raise Exception("Training offset is too big")
+
+        if self.inverseCrossValidation:
+            return _tables[trainingOffset]
         else:
-            length = int(len(tables)/fold)
-            return tables[:length]
+            _tables = _tables[:trainingOffset] + _tables[trainingOffset+1:]
+            _tables = [table for slice in _tables for table in slice]
+            return _tables
+
+    def splitArray(self, _array, parts):
+        arrs = []
+        size = int(len(_array) / parts)
+        while len(_array) > size:
+            piece = _array[:size]
+            arrs.append(piece)
+            _array = _array[size:]
+        arrs.append(_array)
+        return arrs
 
     def getTestingTables(self):
         fold = self.fold
+        trainingOffset = self.trainingOffset
         tables = self.getTables()
         if fold == None:
             return []
 
-        if not self.inverseCrossValidation:
-            length = int(len(tables)/fold*(fold-1))
-            return tables[length:]
+        if trainingOffset == None:
+            return []
+
+        _tables = self.splitArray(tables, fold)
+
+        if trainingOffset > len(_tables):
+            raise Exception("Training offset is too big")
+
+        if self.inverseCrossValidation:
+            _tables = _tables[:trainingOffset] + _tables[trainingOffset+1:]
+            _tables = [table for slice in _tables for table in slice]
+            return _tables
         else:
-            length = int(len(tables)/fold)
-            return tables[length:]
+            return _tables[trainingOffset]
 
     def getIndicesValue(self, lst, value):
         start_at = -1

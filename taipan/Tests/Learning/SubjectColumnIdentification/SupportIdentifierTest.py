@@ -12,8 +12,8 @@ class SupportIdentifierTestCase(unittest.TestCase):
         sampler = T2DSampler()
         self.testTable = sampler.getTestTable()
         self.scIdentifier = SupportIdentifier()
-        #self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
-        self.testTables = sampler.getTablesDbpediaWhitelistDataset()
+        self.testTables = sampler.getTablesSubjectIdentificationGoldStandard()
+        #self.testTables = sampler.getTablesDbpediaWhitelistDataset()
 
     def testSupportIdentifier(self):
         """
@@ -26,8 +26,8 @@ class SupportIdentifierTestCase(unittest.TestCase):
         correctly = 0
         for tableNum, table in enumerate(self.testTables):
             print "%s out of %s" % (tableNum, len(self.testTables))
-            supportFloor = 10
-            supportCeil = 70
+            supportFloor = 0
+            supportCeil = 100
             subjectColumn = self.scIdentifier.identifySubjectColumn(table, supportCeil, supportFloor)
             if table.isSubjectColumn(subjectColumn):
                 correctly += 1

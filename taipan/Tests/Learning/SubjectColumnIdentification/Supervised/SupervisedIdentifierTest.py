@@ -11,7 +11,6 @@ class SVMIdentifierTestCase(unittest.TestCase):
     def setUp(self):
         sampler = T2DSampler()
         self.testTable = sampler.getTestTable()
-        self.scIdentifier = SupervisedIdentifier(7, inverseCrossValidation=True, useColumnIndex=False)
 
     def testSupervisedIdentifier(self):
         """
@@ -51,20 +50,23 @@ class SVMIdentifierTestCase(unittest.TestCase):
                 recall: 0.333333333333
                 false positives: 0.666666666667
         """
-        testTables = self.scIdentifier.getTestingTables()
-        annotatedTables = self.scIdentifier.getAnnotatedTables()
-        recall = 0
-        falsePositives = 0
-        for table in testTables:
-            subjectColumns = self.scIdentifier.identifySubjectColumn(table)
-            if table.subjectColumn in subjectColumns:
-                recall += 1
-            elif len(subjectColumns) > 0:
-                falsePositives += len(subjectColumns)
-        tableGuessedCorrectly = recall
-        recall = float(recall) / len(testTables)
-        precision_1 = float(falsePositives) / len(testTables)
-        fmeasure = recall*precision_1
-        print "table guessed: %s" % len(testTables)
-        print "table guessed correctly: %s" % tableGuessedCorrectly
-        print "table used for learning: %s" % len(annotatedTables)
+        for i in range(0, 10):
+            self.scIdentifier = SupervisedIdentifier(7, inverseCrossValidation=True, useColumnIndex=True, trainingOffset=i)
+            testTables = self.scIdentifier.getTestingTables()
+            annotatedTables = self.scIdentifier.getAnnotatedTables()
+            recall = 0
+            falsePositives = 0
+            for table in testTables:
+                subjectColumns = self.scIdentifier.identifySubjectColumn(table)
+                if table.subjectColumn in subjectColumns:
+                    recall += 1
+                elif len(subjectColumns) > 0:
+                    falsePositives += len(subjectColumns)
+            tableGuessedCorrectly = recall
+            recall = float(recall) / len(testTables)
+            precision_1 = float(falsePositives) / len(testTables)
+            fmeasure = recall*precision_1
+            print "training offset: %s" % (i,)
+            print "table guessed: %s" % len(testTables)
+            print "table guessed correctly: %s" % tableGuessedCorrectly
+            print "table used for learning: %s" % len(annotatedTables)
