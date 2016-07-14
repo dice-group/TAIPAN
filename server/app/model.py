@@ -9,7 +9,7 @@ import uuid
 class GoogleSpreadsheet(object):
     def __init__(self):
         currentDir = os.path.dirname(os.path.realpath(__file__))
-        jsonKeyPath = os.path.join(currentDir, 'google/WebTables-ec825f0c327b.json')
+        jsonKeyPath = os.path.join(currentDir, 'google/google-key-example.json')
         jsonKey = json.load(open(jsonKeyPath))
         scope = ['https://spreadsheets.google.com/feeds']
         credentials = SignedJwtAssertionCredentials(jsonKey['client_email'], jsonKey['private_key'].encode(), scope)
