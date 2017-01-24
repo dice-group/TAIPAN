@@ -1,9 +1,11 @@
-from taipan.Config.Pathes import t2dDataDir
 import os.path
-import numpy
-import random
 
-class T2DTable(object):
+from taipan.Config.Pathes import t2dDataDir
+from taipan.Utils.csv import loadCsv
+
+from taipan.Generic.TableInterface import TableInterface
+
+class T2DTable(TableInterface):
     def __init__(self, id):
         self.id = id
         self.table = self.getTableComplete(id)
@@ -14,7 +16,7 @@ class T2DTable(object):
         #self.entities = self.getEntitiesInstance(id)
 
     def getSubjectColumn(self, id):
-        csv = self.loadCsv(os.path.join(t2dDataDir, 'subject_column', 'subject_column_aggregate.csv'))
+        csv = loadCsv(os.path.join(t2dDataDir, 'subject_column', 'subject_column_aggregate.csv'))
         return self.parseSubjectColumn(csv, id)
 
     def parseSubjectColumn(self, csv, id):
@@ -24,21 +26,21 @@ class T2DTable(object):
         return None
 
     def getTableComplete(self, id):
-        return self.loadCsv(os.path.join(t2dDataDir, 'tables_aggregate', id))
+        return loadCsv(os.path.join(t2dDataDir, 'tables_aggregate', id))
 
     def getTablesInstance(self, id):
-        return self.loadCsv(os.path.join(t2dDataDir, 'tables_instance', id))
+        return loadCsv(os.path.join(t2dDataDir, 'tables_instance', id))
 
     def getAttributesComplete(self, id):
-        attributesRaw = self.loadCsv(os.path.join(t2dDataDir, 'attributes_aggregate', id))
+        attributesRaw = loadCsv(os.path.join(t2dDataDir, 'attributes_aggregate', id))
         return self.parseAttributes(attributesRaw)
 
     def getPropertiesGold(self, id):
-        attributesRaw = self.loadCsv(os.path.join(t2dDataDir, 'properties_gold', 'dbpedia_properties_aggregate', id))
+        attributesRaw = loadCsv(os.path.join(t2dDataDir, 'properties_gold', 'dbpedia_properties_aggregate', id))
         return self.parseAttributes(attributesRaw)
 
     def getAttributesInstance(self, id):
-        attributesRaw = self.loadCsv(os.path.join(t2dDataDir, 'attributes_instance', id))
+        attributesRaw = loadCsv(os.path.join(t2dDataDir, 'attributes_instance', id))
         return self.parseAttributes(attributesRaw)
 
     def parseAttributes(self, attributesRaw):
@@ -66,7 +68,7 @@ class T2DTable(object):
         return attributes
 
     def getEntitiesInstance(self, id):
-        entitiesRaw = self.loadCsv(os.path.join(t2dDataDir, 'entities_instance', id))
+        entitiesRaw = loadCsv(os.path.join(t2dDataDir, 'entities_instance', id))
         if entitiesRaw == []:
             return []
         entities = []
@@ -80,11 +82,11 @@ class T2DTable(object):
         return entities
 
     def getClassesInstance(self, id):
-        allClasses = self.loadCsv(os.path.join(t2dDataDir, 'classes_instance.csv'))
+        allClasses = loadCsv(os.path.join(t2dDataDir, 'classes_instance.csv'))
         return self.parseClasses(allClasses, id)
 
     def getClassesComplete(self, id):
-        allClasses = self.loadCsv(os.path.join(t2dDataDir, 'classes_aggregate.csv'))
+        allClasses = loadCsv(os.path.join(t2dDataDir, 'classes_aggregate.csv'))
         return self.parseClasses(allClasses, id)
 
     def parseClasses(self, classes, id):
@@ -104,67 +106,6 @@ class T2DTable(object):
             }
             classes.append(_class)
         return classes
-
-    def loadCsv(self, csvPath):
-        if(os.path.exists(csvPath)):
-            csv = numpy.genfromtxt(csvPath, delimiter=",", dtype="S", comments="///", missing_values="NULL")
-            if numpy.shape(csv) != (0,):
-                for x in numpy.nditer(csv, op_flags=['readwrite']):
-                    x[...] = str(x).strip('"')
-                return csv
-            else:
-                return []
-        else:
-            return []
-
-    def getHeader(self):
-        if self.table[0].ndim == 0:
-            return numpy.array([self.table[0]])
-        else:
-            return self.table[0]
-
-    def getData(self):
-        if self.table[1:].ndim == 1:
-            return numpy.array([self.table[1:]])
-        else:
-            return self.table[1:]
-
-    def getHeaderPosition(self):
-        return "FIRST_ROW"
-
-    def swap_cols(self, arr, frm, to):
-        try:
-            arr[:,[frm, to]] = arr[:,[to, frm]]
-        except:
-            pass
-
-    def scrumbleColumns(self, times=1000):
-        """
-            Scrumble the positions of the columns
-            Pick two random columns and change their places
-        """
-        numOfColumns = len(self.table.transpose())
-        columnIndex = range(0,numOfColumns)
-        for i in range(0, times):
-            colA = random.randint(0, numOfColumns - 1)
-            colB = colA
-            while colB == colA:
-                colB = random.randint(0, numOfColumns - 1)
-            indexA = columnIndex.index(colA)
-            indexB = columnIndex.index(colB)
-            columnIndex[indexA] = colB
-            columnIndex[indexB] = colA
-            self.swap_cols(self.table,colA,colB)
-        self.columnIndex = columnIndex
-
-    def getTable(self):
-        return self.getData()
-
-    def getColumnIndex(self):
-        return self.columnIndex
-
-    def translateColumnIndex(self, columnNumber):
-        return self.columnIndex.index(columnNumber)
 
     def isSubjectColumn(self, columnIndex):
         if(columnIndex == None):

@@ -25,7 +25,7 @@ class SupervisedIdentifier(object):
         - Column index from left
     """
     #set to None for production
-    fold = 10
+    fold = None
     offset = 0
     inverseCrossValidation = False
     useColumnIndex = False
