@@ -25,12 +25,17 @@ class AgdistisIdentifier(object):
         return self.agdistis.disambiguateEntity(string)
 
     def clearString(self, string):
-        characters = "{}|"
-        string = string.translate(None, characters)
+        characters = str.maketrans(
+            {
+                "{": "",
+                "}": "",
+                "|": ""
+            })
+        string = string.translate(characters)
         string = re.sub('&nbsp;', '', string)
         string = string.strip()
         return string
 
 if __name__ == "__main__":
     ag = AgdistisIdentifier()
-    print ag.identifyEntity("Austria")
+    print(ag.identifyEntity("Austria"))

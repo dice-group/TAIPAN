@@ -7,10 +7,10 @@ from taipan.Generic.TableInterface import TableInterface
 class Table(TableInterface):
     def __init__(self, filepath):
         self.filepath = filepath
-        self.table = self.getTableComplete(id)
+        self.table = self.getTableComplete(filepath)
 
-    def getTableComplete(self, id):
-        return loadCsv(os.path.join(t2dDataDir, 'tables_aggregate', id))
+    def getTableComplete(self, filepath):
+        return loadCsv(filepath)
 
     def isSubjectColumn(self, columnIndex):
         if(columnIndex == None):
@@ -40,9 +40,3 @@ class Table(TableInterface):
             return self.classes[0]['headerRowIndices']
         else:
             return [0]
-
-if __name__ == "__main__":
-    sampleId = "39759273_0_1427898308030295194.csv"
-    t2dTable = T2DTable(sampleId)
-    t2dTable.scrumbleColumns()
-    import ipdb; ipdb.set_trace()

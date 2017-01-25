@@ -1,9 +1,11 @@
+import numpy
+import os
+import os.path
+import random
+
 from taipan.Config.Pathes import t2dDataDir
 from taipan.T2D.Table import T2DTable
-import os.path
-import os
-import numpy
-import random
+from taipan.Utils.csv import loadCsv
 
 class T2DSampler(object):
     blackList = [
@@ -35,7 +37,7 @@ class T2DSampler(object):
         return self.getTable(_id)
 
     def getListOfTableIdsWithClasses(self):
-        allClasses = self.loadCsv(os.path.join(t2dDataDir, 'classes_complete.csv'))
+        allClasses = loadCsv(os.path.join(t2dDataDir, 'classes_complete.csv'))
         idList = []
         for row in allClasses:
             idList.append(row[0])
@@ -65,18 +67,18 @@ class T2DSampler(object):
 
     def getTablesSubjectIdentification(self):
         tables = []
-        idList = self.loadCsv(os.path.join(t2dDataDir, 'subject_column.csv'))
+        idList = loadCsv(os.path.join(t2dDataDir, 'subject_column.csv'))
         for row in idList:
             _id = row[0]
             tables.append(self.getTable(_id))
         return tables
 
     def getTablesSubjectIdentificationIds(self):
-        idList = self.loadCsv(os.path.join(t2dDataDir, 'subject_column.csv'))
+        idList = loadCsv(os.path.join(t2dDataDir, 'subject_column.csv'))
         return map((lambda x: x[0]), idList)
 
     def getTableIdsSubjectIdentificationGoldStandard(self):
-        idList = self.loadCsv(os.path.join(t2dDataDir, 'subject_column', 'subject_column_gold.csv'))
+        idList = loadCsv(os.path.join(t2dDataDir, 'subject_column', 'subject_column_gold.csv'))
         return map((lambda x: x[0]), idList)
 
     def getTablesSubjectIdentificationGoldStandard(self):

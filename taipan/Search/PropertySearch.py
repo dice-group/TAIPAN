@@ -21,12 +21,6 @@ class PropertySearchDbpediaSparql(object):
 
     def uriLiteralSearch(self, s, o):
         properties = []
-        try:
-            o = o.decode('utf-8')
-        except UnicodeDecodeError as e:
-            self.logger.debug("Could not decode o for uriLiteralSearch")
-            self.logger.debug(str(e))
-            o = ""
         properties.append(self.uriLiteralSimple(s,o))
         properties.append(self.uriLiteralRegex(s,o))
         properties.append(self.uriLiteralRegexReverse(s,o))

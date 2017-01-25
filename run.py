@@ -1,13 +1,10 @@
-
-from taipan.Learning.SubjectColumnIdentification.Supervised.SupervisedIdentifier import SupervisedIdentifier
-
+# Load table into internal datastructure
+from taipan.Generic.Table import Table
 tableFilename = "test.csv"
-#table = load table
-#necessary functionality for subject identification:
-#* decouple following functions from T2DTable
-#* table.getData
-#* table.getHeader
+_table = Table(tableFilename)
 
-DecisionTreeClassifierID = 4
-scIdentifier = SupervisedIdentifier(DecisionTreeClassifierID)
-scIdentifier.identifySubjectColumn(table)
+# Get subject column identification model
+from taipan.Learning.SubjectColumnIdentification.Supervised.SupervisedIdentifier import SupervisedIdentifier
+scIdentifier = SupervisedIdentifier()
+subject_column = scIdentifier.identifySubjectColumn(_table)
+import ipdb; ipdb.set_trace()
