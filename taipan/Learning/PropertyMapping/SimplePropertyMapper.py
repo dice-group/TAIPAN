@@ -77,7 +77,7 @@ class SimplePropertyMapper(object):
                     try:
                         classes[columnIndex].append(_class)
                     except BaseException as e:
-                        print "%s" % (str(e),)
+                        print("%s" % (str(e),))
         return classes
 
     def getMainClassForSubjectColumn(self, classes, subjectColumn):
@@ -170,7 +170,7 @@ class SimplePropertyMapper(object):
         if subjectColumn == None or subjectColumn == -1:
             return []
 
-        nonSubjectColumns = range(0,numberOfColumns)
+        nonSubjectColumns = [i for i in range(0,numberOfColumns)]
         nonSubjectColumns.remove(subjectColumn)
 
         self.logger.debug("Identifying properties for a table %s"%(tableId))
@@ -195,7 +195,7 @@ class SimplePropertyMapper(object):
         if subjectColumn == None or subjectColumn == -1:
             return []
 
-        nonSubjectColumns = range(0,len(tableData[0]))
+        nonSubjectColumns = [i for i in range(0,len(tableData[0]))]
         nonSubjectColumns.remove(subjectColumn)
 
         self.logger.debug("Identifying properties for a table %s"%(tableId))

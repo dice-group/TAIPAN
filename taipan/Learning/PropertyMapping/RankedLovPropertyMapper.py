@@ -39,7 +39,7 @@ class RankedLovPropertyMapper(object):
         if len(mergedProperties) == 0:
             return []
 
-        maxScore = max(mergedProperties.iteritems(), key=operator.itemgetter(1))[1]
+        maxScore = max(mergedProperties.items(), key=operator.itemgetter(1))[1]
         normalizedMergedProperties = {}
         for _prop in mergedProperties:
             normalizedMergedProperties[_prop] = mergedProperties[_prop] / maxScore
@@ -54,7 +54,7 @@ class RankedLovPropertyMapper(object):
 
     def convertTaipanToLovFormat(self, taipanProperties):
         convProperties = []
-        for (_propertyUri, score) in taipanProperties.iteritems():
+        for (_propertyUri, score) in taipanProperties.items():
             _prop = {
                 "prefixedName": "",
                 "score": float(score),
@@ -84,14 +84,14 @@ class RankedLovPropertyMapper(object):
         propertyRecommender = SimplePropertyRecommender()
         for columnIndex, headerItem in enumerate(header):
             if columnIndex == table.subjectColumn:
-                properties.append({"columnIndex": columnIndex, "uri": "http://www.w3.org/2000/01/rdf-schema#label", "lovScore": None, "taipanScore": None, "score": 1.0})
+                properties.append({"columnIndex": columnIndex, "uri": "http://www.w3.org/2000/01/rdf-schema#label", "score": 1.0})
                 continue
             lovProperties = propertyRecommender.lookupPropertiesLOV(headerItem)
             _columnProperties = self.mergeLovAndTaipanProperties(lovProperties, scores[columnIndex])
 
             for _property in _columnProperties:
                 if _columnProperties[_property] > self.scoreThreshold:
-                    properties.append({"columnIndex": columnIndex, "uri": _property, "lovScore": None, "taipanScore": None, "score": _columnProperties[_property]})
+                    properties.append({"columnIndex": columnIndex, "uri": _property, "score": _columnProperties[_property]})
 
         #filter properties with maximum scores
         propertiesRanked = []
