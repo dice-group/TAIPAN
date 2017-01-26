@@ -1,4 +1,5 @@
 import numpy
+import uuid
 
 from taipan.Utils.csv import loadCsv
 
@@ -8,6 +9,8 @@ class Table(TableInterface):
     def __init__(self, filepath):
         self.filepath = filepath
         self.table = self.getTableComplete(filepath)
+        self.id = str(uuid.uuid5(uuid.NAMESPACE_URL, filepath))
+        self.subjectColumn = None
 
     def getTableComplete(self, filepath):
         return loadCsv(filepath)
