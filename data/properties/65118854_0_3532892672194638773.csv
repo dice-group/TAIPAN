@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/currency","Currency","False","4"
+"http://www.w3.org/2000/01/rdf-schema#label","Name","True","1"
+"http://dbpedia.org/ontology/capital","Capital of the country","False","3"
+"http://dbpedia.org/ontology/country","Countryname in own language","False","2"

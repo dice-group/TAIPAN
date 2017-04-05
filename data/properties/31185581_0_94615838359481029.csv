@@ -1,0 +1,5 @@
+"http://dbpedia.org/ontology/product","Top Beer","False","4"
+"http://dbpedia.org/ontology/revenue","Revenue","False","3"
+"http://dbpedia.org/ontology/rank","#","False","0"
+"http://www.w3.org/2000/01/rdf-schema#label","Company","True","1"
+"http://dbpedia.org/ontology/location","Location","False","2"

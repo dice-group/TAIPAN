@@ -1,0 +1,3 @@
+"description","the number of kilobytes of real stack space used by the process."
+"units","kilobytes"
+"mappingstrings","mif.dmtf process information 001.17"

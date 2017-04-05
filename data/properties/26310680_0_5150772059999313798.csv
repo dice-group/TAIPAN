@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/currency","currency","False","1"
+"http://dbpedia.org/ontology/code","numeric code","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","entity","True","0"
+"http://dbpedia.org/ontology/currencyCode","alphabetic code","False","2"

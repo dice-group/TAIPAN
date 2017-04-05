@@ -1,0 +1,6 @@
+"http://dbpedia.org/ontology/language","Language","False","2"
+"http://dbpedia.org/ontology/artist","Artist","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","Song","True","4"
+"http://dbpedia.org/ontology/collectionSize","Country","False","1"
+"http://dbpedia.org/ontology/alternativeTitle","English translation","False","5"
+"http://dbpedia.org/ontology/rating","Points","False","7"

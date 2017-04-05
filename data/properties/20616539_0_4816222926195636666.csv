@@ -1,0 +1,8 @@
+"http://dbpedia.org/ontology/numberOfEmployees","number of employees :","False","5"
+"http://dbpedia.org/ontology/sales","total annual sales volume :","False","6"
+"http://dbpedia.org/ontology/address","company address :","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","company name :","True","0"
+"http://dbpedia.org/ontology/industry","industry :","False","7"
+"http://dbpedia.org/ontology/zipCode","zip :","False","3"
+"http://dbpedia.org/ontology/owner","legal representative/business owner :","False","1"
+"http://dbpedia.org/ontology/foundingYear","year established :","False","4"

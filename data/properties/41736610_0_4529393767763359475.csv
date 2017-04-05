@@ -1,0 +1,4 @@
+"http://www.w3.org/2000/01/rdf-schema#label","Country","True","0"
+"http://dbpedia.org/ontology/priceMoney","Client Buys  (Pays Canadian)","False","2"
+"http://dbpedia.org/ontology/priceMoney","Client Sells  (Receives Canadian)","False","3"
+"http://dbpedia.org/ontology/currencyCode","Currency/Code","False","1"

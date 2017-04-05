@@ -1,0 +1,6 @@
+"[Contract Size:]","100000","[Min. Trade:]","1"
+"[Exchange:]","EUREX","[[Trading Hours:]]","20:00 -19:59"
+"[Tick Size:]","0.01","[Tick Value:]","10"
+"[Init. Margin:]","2140","[Maint. Margin:]","2140"
+"[Exchange Fee:]","CHF. 0.3","NULL","NULL"
+"[Order Types:]","market limit stop","NULL","NULL"

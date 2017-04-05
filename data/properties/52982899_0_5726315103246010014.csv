@@ -1,0 +1,4 @@
+"http://dbpedia.org/ontology/recordDate","year","False","5"
+"http://dbpedia.org/ontology/album","album","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","title","True","2"
+"http://dbpedia.org/ontology/musicalArtist","artist","False","1"

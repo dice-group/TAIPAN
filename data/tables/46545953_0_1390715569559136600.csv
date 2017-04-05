@@ -1,0 +1,7 @@
+"Module","{CGI::URI2param|source}"
+"Distribution","{CGI-URI2param|Download}"
+"Author","DOMM [ Thomas Klausner ]"
+"Version","1.01"
+"Abstract","extract query keys and values out of an URI"
+"Category","{World Wide Web HTML HTTP CGI|&gt;&gt;|CGI}"
+"Links","{search.cpan.org|rt.cpan.org|CPAN::Forum|AnnoCPAN|Rating|CPAN testers|Dependencies|Testers matrix}"

@@ -1,0 +1,3 @@
+"http://dbpedia.org/ontology/company","Pharmaceutical company","False","2"
+"http://dbpedia.org/ontology/commonName","Active ingredients","False","1"
+"http://www.w3.org/2000/01/rdf-schema#label","Trade name","True","0"

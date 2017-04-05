@@ -1,0 +1,4 @@
+"http://www.w3.org/2000/01/rdf-schema#label","varta","True","0"
+"http://dbpedia.org/ontology/capacity","capacity","False","3"
+"http://dbpedia.org/ontology/AutomobileEngine/length","body dimensions length","False","4"
+"http://dbpedia.org/ontology/AutomobileEngine/diameter","body dimensions diamter","False","5"

@@ -1,0 +1,5 @@
+"http://dbpedia.org/ontology/capital","Capital","False","4"
+"http://dbpedia.org/ontology/GeopoliticalOrganisation/populationDensity","Population density (per km&sup2;)","False","3"
+"http://dbpedia.org/ontology/PopulatedPlace/area","Area (km&sup2;)","False","1"
+"http://www.w3.org/2000/01/rdf-schema#label","Name of territory with  flag","True","0"
+"http://dbpedia.org/ontology/populationAsOf","Population (2005)","False","2"

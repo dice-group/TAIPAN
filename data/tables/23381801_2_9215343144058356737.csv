@@ -1,0 +1,6 @@
+"description:","alternate text to display for a file instead of an iconselected by mime-encoding"
+"syntax:","addaltbyencoding string mime-encoding[mime-encoding] ..."
+"context:","server config virtual host directory .htaccess"
+"override:","indexes"
+"status:","base"
+"module:","mod_autoindex"

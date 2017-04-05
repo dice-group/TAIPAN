@@ -1,0 +1,4 @@
+numpy
+agdistispy
+SPARQLWrapper
+https://github.com/brmscheiner/memorize.py/zipball/master

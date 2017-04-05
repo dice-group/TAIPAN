@@ -1,0 +1,3 @@
+"http://dbpedia.org/ontology/federalState","STATE","False","4"
+"http://www.w3.org/2000/01/rdf-schema#label","COMPANY","True","1"
+"http://dbpedia.org/ontology/revenue","REVENUE (millions)","False","3"

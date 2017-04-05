@@ -1,0 +1,3 @@
+"http://www.w3.org/2000/01/rdf-schema#label","Hotel&nbsp;Name","True","0"
+"http://dbpedia.org/ontology/cost","Low&nbsp;rate","False","1"
+"http://dbpedia.org/ontology/cost","High&nbsp;rate","False","2"

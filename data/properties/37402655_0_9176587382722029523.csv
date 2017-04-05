@@ -1,0 +1,8 @@
+"http://dbpedia.org/ontology/club","verein","False","8"
+"http://dbpedia.org/ontology/birthYear","jahrgang","False","4"
+"http://dbpedia.org/ontology/nickname","künstlername","False","2"
+"http://www.w3.org/2000/01/rdf-schema#label","nachname","True","0"
+"http://dbpedia.org/ontology/nationality","nationalität","False","6"
+"http://dbpedia.org/ontology/birthDate","geburtsdatum","False","3"
+"http://www.w3.org/2000/01/rdf-schema#label","vorname","True","1"
+"http://dbpedia.org/ontology/Person/height","grösse","False","5"
