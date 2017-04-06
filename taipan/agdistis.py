@@ -3,7 +3,6 @@ import re
 from agdistispy.agdistis import Agdistis
 
 from taipan.util import clear_string
-from taipan.memorize import Memorize
 
 class AgdistisWrapper(object):
     def __init__(self):

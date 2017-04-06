@@ -12,7 +12,8 @@ def test_calculate_feature_vector_column():
     table = mlmodel.get_tables()[0]
     columns = table.table.transpose()
     col = columns[0]
-    #vec = mlmodel.calculate_feature_vector_column(col, 0, table)
+    vec = mlmodel.calculate_feature_vector_column(col, 0, table)
+    print(vec)
     #import ipdb; ipdb.set_trace()
 
 def test_calculate_feature_vector():

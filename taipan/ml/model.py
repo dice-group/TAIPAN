@@ -4,14 +4,14 @@ from taipan.pathes import SUBJECT_COLUMN_LIST
 from taipan.util import load_csv
 from taipan.table import Table
 
-from taipan.ml.subjectcolumn.features import Connectivity
+from taipan.ml.subjectcolumn.features import Connectivity, Support
 # , Support, \
 #         CellsWithUniqueContentFraction, CellsWithNumericContentFraction, \
 #         VarianceInDateTokens, NumberOfWordsAverage
 
 ROWS_TO_ANALYZE = os.environ.get("ROWS_TO_ANALYZE", "20")
 #FEATURE_LIST = [Connectivity(), Support(), CellsWithUniqueContentFraction(), CellsWithNumericContentFraction(), VarianceInDateTokens(), NumberOfWordsAverage()]
-FEATURE_LIST = [Connectivity()]
+FEATURE_LIST = [Connectivity(), Support()]
 
 class MLModel(object):
     def get_tables(self):

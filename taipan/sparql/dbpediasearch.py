@@ -11,7 +11,7 @@ DBPEDIA.setReturnFormat(JSON)
 def parse_results(results):
     properties = []
     for result in results:
-        properties.append(result["property"]['value'])
+        properties.append(result["property"]["value"])
     return properties
 
 def uri_literal(s, o):
@@ -25,6 +25,7 @@ def uri_literal(s, o):
 def uri_uri(s, o):
     properties = []
     properties.append(uri_uri_simple(s, o))
+    properties = [item for sublist in properties for item in sublist]
     return properties
 
 def uri_uri_simple(s, o):
@@ -57,7 +58,6 @@ def uri_literal_regex(s, o):
             FILTER regex(?o, ".*%s.*", "i")
         }
     """ % (s, o,))
-    queryDebugMessage("uriLiteralRegex", s, o, DBPEDIA.queryString)
     results = DBPEDIA.query().convert()['results']['bindings']
     return parse_results(results)
 
@@ -72,6 +72,5 @@ def uri_literal_regex_reverse(s, o):
             FILTER regex(?o, ".*%s.*", "i")
         }
     """ % (s, o,))
-    queryDebugMessage("uriLiteralRegexReverse", s, o, DBPEDIA.queryString)
     results = DBPEDIA.query().convert()['results']['bindings']
     return parse_results(results)
