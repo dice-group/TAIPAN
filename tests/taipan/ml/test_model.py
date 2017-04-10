@@ -30,5 +30,7 @@ def test_calculate_feature_vector():
 
 
 def test_calculate_feature_vectors():
-    #TODO: next thang
-    pass
+    tables = MLMODEL.get_tables()
+    (feature_vectors, target_vector) = MLMODEL.calculate_feature_vectors(tables)
+    assert len(feature_vectors) == len(target_vector)
+    assert len(target_vector) == 553

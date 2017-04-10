@@ -29,10 +29,10 @@ class MLModel(object):
         feature_vectors = []
         target_vectors = []
         for table in tables:
-            (feature_vector, target_vector) = self.calculate_features(table)
+            (feature_vector, target_vector) = self.calculate_feature_vector(table)
             feature_vectors.extend(feature_vector)
             target_vectors.extend(target_vector)
-        return (featureVectors, targetVector)
+        return (feature_vectors, target_vectors)
 
     def calculate_feature_vector(self, table):
         columns = table.table.transpose()
