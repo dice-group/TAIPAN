@@ -1,6 +1,6 @@
 """Test for taipan.table"""
 
-from taipan.table import Table
+from taipan.ml.table import Table
 from numpy import array, array_equal
 
 TABLE_ID = "57790315_0_2715326399585929245.csv"

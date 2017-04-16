@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+
+import argparse
+import os
+import json
+from taipan.generictable import GenericTable
+from taipan.ml.subjectcolumn.scidentifier import SCIdentifier
+
+class FullPaths(argparse.Action):
+    """Expand user- and relative-paths"""
+    def __call__(self, parser, namespace, values, option_string=None):
+        setattr(namespace, self.dest, os.path.abspath(os.path.expanduser(values)))
+
+def is_file(filename):
+    """Checks if a path is an actual directory"""
+    if not os.path.isfile(filename):
+        msg = "{0} is not a file".format(filename)
+        raise argparse.ArgumentTypeError(msg)
+    else:
+        return filename
+
+def get_args():
+    """Get CLI arguments and options"""
+    parser = argparse.ArgumentParser(description="""identify the subject column of a table""")
+
+    parser.add_argument('filename', help="table filename for subject column identification",
+        action=FullPaths, type=is_file)
+    return parser.parse_args()
+
+args = get_args()
+
+table = GenericTable(args.filename)
+sc_ident = SCIdentifier()
+print(json.dumps(sc_ident.identify_subject_column(table)))

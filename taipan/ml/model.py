@@ -2,7 +2,7 @@ import os
 
 from taipan.pathes import SUBJECT_COLUMN_LIST
 from taipan.util import load_csv
-from taipan.table import Table
+from taipan.ml.table import Table
 
 from taipan.ml.subjectcolumn.features import Connectivity, Support, \
          CellsWithUniqueContentFraction, CellsWithNumericContentFraction, \
