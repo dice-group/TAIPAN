@@ -29,9 +29,12 @@ _COLUMN =  {
 def test_get_dbpedia_property():
     term = "population"
     properties = get_dbpedia_property(term)
-    assert _PROPERTY in properties
+    assert 'prefixed_name' in properties[0]
+    assert 'score' in properties[0]
+    assert 'uri' in properties[0]
 
 def test_get_table_properties():
     table = MLMODEL.get_tables()[0]
     table_properties = get_table_properties(table)
-    assert _COLUMN in table_properties
+    assert 'col_i' in table_properties[0]
+    assert 'properties' in table_properties[0]
