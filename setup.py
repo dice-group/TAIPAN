@@ -11,6 +11,9 @@ setup(
     install_requires=[
         'numpy',
         'agdistispy',
-        'SPARQLWrapper'
+        'SPARQLWrapper',
+        'rdflib',
+        'scipy',
+        'scikit-learn'
     ],
 )
