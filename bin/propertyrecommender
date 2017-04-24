@@ -30,4 +30,5 @@ def get_args():
 args = get_args()
 
 table = GenericTable(args.filename)
+table.init()
 print(json.dumps(get_table_properties(table)))

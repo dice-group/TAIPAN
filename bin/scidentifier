@@ -30,5 +30,6 @@ def get_args():
 args = get_args()
 
 table = GenericTable(args.filename)
+table.init()
 sc_ident = SCIdentifier()
 print(json.dumps(sc_ident.identify_subject_column(table)))

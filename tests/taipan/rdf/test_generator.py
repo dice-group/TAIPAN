@@ -1,4 +1,5 @@
 import os
+import rdflib
 
 from taipan.pathes import TABLES_DIR
 from taipan.generictable import GenericTable
@@ -10,5 +11,10 @@ RDF = b'@prefix ns1: <http://dbpedia.org/ontology/> .\n@prefix rdf: <http://www.
 
 def test_generate_rdf():
     table = GenericTable(TEST_FILENAME)
+    table.init()
     rdf = generate_rdf(table)
-    assert rdf == RDF
+
+    g = rdflib.Graph()
+    g.parse(data=rdf, format="n3")
+
+    assert len(g.all_nodes()) > 1

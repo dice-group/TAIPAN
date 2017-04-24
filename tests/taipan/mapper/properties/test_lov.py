@@ -20,5 +20,8 @@ MAPPED_PROPERTIES = [
 
 def test_map_table_properties():
     table = GenericTable(TEST_FILENAME)
+    table.init()
     properties = map_table_properties(table)
-    assert properties == MAPPED_PROPERTIES
+    assert "uri" in properties[0].keys()
+    assert "prefixed_name" in properties[0].keys()
+    assert "score" in properties[0].keys()

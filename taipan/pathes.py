@@ -8,3 +8,5 @@ PROPERTIES_DIR = os.path.join(CURRENT_DIR, "..", "data", "properties")
 ENTITIES_DIR = os.path.join(CURRENT_DIR, "..", "data", "entities")
 DEFAULT_CACHE_DIR = os.path.join(CURRENT_DIR, "..", "cache")
 SCI_MODEL = os.path.join(CURRENT_DIR, "..", "data", "sci.model")
+ADDITIONAL_DATA_DIR = os.environ.get("ADDITIONAL_DATA_DIR",
+                                     os.path.join(CURRENT_DIR, "..", "additional_data"))

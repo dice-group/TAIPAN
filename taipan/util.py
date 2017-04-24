@@ -4,11 +4,26 @@ import os
 import re
 from dateutil.parser import parse
 
-def load_csv(csvPath):
+def load_csv_commas(csv_path):
     """Load CSV file to numpy array"""
-    if(os.path.exists(csvPath) and os.stat(csvPath).st_size):
+    if(os.path.exists(csv_path) and os.stat(csv_path).st_size):
+        csv = []
+        _f = open(csv_path, "rU")
+        for line in _f.readlines():
+            row = line.split('","')
+            row[0] = row[0][1:]
+            row[-1] = row[-1][:-2]
+            csv.append(row)
+        _f.close()
+        return numpy.array(csv)
+    else:
+        return []
+
+def load_csv(csv_path):
+    """Load CSV file to numpy array"""
+    if(os.path.exists(csv_path) and os.stat(csv_path).st_size):
         csv_bytes = numpy.genfromtxt(
-            csvPath,
+            csv_path,
             delimiter=",",
             dtype="S",
             comments="///",
