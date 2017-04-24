@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+
+import os
+
+from taipan.pathes import SCI_MODEL
+from taipan.ml.model import MLModel
+from taipan.ml.subjectcolumn.scidentifier import SCIdentifier
+
+SCIDENTIFIER = SCIdentifier()
+MLMODEL = MLModel()
+
+os.remove(SCI_MODEL)
+
+SCIDENTIFIER.get_model()
+
+print("Done!")

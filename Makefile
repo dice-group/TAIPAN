@@ -9,3 +9,6 @@ test:
 
 data-server:
 	docker run -p 80:80 osier
+
+update-model:
+	python bin/update_scident_model
