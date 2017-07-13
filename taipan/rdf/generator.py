@@ -12,8 +12,9 @@ AGDISTIS_WRAPPER = AgdistisWrapper()
 
 TABLE_NAMESPACE = os.environ.get("TABLE_NAMESPACE", "http://example.org/")
 
-def get_table_meta(table):
-    subject_column = SCIDENTIFIER.identify_subject_column(table)
+def get_table_meta(table, subject_column=None):
+    if subject_column is None:
+        subject_column = SCIDENTIFIER.identify_subject_column(table)
     if subject_column == []:
         subject_column = 0
     else:
@@ -27,8 +28,8 @@ def get_table_meta(table):
     return (subject_column, properties_uri, entities)
 
 
-def generate_rdf(table):
-    (subject_column, properties, entities) = get_table_meta(table)
+def generate_rdf(table, subject_column=None):
+    (subject_column, properties, entities) = get_table_meta(table, subject_column=subject_column)
     g = Graph()
     for row_i, row in enumerate(table.table[1:]):
         if entities[row_i][subject_column]:
