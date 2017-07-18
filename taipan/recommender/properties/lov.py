@@ -28,6 +28,8 @@ def get_dbpedia_property(col):
         "vocab": "dbpedia",
         "type": "property"
     }
+    if not col:
+        return []
     r = requests.get(LOV_SEARCH_URI, params=params)
     r.raise_for_status()
     properties = r.json()
