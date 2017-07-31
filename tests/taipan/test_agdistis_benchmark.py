@@ -22,12 +22,22 @@ def test_benchmark_agdistis():
             _table.init()
             agdistis_entities = agdistis_wrapper.disambiguate_table(_table)
             to_compare = map_agdistis_entities_to_gold_standard_format(_table, agdistis_entities)
+            print("", flush=True)
+            print(fixture_entities, flush=True)
+            print("", flush=True)
+            print(to_compare, flush=True)
             print(diff_entities(fixture_entities, to_compare), flush=True)
             num += 1
             if(num >= len(onlyfiles)):
                 break
         except BaseException as e:
             print(str(e))
+
+def test_get_gold_standard_entities():
+    onlyfiles = [f for f in listdir(ENTITIES_DIR) if isfile(join(ENTITIES_DIR, f))]
+    for _f in onlyfiles:
+        print(_f)
+        fixture_entities = get_gold_standard_entities(_f)
 
 def get_gold_standard_entities(_id):
     entities = []
