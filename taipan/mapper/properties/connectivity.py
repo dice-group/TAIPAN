@@ -4,7 +4,7 @@ from taipan.sparql.propertysearch import find_properties
 from taipan.agdistis import AgdistisWrapper
 
 AGDISTIS = AgdistisWrapper()
-def map_atomic_table_property(table, rows_to_analyze=10):
+def map_table_properties_connectivity(table, rows_to_analyze=10):
     table.table = table.table[:rows_to_analyze]
     entities = AGDISTIS.disambiguate_table(table)
     properties = find_properties(table, entities)
