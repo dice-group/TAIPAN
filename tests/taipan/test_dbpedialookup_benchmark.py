@@ -10,7 +10,7 @@ from os.path import isfile, join
 
 def test_benchmark_dbpedia_lookup():
     onlyfiles = [f for f in listdir(ENTITIES_DIR) if isfile(join(ENTITIES_DIR, f))]
-    num = 197
+    num = 0
     while True:
         try:
             _id = onlyfiles[num]
@@ -35,7 +35,6 @@ def test_benchmark_dbpedia_lookup():
 def test_get_gold_standard_entities():
     onlyfiles = [f for f in listdir(ENTITIES_DIR) if isfile(join(ENTITIES_DIR, f))]
     for _f in onlyfiles:
-        print(_f)
         fixture_entities = get_gold_standard_entities(_f)
 
 def get_gold_standard_entities(_id):
