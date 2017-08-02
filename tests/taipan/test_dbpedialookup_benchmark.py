@@ -74,8 +74,9 @@ def diff_entities(gold_entities, agdistis_entities):
 def test_calculate_score():
     """
         overall: 26124
-        recognized: 3792
-        new_entities: 11815
+        recognized: 18361
+        new_entities: 85900
+        recall: 70.28%
     """
     overall = 0
     recognized_overall = 0
