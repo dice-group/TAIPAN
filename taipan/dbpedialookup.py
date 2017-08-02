@@ -1,0 +1,35 @@
+"""DBpedia lookup wrapper."""
+
+import requests
+from xml.dom.minidom import parseString
+
+KEYWORD_SEARCH_URI = "http://lookup.dbpedia.org/api/search.asmx/KeywordSearch"
+
+def lookup_dbpedia_entity(entity_string, _class=None):
+    params = {
+        "QueryString": entity_string,
+        "MaxHits": 5
+    }
+    if _class:
+        params["QueryClass"] = _class
+    r = requests.get(KEYWORD_SEARCH_URI, params=params)
+    r.raise_for_status()
+    xml_entities = parseString(r.content)
+    result_nodes = xml_entities.getElementsByTagName("Result")
+    if len(result_nodes) > 0:
+        first_uri_node = result_nodes[0].getElementsByTagName("URI")[0]
+        return [first_uri_node.firstChild.data]
+    else:
+        return []
+
+def disambiguate_row(row):
+    entities = []
+    for cell_i, cell in enumerate(row):
+        entities.append(lookup_dbpedia_entity(cell))
+    return entities
+
+def disambiguate_table(table):
+    entities = []
+    for row in table.table:
+        entities.append(disambiguate_row(row))
+    return entities

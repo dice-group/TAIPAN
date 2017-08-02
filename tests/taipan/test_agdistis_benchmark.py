@@ -11,7 +11,7 @@ from os.path import isfile, join
 def test_benchmark_agdistis():
     agdistis_wrapper = AgdistisWrapper()
     onlyfiles = [f for f in listdir(ENTITIES_DIR) if isfile(join(ENTITIES_DIR, f))]
-    num = 0
+    num = 172
     while True:
         try:
             _id = onlyfiles[num]
@@ -152,3 +152,24 @@ def diff_entities(gold_entities, agdistis_entities):
 def test_diff_entities():
     diff = diff_entities(FIXTURE_ENTITIES, ENTITIES_1)
     assert diff == (24, 19, 30)
+
+def test_calculate_score():
+    """
+        overall: 26124
+        recognized: 3792
+        new_entities: 11815
+    """
+    overall = 0
+    recognized_overall = 0
+    new_entities_overall = 0
+    _f = open("agdistis_benchmark_score")
+    for line in _f.readlines():
+        try:
+            (recognized, new_entities, gold) = eval(line)
+        except:
+            import ipdb; ipdb.set_trace()
+        overall += gold
+        recognized_overall += recognized
+        new_entities_overall += new_entities
+    _f.close()
+    import ipdb; ipdb.set_trace()
