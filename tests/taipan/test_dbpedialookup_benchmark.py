@@ -10,7 +10,7 @@ from os.path import isfile, join
 
 def test_benchmark_dbpedia_lookup():
     onlyfiles = [f for f in listdir(ENTITIES_DIR) if isfile(join(ENTITIES_DIR, f))]
-    num = 0
+    num = 197
     while True:
         try:
             _id = onlyfiles[num]
