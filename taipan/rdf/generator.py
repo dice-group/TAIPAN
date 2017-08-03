@@ -20,6 +20,7 @@ def get_table_meta(table, subject_column=None):
     else:
         subject_column = subject_column[0]
 
+    #TODO: modify RDFizer to use connectivity property mapper
     properties = map_table_properties(table)
     properties_uri = [x['uri'] if x is not None else None for x in properties]
 

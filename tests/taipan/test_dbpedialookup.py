@@ -22,17 +22,18 @@ TABLE_ENTITIES = [[['http://dbpedia.org/resource/Portuguese_language'], ['http:/
  [['http://dbpedia.org/resource/Germany'], ['http://dbpedia.org/resource/Euro'], []],
  [['http://dbpedia.org/resource/Hong_Kong'], ['http://dbpedia.org/resource/Hong_Kong_dollar'], []],
  [['http://dbpedia.org/resource/India'], ['http://dbpedia.org/resource/Indian_rupee'], []],
- [['http://dbpedia.org/resource/Indonesia'], ['http://dbpedia.org/resource/United_States_dollar'], ['http://dbpedia.org/resource/Confederate_States_of_America_dollar']],
+ [['http://dbpedia.org/resource/Indonesia'], ['http://dbpedia.org/resource/United_States_dollar'], []],
  [['http://dbpedia.org/resource/Italy'], ['http://dbpedia.org/resource/Euro'], []],
  [['http://dbpedia.org/resource/Japan'], ['http://dbpedia.org/resource/Japanese_yen'], []],
  [['http://dbpedia.org/resource/South_Korea'], ['http://dbpedia.org/resource/South_Korean_won'], []],
  [['http://dbpedia.org/resource/Malaysia'], ['http://dbpedia.org/resource/Malaysian_ringgit'], []],
  [['http://dbpedia.org/resource/Nepal'], ['http://dbpedia.org/resource/United_States_dollar'], []],
  [['http://dbpedia.org/resource/New_Zealand'], ['http://dbpedia.org/resource/New_Zealand_dollar'], []],
- [['http://dbpedia.org/resource/Papua_New_Guinea'], ['http://dbpedia.org/resource/Papua_New_Guinean_kina'], ['http://dbpedia.org/resource/Confederate_States_of_America_dollar']],
+ [['http://dbpedia.org/resource/Papua_New_Guinea'], ['http://dbpedia.org/resource/Papua_New_Guinean_kina'], []],
  [[], ['http://dbpedia.org/resource/Renminbi'], []],
  [['http://dbpedia.org/resource/Philippines'], ['http://dbpedia.org/resource/United_States_dollar'], []],
  [['http://dbpedia.org/resource/Portugal'], ['http://dbpedia.org/resource/Euro'], []]]
+
 
 
 def test_disambiguate_table():

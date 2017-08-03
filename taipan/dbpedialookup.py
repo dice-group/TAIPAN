@@ -6,6 +6,10 @@ from xml.dom.minidom import parseString
 KEYWORD_SEARCH_URI = "http://lookup.dbpedia.org/api/search.asmx/KeywordSearch"
 
 def lookup_dbpedia_entity(entity_string, _class=None):
+    if string_only_contain(entity_string, "1234567890%.&#;") or entity_string == "NULL"\
+        or entity_string == "null" or len(entity_string) < 3:
+        return []
+
     params = {
         "QueryString": entity_string,
         "MaxHits": 5
@@ -33,3 +37,9 @@ def disambiguate_table(table):
     for row in table.table:
         entities.append(disambiguate_row(row))
     return entities
+
+def string_only_contain(_string, characters):
+    for char in _string:
+        if not char in characters:
+            return False
+    return True

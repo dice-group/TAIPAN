@@ -17,3 +17,7 @@ class OsierTable(object):
         if i == self.subject_column:
             return True
         return False
+
+    def trim_table(self, number_of_rows=10):
+        for num, col in enumerate(self.table):
+            self.table[num] = col[:number_of_rows]
