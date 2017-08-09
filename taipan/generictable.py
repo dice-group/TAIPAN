@@ -16,7 +16,7 @@ class GenericTable(object):
             self.csv_string = csv_string
 
     def init(self):
-        if self.csv_string:
+        if hasattr(self, 'csv_string') and self.csv_string:
             self.table = load_csv_string_commas(self.csv_string)
         else:
             self.table = self.get_data(self.filename)

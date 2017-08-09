@@ -23,7 +23,7 @@ def load_csv_string_commas(csv_string):
     """Load CSV string to numpy array"""
     if(csv_string):
         csv = []
-        for line in csv_string:
+        for line in csv_string.splitlines():
             row = line.split('","')
             row[0] = row[0][1:]
             row[-1] = row[-1][:-2]
