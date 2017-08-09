@@ -14,6 +14,7 @@ setup(
         'SPARQLWrapper',
         'rdflib',
         'scipy',
-        'scikit-learn'
+        'scikit-learn',
+        'foxpy'
     ],
 )
