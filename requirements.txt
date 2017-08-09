@@ -5,3 +5,4 @@ rdflib
 scikit-learn
 scipy
 python-dateutil
+foxpy
