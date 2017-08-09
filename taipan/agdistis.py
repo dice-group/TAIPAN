@@ -38,7 +38,7 @@ class AgdistisWrapper(object):
             entities.append(self.disambiguate_row(row))
         return entities
 
-    def disambiguate_row(self, row):
+    def _disambiguate_row(self, row):
         """
             Concat row and disambiguate the complete row
         """
@@ -52,9 +52,10 @@ class AgdistisWrapper(object):
                     r_entities[cell_i] = [_entity["disambiguatedURL"]]
         return r_entities
 
-    def _disambiguate_row(self, row):
+    def disambiguate_row(self, row):
         """
             Disambiguate cell by cell
+            This performs better
         """
         entities = []
         for cell_i, cell in enumerate(row):

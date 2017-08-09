@@ -11,7 +11,7 @@ from os.path import isfile, join
 def test_benchmark_agdistis():
     agdistis_wrapper = AgdistisWrapper()
     onlyfiles = [f for f in listdir(ENTITIES_DIR) if isfile(join(ENTITIES_DIR, f))]
-    num = 172
+    num = 0
     while True:
         try:
             _id = onlyfiles[num]
