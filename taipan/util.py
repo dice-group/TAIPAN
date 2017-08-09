@@ -28,7 +28,6 @@ def load_csv_string_commas(csv_string):
             row[0] = row[0][1:]
             row[-1] = row[-1][:-2]
             csv.append(row)
-        _f.close()
         return numpy.array(csv)
     else:
         return []
