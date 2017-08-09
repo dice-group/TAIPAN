@@ -19,6 +19,20 @@ def load_csv_commas(csv_path):
     else:
         return []
 
+def load_csv_string_commas(csv_string):
+    """Load CSV string to numpy array"""
+    if(csv_string):
+        csv = []
+        for line in csv_string:
+            row = line.split('","')
+            row[0] = row[0][1:]
+            row[-1] = row[-1][:-2]
+            csv.append(row)
+        _f.close()
+        return numpy.array(csv)
+    else:
+        return []
+
 def load_csv(csv_path):
     """Load CSV file to numpy array"""
     if(os.path.exists(csv_path) and os.stat(csv_path).st_size):
