@@ -5,7 +5,7 @@ from rdflib import Graph, Literal, BNode, RDF, URIRef
 
 from taipan.mapper.properties.lov import map_table_properties
 from taipan.ml.subjectcolumn.scidentifier import SCIdentifier
-from taipan.agdistis import AgdistisWrapper
+from taipan.entitysearch.agdistis import AgdistisWrapper
 
 SCIDENTIFIER = SCIdentifier()
 AGDISTIS_WRAPPER = AgdistisWrapper()

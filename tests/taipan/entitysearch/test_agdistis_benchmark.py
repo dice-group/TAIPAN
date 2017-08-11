@@ -1,6 +1,8 @@
 """Benchmark for taipan.agdistis"""
 
-from taipan.agdistis import AgdistisWrapper
+from nose.tools import nottest
+
+from taipan.entitysearch.agdistis import AgdistisWrapper
 from taipan.ml.model import MLModel
 from taipan.pathes import ENTITIES_DIR, TABLES_DIR
 from taipan.generictable import GenericTable
@@ -8,6 +10,7 @@ from taipan.generictable import GenericTable
 from os import listdir
 from os.path import isfile, join
 
+@nottest
 def test_benchmark_agdistis():
     agdistis_wrapper = AgdistisWrapper()
     onlyfiles = [f for f in listdir(ENTITIES_DIR) if isfile(join(ENTITIES_DIR, f))]
@@ -36,7 +39,6 @@ def test_benchmark_agdistis():
 def test_get_gold_standard_entities():
     onlyfiles = [f for f in listdir(ENTITIES_DIR) if isfile(join(ENTITIES_DIR, f))]
     for _f in onlyfiles:
-        print(_f)
         fixture_entities = get_gold_standard_entities(_f)
 
 def get_gold_standard_entities(_id):
@@ -173,4 +175,3 @@ def test_calculate_score():
         recognized_overall += recognized
         new_entities_overall += new_entities
     _f.close()
-    import ipdb; ipdb.set_trace()

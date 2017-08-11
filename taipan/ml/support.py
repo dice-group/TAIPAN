@@ -1,4 +1,4 @@
-from taipan.agdistis import AgdistisWrapper
+from taipan.entitysearch.agdistis import AgdistisWrapper
 from taipan.cache import enable_cache
 
 class SupportCalculator(object):

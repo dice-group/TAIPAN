@@ -1,4 +1,4 @@
-from taipan.agdistis import AgdistisWrapper
+from taipan.entitysearch.agdistis import AgdistisWrapper
 from taipan.sparql.propertysearch import find_properties
 from taipan.cache import enable_cache
 

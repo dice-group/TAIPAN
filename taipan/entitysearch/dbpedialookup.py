@@ -38,6 +38,19 @@ def disambiguate_table(table):
         entities.append(disambiguate_row(row))
     return entities
 
+def disambiguate_table_subject_column_only(table):
+    entities = []
+    for row in table.table:
+        row_entities = []
+        for cell_i, cell in enumerate(row):
+            if cell_i == table.subject_column:
+                row_entities.append(lookup_dbpedia_entity(cell))
+            else:
+                row_entities.append([])
+        entities.append(row_entities)
+    return entities
+
+
 def string_only_contain(_string, characters):
     for char in _string:
         if not char in characters:

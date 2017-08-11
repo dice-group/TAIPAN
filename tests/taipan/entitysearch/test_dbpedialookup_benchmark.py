@@ -1,13 +1,41 @@
 """Benchmark for taipan.agdistis"""
 
+from nose.tools import nottest
+
 from taipan.ml.model import MLModel
 from taipan.pathes import ENTITIES_DIR, TABLES_DIR
 from taipan.generictable import GenericTable
-from taipan.dbpedialookup import disambiguate_table
+from taipan.entitysearch.dbpedialookup import disambiguate_table, \
+    disambiguate_table_subject_column_only
 
 from os import listdir
 from os.path import isfile, join
 
+def test_benchmark_dbpedia_lookup_subject_columns_only():
+    onlyfiles = [f for f in listdir(ENTITIES_DIR) if isfile(join(ENTITIES_DIR, f))]
+    num = 0
+    while True:
+        try:
+            _id = onlyfiles[num]
+            print("process table %d out of %d" % (num, len(onlyfiles)), flush=True)
+            print("table id %s" % (_id), flush=True)
+            fixture_entities = get_gold_standard_entities(_id)
+            _table = GenericTable(filename=join(TABLES_DIR, _id),_id=_id)
+            _table.init()
+            dbpedia_lookup_entities = disambiguate_table_subject_column_only(_table)
+            to_compare = map_agdistis_entities_to_gold_standard_format(_table, dbpedia_lookup_entities)
+            print("", flush=True)
+            print(fixture_entities, flush=True)
+            print("", flush=True)
+            print(to_compare, flush=True)
+            print(diff_entities(fixture_entities, to_compare), flush=True)
+            num += 1
+            if(num >= len(onlyfiles)):
+                break
+        except BaseException as e:
+            print(str(e))
+
+@nottest
 def test_benchmark_dbpedia_lookup():
     onlyfiles = [f for f in listdir(ENTITIES_DIR) if isfile(join(ENTITIES_DIR, f))]
     num = 0
@@ -91,4 +119,3 @@ def test_calculate_score():
         recognized_overall += recognized
         new_entities_overall += new_entities
     _f.close()
-    import ipdb; ipdb.set_trace()

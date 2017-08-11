@@ -32,4 +32,6 @@ class SCIdentifier(object):
         for col_i, is_sc in enumerate(self.clf.predict(feature_vector).tolist()):
             if is_sc:
                 subject_column.append(col_i)
+        if subject_column == []:
+            subject_column = [0]
         return subject_column

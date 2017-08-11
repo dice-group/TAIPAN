@@ -1,4 +1,4 @@
-from taipan.agdistis import AgdistisWrapper
+from taipan.entitysearch.agdistis import AgdistisWrapper
 from taipan.ml.model import MLModel
 from taipan.sparql.propertysearch import *
 

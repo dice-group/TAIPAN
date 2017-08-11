@@ -1,7 +1,7 @@
 from collections import Counter
 
 from taipan.sparql.propertysearch import find_properties
-from taipan.dbpedialookup import disambiguate_table
+from taipan.entitysearch.dbpedialookup import disambiguate_table
 from taipan.mapper.properties.stoplist import DBPEDIA_STOPLIST
 
 def map_table_properties_connectivity(table, rows_to_analyze=10):
