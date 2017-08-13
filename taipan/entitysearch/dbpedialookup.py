@@ -44,6 +44,7 @@ def disambiguate_table_subject_column_only(table):
         row_entities = []
         for cell_i, cell in enumerate(row):
             if cell_i == table.subject_column:
+                print(cell)
                 row_entities.append(lookup_dbpedia_entity(cell))
             else:
                 row_entities.append([])

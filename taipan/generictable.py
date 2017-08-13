@@ -5,13 +5,14 @@ import uuid
 from taipan.util import load_csv_commas, load_csv_string_commas
 
 class GenericTable(object):
-    def __init__(self, filename, _id=None, csv_string=None):
+    def __init__(self, filename=None, _id=None, csv_string=None):
         if _id:
             self._id = _id
         else:
             self._id = uuid.uuid5(uuid.NAMESPACE_URL, "file://%s" % filename)
 
-        self.filename = filename
+        if filename:
+            self.filename = filename
         if csv_string:
             self.csv_string = csv_string
 
