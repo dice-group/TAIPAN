@@ -18,6 +18,7 @@ setup(
         'rdflib',
         'scipy',
         'scikit-learn',
-        'foxpy'
+        'foxpy',
+        'python-dateutil'
     ],
 )
