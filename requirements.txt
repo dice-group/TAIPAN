@@ -1,8 +1,0 @@
-numpy
-agdistispy
-SPARQLWrapper
-rdflib
-scikit-learn
-scipy
-python-dateutil
-foxpy
