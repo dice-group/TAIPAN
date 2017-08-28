@@ -1,5 +1,14 @@
 # taipan-library
 
+# Installation Instructions
+```bash
+$ mkvirtualenv -p $(which python3) taipan
+$ cdvirtualenv
+$ mkdir src && cd src
+$ git clone git@github.com:dice-group/TAIPAN.git && cd TAIPAN
+$ pip install -e .
+```
+
 # Dev
 ```
 make dev
