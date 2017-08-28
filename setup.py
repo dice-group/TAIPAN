@@ -4,9 +4,12 @@ from setuptools import find_packages, setup
 
 setup(
     name='taipan',
-    version="1.0",
+    version="1.0.0",
     packages=find_packages(),
-    scripts=['bin/scidentifier'],
+    scripts=[
+        'bin/scidentifier',
+        'bin/propertyrecommender'
+    ],
     include_package_data=False,
     install_requires=[
         'numpy',
