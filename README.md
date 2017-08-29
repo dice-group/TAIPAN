@@ -57,5 +57,6 @@ Create View Template csvtemplate As
 ```
 You can use mappings together with SPARQLify to convert csv to RDF:
 ```
-$ ./bin/smlmapping data/tables/329f559f-981f-4e7a-af8c-df8838caf74a.csv http://example.org > my_mapping.sml
+$ ./bin/smlmapping data/tables/329f559f-981f-4e7a-af8c-df8838caf74a.csv http://example.org > generated_mapping.sml
+$ sparqlify-csv -c generated_mapping.sml -f data/tables/329f559f-981f-4e7a-af8c-df8838caf74a.csv
 ```
