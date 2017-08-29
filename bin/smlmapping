@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+
+import argparse
+import os
+import json
+from taipan.generictable import GenericTable
+from taipan.sml.taipantosml import TaipanToSML
+from taipan.ml.subjectcolumn.scidentifier import SCIdentifier
+from taipan.recommender.properties.lov import get_table_properties
+
+class FullPaths(argparse.Action):
+    """Expand user- and relative-paths"""
+    def __call__(self, parser, namespace, values, option_string=None):
+        setattr(namespace, self.dest, os.path.abspath(os.path.expanduser(values)))
+
+def is_file(filename):
+    """Checks if a path is an actual directory"""
+    if not os.path.isfile(filename):
+        msg = "{0} is not a file".format(filename)
+        raise argparse.ArgumentTypeError(msg)
+    else:
+        return filename
+
+def is_uri(uri):
+    """Checks if uri is a uri."""
+    if not uri.startswith("http"):
+        msg = "{0} is not a URI".format(uri)
+        raise argparse.ArgumentError(msg)
+    else:
+        return uri
+
+def get_args():
+    """Get CLI arguments and options"""
+    parser = argparse.ArgumentParser(description="""identify the subject column of a table""")
+
+    parser.add_argument('filename', help="table filename for subject column identification",
+        action=FullPaths, type=is_file)
+    parser.add_argument('subject_namespace', help="namespace for the subject inside triple patterns",
+        type=is_uri)
+    return parser.parse_args()
+
+args = get_args()
+
+table = GenericTable(args.filename)
+table.init()
+sc_ident = SCIdentifier()
+subject_column = sc_ident.identify_subject_column(table)
+property_mappings = get_table_properties(table)
+sml_mapping = TaipanToSML(property_mappings, args.subject_namespace, subject_column[0])
+print(sml_mapping.get_mapping())
