@@ -42,3 +42,20 @@ $ ./bin/propertyrecommender data/tables/329f559f-981f-4e7a-af8c-df8838caf74a.csv
     }
 ]
 ```
+For SML mapping generation:
+```
+$ ./bin/smlmapping data/tables/329f559f-981f-4e7a-af8c-df8838caf74a.csv http://example.org
+Prefix fn:<http://aksw.org/sparqlify/>
+Prefix dbpedia-owl:<http://dbpedia.org/ontology/>
+Create View Template csvtemplate As
+  Construct {
+    ?subjectVariable dbpedia-owl:recordLabel ?columnVariable1 .
+  }
+  With
+    ?subjectVariable = uri(concat("http://example.org", fn:urlEncode(?1)))
+    ?columnVariable1 = plainLiteral(?1)
+```
+You can use mappings together with SPARQLify to convert csv to RDF:
+```
+$ ./bin/smlmapping data/tables/329f559f-981f-4e7a-af8c-df8838caf74a.csv http://example.org > my_mapping.sml
+```
