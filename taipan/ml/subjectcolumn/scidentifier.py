@@ -3,7 +3,6 @@ import os
 from sklearn import tree
 from sklearn.externals import joblib
 
-from taipan.util import load_csv
 from taipan.ml.model import MLModel
 from taipan.pathes import SCI_MODEL
 

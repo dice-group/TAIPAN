@@ -1,9 +1,9 @@
 import os
 
 from taipan.pathes import SUBJECT_COLUMN_LIST, ADDITIONAL_DATA_DIR
-from taipan.util import load_csv, load_csv_commas
 from taipan.ml.table import Table
 from taipan.generictable import GenericTable
+from taipan.csvloader import CSVLoader
 
 from taipan.ml.subjectcolumn.features import Connectivity, Support, \
          CellsWithUniqueContentFraction, CellsWithNumericContentFraction, \
@@ -13,16 +13,23 @@ ROWS_TO_ANALYZE = os.environ.get("ROWS_TO_ANALYZE", "20")
 FEATURE_LIST = [Connectivity(), Support(), CellsWithUniqueContentFraction(), CellsWithNumericContentFraction(), VarianceInDateTokens(), NumberOfWordsAverage()]
 
 class MLModel(object):
+    def __init__(self):
+        self.csv_loader = CSVLoader()
+
     def get_tables(self):
         tables = []
         tables += self.get_taipan_tables()
         tables += self.get_additional_tables()
         return tables
 
+    def load_csv(self, filepath):
+        _f = open(filepath)
+        return self.csv_loader.load_csv(_f)
+
     def get_taipan_tables(self):
         tables = []
 
-        id_list = load_csv(SUBJECT_COLUMN_LIST)
+        id_list = self.load_csv(SUBJECT_COLUMN_LIST)
         id_list = map((lambda x: x[0]), id_list)
 
         for _id in id_list:
@@ -35,11 +42,11 @@ class MLModel(object):
     def get_additional_tables(self):
         tables = []
         subject_column_list = os.path.join(ADDITIONAL_DATA_DIR, "subject_columns.csv")
-        id_list = load_csv(subject_column_list)
+        id_list = self.load_csv(subject_column_list)
         for (_id, subject_column) in id_list:
             table_filename = os.path.join(ADDITIONAL_DATA_DIR, "tables", _id)
             table = GenericTable(filename=table_filename, _id=_id)
-            table.table = load_csv_commas(table_filename)
+            table.init()
             table.table = table.table[:int(ROWS_TO_ANALYZE)]
             table.subject_column = int(subject_column)
             tables.append(table)

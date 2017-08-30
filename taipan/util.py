@@ -1,57 +1,6 @@
 """Utils"""
-import numpy
-import os
 import re
 from dateutil.parser import parse
-
-def load_csv_commas(csv_path):
-    """Load CSV file to numpy array"""
-    if(os.path.exists(csv_path) and os.stat(csv_path).st_size):
-        csv = []
-        _f = open(csv_path, "rU")
-        for line in _f.readlines():
-            row = line.split('","')
-            row[0] = row[0][1:]
-            row[-1] = row[-1][:-2]
-            csv.append(row)
-        _f.close()
-        return numpy.array(csv)
-    else:
-        return []
-
-def load_csv_string_commas(csv_string):
-    """Load CSV string to numpy array"""
-    if(csv_string):
-        csv = []
-        for line in csv_string.splitlines():
-            row = line.split('","')
-            row[0] = row[0][1:]
-            row[-1] = row[-1][:-2]
-            csv.append(row)
-        return numpy.array(csv)
-    else:
-        return []
-
-def load_csv(csv_path):
-    """Load CSV file to numpy array"""
-    if(os.path.exists(csv_path) and os.stat(csv_path).st_size):
-        csv_bytes = numpy.genfromtxt(
-            csv_path,
-            delimiter=",",
-            dtype="S",
-            comments="///",
-            missing_values="NULL",
-            invalid_raise=False
-        )
-        csv = csv_bytes.view(numpy.chararray).decode("utf-8")
-        if numpy.shape(csv) != (0,):
-            for x in numpy.nditer(csv, op_flags=['readwrite']):
-                x[...] = x.flatten()[0].strip('"')
-            return csv
-        else:
-            return []
-    else:
-        return []
 
 def clear_string(string):
     string = re.sub('[{}|*?()\[\]!-"]', '', string)

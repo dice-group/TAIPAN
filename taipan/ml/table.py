@@ -1,12 +1,13 @@
 import os
 
-from taipan.util import load_csv
 from taipan.pathes import TABLES_DIR, CLASSES_LIST, \
         PROPERTIES_DIR, SUBJECT_COLUMN_LIST, ENTITIES_DIR
+from taipan.csvloader import CSVLoader
 
 class Table(object):
     def __init__(self, _id):
         self._id = _id
+        self.csv_loader = CSVLoader()
 
     def init(self):
         self.table = self.get_data(self._id)
@@ -15,12 +16,16 @@ class Table(object):
         #self.properties = self.get_properties(self._id)
         #self.entities = self.get_entities(self._id)
 
+    def load_csv(self, filepath):
+        _f = open(filepath)
+        return self.csv_loader.load_csv(_f)
+
     def get_data(self, _id):
-        return load_csv(os.path.join(TABLES_DIR, _id))
+        return self.load_csv(os.path.join(TABLES_DIR, _id))
 
     def get_classes(self, _id):
         classes = []
-        classes_list = load_csv(CLASSES_LIST)
+        classes_list = self.load_csv(CLASSES_LIST)
         classes_list_filtered = classes_list[classes_list[:,0] == _id]
         for row in classes_list_filtered:
             if row[3] == '':
@@ -37,7 +42,7 @@ class Table(object):
 
     def get_properties(self, _id):
         properties = []
-        properties_all = load_csv(os.path.join(PROPERTIES_DIR, _id))
+        properties_all = self.load_csv(os.path.join(PROPERTIES_DIR, _id))
         if properties_all == []:
             return []
         if properties_all.ndim > 1:
@@ -61,7 +66,7 @@ class Table(object):
         return properties
 
     def get_subject_column(self, _id):
-        csv = load_csv(SUBJECT_COLUMN_LIST)
+        csv = self.load_csv(SUBJECT_COLUMN_LIST)
         sc = csv[csv[:,0] == _id]
         if len(sc) > 0:
             return int(sc[0][1])
@@ -70,7 +75,7 @@ class Table(object):
 
     def get_entities(self, _id):
         entities = []
-        entities_list = load_csv(os.path.join(ENTITIES_DIR, _id))
+        entities_list = self.load_csv(os.path.join(ENTITIES_DIR, _id))
         if entities_list == []:
             return []
         for row in entities_list:

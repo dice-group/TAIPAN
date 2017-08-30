@@ -2,7 +2,7 @@
 
 import uuid
 
-from taipan.util import load_csv_commas, load_csv_string_commas
+from taipan.csvloader import CSVLoader
 
 class GenericTable(object):
     def __init__(self, filename=None, _id=None, csv_string=None):
@@ -16,15 +16,18 @@ class GenericTable(object):
         if csv_string:
             self.csv_string = csv_string
 
+        self.csv_loader = CSVLoader()
+
     def init(self):
         if hasattr(self, 'csv_string') and self.csv_string:
-            self.table = load_csv_string_commas(self.csv_string)
+            self.table = self.get_data(self.csv_string)
         else:
-            self.table = self.get_data(self.filename)
+            _f = open(self.filename)
+            self.table = self.get_data(_f)
         self.subject_column = None
 
-    def get_data(self, filename):
-        return load_csv_commas(filename)
+    def get_data(self, _csv):
+        return self.csv_loader.load_csv(_csv)
 
     def is_subject_column(self, i):
         if i == self.subject_column:
