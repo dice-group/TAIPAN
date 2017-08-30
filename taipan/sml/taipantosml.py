@@ -5,11 +5,11 @@ from .prefixcc import prefixes
 
 class TaipanToSML(object):
     # SMLMapping object to generate the mapping
-    sml_mapping = SMLMapping()
+    sml_mapping = None
 
     # property mapping from TAIPAN
-    property_mappings = []
-    col_number = 0
+    property_mappings = None
+    col_number = None
 
     # Variables and patterns for mapping construction
     subject_variable = "subjectVariable"
@@ -22,6 +22,10 @@ class TaipanToSML(object):
         """
             property_mappings is expected property mapping from TAIPAN
         """
+        self.sml_mapping = SMLMapping()
+        self.property_mappings = []
+        self.col_number = 0
+
         self.set_property_mappings(property_mappings)
         self.set_subject_binding(subject_uri, subject_column_id)
         self.set_column_variables()

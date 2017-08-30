@@ -1,11 +1,14 @@
 """SML Generator."""
 
 class SMLMapping(object):
-    prefixes = []
-    variable_bindings = []
-    triple_bindings = []
+    prefixes = None
+    variable_bindings = None
+    triple_bindings = None
 
     def __init__(self):
+        self.prefixes = []
+        self.variable_bindings = []
+        self.triple_bindings = []
         self.add_prefix("fn", "http://aksw.org/sparqlify/")
 
     def add_prefix(self, _key, _uri):

@@ -2,6 +2,7 @@
 
 from csv import reader, list_dialects, \
     Dialect, QUOTE_MINIMAL, register_dialect
+import io
 
 class GermanCSV(Dialect):
     delimiter=','
@@ -21,8 +22,6 @@ def check_csv(_iterable, _dialect):
         assert len(line) > 2
         assert len(line) == header_length
 
-check_csv(open("test_csv_1.csv"), "GermanCSV")
-
 german_csv_line = """STRECKE_NR,RICHTUNG,KM_I,KM_L,BEZEICHNUNG,TECHN_SICHERUNG,STRASSENART,GEOGR_BREITE,GEOGR_LAENGE,GK_H_DGN,GK_R_DGN
 1000,0,117310013,"173,1 + 13",Bü 173.114 Flensburg-Weiche - Flensb. Gr,Schrankenabschluss,Strasse,54.759941,9.39961214,6070137.808,3525801.083
 1000,0,117730060,"177,3 + 60",Bü 177.36 Flensburg-Weiche - Flensb. Gr,Schrankenabschluss,Strasse,54.79452802,9.37456587,6073979.067,3524168.173
@@ -31,9 +30,8 @@ german_csv_line = """STRECKE_NR,RICHTUNG,KM_I,KM_L,BEZEICHNUNG,TECHN_SICHERUNG,S
 1000,0,117950053,"179,5 + 53",Bü 179.552 Flensburg-Weiche - Flensb. Gr,Nicht technisch gesichert,Strasse,54.81325834,9.36399819,6076060.519,3523477.636
 """
 
-import io
-
 check_csv(io.StringIO(german_csv_line), "GermanCSV")
+
 
 class GermanCSVSemicolon(Dialect):
     delimiter=';'
@@ -43,8 +41,6 @@ class GermanCSVSemicolon(Dialect):
     lineterminator = '\n'
     quoting = QUOTE_MINIMAL
 register_dialect("GermanCSVSemicolon", GermanCSVSemicolon)
-
-check_csv(open("test_csv_2.csv"), "GermanCSVSemicolon")
 
 german_csv_line = """Bundesland;RB;BM;Bf. Nr.;Station;"Bf DS 100 Abk.";"Kat. Vst";Straße;PLZ;Ort;Aufgabenträger
 Hessen;RB Mitte;Darmstadt;119;Altheim (Hess);FAT;6;Münstererstr. 19;64839;Münster;Rhein-Main-Verkehrsverbund GmbH

@@ -11,7 +11,7 @@ def test_map_atomic_table_property():
     table = GenericTable(TEST_FILENAME)
     table.init()
     _property = map_table_properties_connectivity(table)
-    assert _property == "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    assert _property == {'0_1': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type'}
 
 def test_get_all_dict_values():
     _dict = {0:
@@ -343,4 +343,3 @@ PROPERTY_RESULT = [{0: {0: [], 1: ['http://dbpedia.org/ontology/wikiPageWikiLink
 
 def test_map_properties_to_columns():
     result = group_properties_by_column(PROPERTY_RESULT)
-    import ipdb; ipdb.set_trace()
