@@ -1,11 +1,23 @@
 """Generic Table"""
 
 import uuid
+from csv import QUOTE_MINIMAL
 
 from taipan.csvloader import CSVLoader
 
 class GenericTable(object):
-    def __init__(self, filename=None, _id=None, csv_string=None):
+    def __init__(
+        self,
+        filename=None,
+        _id=None,
+        csv_string=None,
+        delimiter=",",
+        quotechar='"',
+        quoting=QUOTE_MINIMAL,
+        doublequote=False,
+        skipinitialspace=True,
+        lineterminator='\n'
+    ):
         if _id:
             self._id = _id
         else:
@@ -16,7 +28,14 @@ class GenericTable(object):
         if csv_string:
             self.csv_string = csv_string
 
-        self.csv_loader = CSVLoader()
+        self.csv_loader = CSVLoader(
+            delimiter=delimiter,
+            quotechar=quotechar,
+            quoting=quoting,
+            doublequote=doublequote,
+            skipinitialspace=skipinitialspace,
+            lineterminator=lineterminator
+        )
 
     def init(self):
         if hasattr(self, 'csv_string') and self.csv_string:

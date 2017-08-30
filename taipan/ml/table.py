@@ -1,13 +1,30 @@
 import os
+from csv import QUOTE_MINIMAL
 
 from taipan.pathes import TABLES_DIR, CLASSES_LIST, \
         PROPERTIES_DIR, SUBJECT_COLUMN_LIST, ENTITIES_DIR
 from taipan.csvloader import CSVLoader
 
 class Table(object):
-    def __init__(self, _id):
+    def __init__(
+        self,
+        _id,
+        delimiter=",",
+        quotechar='"',
+        quoting=QUOTE_MINIMAL,
+        doublequote=False,
+        skipinitialspace=True,
+        lineterminator='\n'
+    ):
         self._id = _id
-        self.csv_loader = CSVLoader()
+        self.csv_loader = CSVLoader(
+            delimiter=delimiter,
+            quotechar=quotechar,
+            quoting=quoting,
+            doublequote=doublequote,
+            skipinitialspace=skipinitialspace,
+            lineterminator=lineterminator
+        )
 
     def init(self):
         self.table = self.get_data(self._id)
