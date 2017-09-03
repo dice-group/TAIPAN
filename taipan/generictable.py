@@ -27,6 +27,7 @@ class GenericTable(object):
             self.filename = filename
         if csv_string:
             self.csv_string = csv_string
+            self._id = self.generate_id(csv_string)
 
         self.csv_loader = CSVLoader(
             delimiter=delimiter,
@@ -36,6 +37,10 @@ class GenericTable(object):
             skipinitialspace=skipinitialspace,
             lineterminator=lineterminator
         )
+
+    def generate_id(self, _string):
+        """Generate id from two first rows."""
+        return str(uuid.uuid5(uuid.NAMESPACE_OID, _string))
 
     def init(self):
         if hasattr(self, 'csv_string') and self.csv_string:
